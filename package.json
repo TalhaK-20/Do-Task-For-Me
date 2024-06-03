@@ -1,0 +1,25 @@
+{
+  "name": "do-my-assignment-web-app",
+  "version": "1.0.0",
+  "description": "This is a full stack web app for my internship.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Talha Khalid",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
+    "multer": "^1.4.5-lts.1",
+    "node-mailer": "^0.1.1",
+    "nodemailer": "^6.9.13",
+    "transporter": "^0.0.1",
+    "views": "^1.0.2"
+  }
+}

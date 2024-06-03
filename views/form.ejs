@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do My Assignment | Form</title>
+    <link rel="stylesheet" href="/css/form.css">
+
+</head>
+<body>
+
+    <form id="assignmentForm" action="/submit" method="POST">
+
+        <h1>Assignment Request Form</h1>
+
+        <div class="form-group">
+            <label for="assignmentType">Type of Assignment:</label>
+            <select id="assignmentType" name="assignmentType" required>
+                <option value="">Select Assignment Type</option>
+                <option value="Essay">Essay</option>
+                <option value="Research Paper">Research Paper</option>
+                <option value="Project">Project</option>
+                <option value="Presentation">Presentation</option>
+                <option value="App Development">App Development</option>
+                <option value="Game Development">Game Development</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Content Writing">Content Writing</option>
+                <option value="SEO">SEO</option>
+                <option value="Research">Research</option>
+                <option value="Term Project">Term Project</option>
+                <option value="Professional Web App">Professional Web App</option>
+                <option value="Technical Report">Technical Report</option>
+                <option value="Lab Report">Lab Report</option>
+                <option value="Case Study">Case Study</option>
+                <option value="Thesis">Thesis</option>
+                <option value="Dissertation">Dissertation</option>
+                <option value="Capstone Project">Capstone Project</option>
+                <option value="Article">Article</option>
+                <option value="Review Paper">Review Paper</option>
+                <option value="Creative Writing">Creative Writing</option>
+            </select>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="daysUntilDue">Days Until Due:</label>
+            <input type="number" id="daysUntilDue" name="daysUntilDue" required min="1">
+        </div>
+
+       
+        <div class="form-group">
+            <label for="exactDeadline">Exact Deadline (Date & Time):</label>
+            <input type="datetime-local" id="exactDeadline" name="exactDeadline" required>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="gradeDesired">Desired Grade:</label>
+            <select id="gradeDesired" name="gradeDesired" required>
+                <option value="">Select Desired Grade</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="studentEmail">Email:</label>
+            <input type="email" id="studentEmail" name="email" required>
+        </div>
+
+       
+        <div class="form-group">
+            <label for="additionalDetails">Additional Details:</label>
+            <textarea id="additionalDetails" name="additionalDetails" rows="4" placeholder="Provide any additional details or requirements here..."></textarea>
+        </div>
+
+        
+        <div class="form-group">
+            <label for="fileUploads">Google Drive Link (PDF):</label>
+            <input type="text" id="fileUploads" name="fileUploads" required>
+        </div>
+        
+        
+        <button type="submit" id="submitBtn">Submit</button>
+    
+    </form>
+
+</body>
+</html>

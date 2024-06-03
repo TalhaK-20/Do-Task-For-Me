@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Admin Dashboard</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-user"></i> Admin</a>
+                </li>
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    
+    
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+    
+    
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="fas fa-home"></i> Dashboard
+                            </a>
+                        </li>
+    
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-file-alt"></i> Assignments
+                            </a>
+                        </li>
+    
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-users"></i> Users
+                            </a>
+                        </li>
+    
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-chart-line"></i> Reports
+                            </a>
+                        </li>
+    
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cogs"></i> Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+     
+
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+
+                <div id="assignments-container" class="row"></div>
+            </main>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/admin/dashboard')
+                .then(response => response.json())
+                .then(assignments => {
+                    const assignmentsContainer = document.getElementById('assignments-container');
+    
+                    assignments.forEach(assignment => {
+    
+                        const assignmentCard = `
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+    
+                                    <div class="card-body">
+                                        <h5 class="card-title">${assignment.assignmentType}</h5>
+    
+    
+                                        <p class="card-text">Days Until Due: ${assignment.daysUntilDue}</p>
+    
+    
+                                        <p class="card-text">Exact Deadline: ${assignment.exactDeadline}</p>
+    
+    
+                                        <p class="card-text">Grade Desired: ${assignment.gradeDesired}</p>
+    
+    
+                                        <p class="card-text">Email: ${assignment.email}</p>
+    
+    
+                                        <p class="card-text">Additional Details: ${assignment.additionalDetails}</p>
+    
+    
+                                        <p class="card-text">File Uploads: ${assignment.fileUploads}</p>
+    
+    
+                                        <p class="card-text">Total Cost: $${assignment.totalCost}</p>
+    
+    
+                                        <p class="card-text">Status: ${assignment.status}</p>
+    
+    
+                                        <div class="form-check">
+                                            <input class="form-check-input work-started-checkbox" type="checkbox" value="" id="started-${assignment._id}" ${assignment.status === 'started' ? 'checked' : ''} data-id="${assignment._id}">
+                                            <label class="form-check-label" for="started-${assignment._id}">
+                                                Work Started
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    
+                        assignmentsContainer.insertAdjacentHTML('beforeend', assignmentCard);
+                    });
+    
+                    document.querySelectorAll('.work-started-checkbox').forEach(checkbox => {
+                    
+                        checkbox.addEventListener('change', function () {
+                            const assignmentId = this.getAttribute('data-id');
+                            const isChecked = this.checked;
+    
+                            fetch(`/admin/update-status/${assignmentId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                    
+                                body: JSON.stringify({ status: isChecked ? 'started' : 'not started' })
+                            })
+                    
+                            .then(response => response.json())
+                    
+                            .then(data => {
+                                
+                                if(data.message === 'Status updated'){
+                                    alert('Status updated and email sent to user');
+                                } 
+                                
+                                else{
+                                    alert('Error updating status');
+                                }
+                            })
+                            
+                            .catch(error => console.error('Error updating status:', error));
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching assignments:', error));
+        });
+    </script>
+</body>
+</html>
