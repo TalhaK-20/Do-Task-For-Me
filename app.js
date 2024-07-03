@@ -41,6 +41,9 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+const mongoConnectionString = 'mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+
 app.use(session({
     secret: crypto.randomBytes(64).toString('hex'),
     resave: false,
@@ -75,8 +78,6 @@ const storage = multer.diskStorage({
 
 
 // --------------------- MongoDB connection ---------------------
-
-const mongoConnectionString = 'mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect('mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
@@ -1579,3 +1580,4 @@ app.post('/admin/update-status/:id', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
+
