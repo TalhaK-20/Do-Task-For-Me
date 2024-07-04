@@ -4,7 +4,9 @@
   "description": "This is a full stack web app for my internship.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "build": "echo 'no build step necessary'"
   },
   "author": "Talha Khalid",
   "license": "ISC",

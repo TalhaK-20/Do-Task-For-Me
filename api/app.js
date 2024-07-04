@@ -12,8 +12,9 @@ const multer = require('multer');
 const fs = require('fs');
 const { google } = require('googleapis');
 
-const { isAuthenticated, isAdminAuthenticated } = require('./middlewares/session.js');
-const faviconMiddleware = require('./middlewares/favicon');
+const { isAuthenticated, isAdminAuthenticated } = require('../middlewares/session.js');
+
+const faviconMiddleware = require('../middlewares/favicon');
 
 const app = express();
 const port = 3000;
@@ -27,8 +28,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(faviconMiddleware);
+app.use(express.static(path.join(__dirname, '../public')));
+
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, '../views'));
 
 
 app.use(bodyParser.json());
@@ -37,8 +40,10 @@ app.use(cors());
 
 
 app.use(faviconMiddleware);
+app.use(express.static(path.join(__dirname, '../public')));
+
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, '../views'));
 
 
 const mongoConnectionString = 'mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
@@ -1169,6 +1174,7 @@ app.get('/user-dashboard', isAuthenticated, async (req, res) => {
     
     try {
         const assignments = await Assignment.find({ email: req.session.user.email }).sort({ createdAt: -1 });
+        
         res.render('./user/user-dashboard', { user: req.session.user, assignments });
     } 
     
@@ -1507,6 +1513,7 @@ app.post('/reset-password-admin/:resetToken', async (req, res) => {
             foundAdmin.resetToken = null;
             foundAdmin.resetTokenExpiration = null;
             await foundAdmin.save();
+            
             res.render('./admin/password-reset-success-admin', { message: 'Your password has been successfully reset.' });
         } 
         
@@ -1577,7 +1584,13 @@ app.post('/admin/update-status/:id', async (req, res) => {
 
 
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-});
-
+if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  }
+  
+  module.exports = app; // Export the app for serverless functions
+  
+  
