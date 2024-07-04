@@ -113,7 +113,7 @@ const AdminSchema = new mongoose.Schema({
     resetTokenExpiration: Date
 });
 
-const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
+const Admin = mongoose.models.Admin || mongoose.model('Admin', AdminSchema);
 
 
 
