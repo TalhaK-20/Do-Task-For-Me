@@ -85,8 +85,6 @@ const storage = multer.diskStorage({
 // --------------------- MongoDB connection ---------------------
 
 mongoose.connect('mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
 });
 
 
@@ -115,7 +113,7 @@ const AdminSchema = new mongoose.Schema({
     resetTokenExpiration: Date
 });
 
-const Admin = mongoose.model('Admin', AdminSchema);
+const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
 
 
 
@@ -1585,12 +1583,13 @@ app.post('/admin/update-status/:id', async (req, res) => {
 
 
 if (!process.env.VERCEL) {
+    
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
+
   }
   
-  module.exports = app; // Export the app for serverless functions
-  
+module.exports = app; // Export the app for serverless functions
   
