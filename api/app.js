@@ -146,7 +146,7 @@ const AssignmentSchema = new mongoose.Schema({
     vivaTiming: String
 }, { timestamps: true });
 
-const Assignment = mongoose.model('Assignment', AssignmentSchema);
+const Assignment = mongoose.models.Assignment || mongoose.model('Assignment', AssignmentSchema);
 
 
 
@@ -166,7 +166,7 @@ const UserSchema = new mongoose.Schema({
     resetTokenExpiration: Date
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 
 
