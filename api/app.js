@@ -64,7 +64,7 @@ app.use(session({
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/')
+        cb(null, '../uploads/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
@@ -479,7 +479,7 @@ const GOOGLE_DRIVE_FOLDER_ID = '1CbO11lCNlmam55uIUemNHWC_QuNPYxQW';
 
 const USER_EMAIL = 'F2021266625@umt.edu.pk';
 
-const upload = multer({ dest: 'uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
+const upload = multer({ dest: '../uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
 
 const auth = new google.auth.GoogleAuth({
     
