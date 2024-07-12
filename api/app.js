@@ -85,6 +85,7 @@ const storage = multer.diskStorage({
 // --------------------- MongoDB connection ---------------------
 
 mongoose.connect('mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+    ssl: true,
 });
 
 
@@ -1587,3 +1588,4 @@ app.listen(port, () => {
 });
 
 // --------------------- End ---------------------
+
