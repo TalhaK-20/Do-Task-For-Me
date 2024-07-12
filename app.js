@@ -12,9 +12,9 @@ const multer = require('multer');
 const fs = require('fs');
 const { google } = require('googleapis');
 
-const { isAuthenticated, isAdminAuthenticated } = require('../middlewares/session.js');
+const { isAuthenticated, isAdminAuthenticated } = require('./middlewares/session.js');
 
-const faviconMiddleware = require('../middlewares/favicon');
+const faviconMiddleware = require('./middlewares/favicon');
 
 const app = express();
 const port = 3000;
@@ -28,10 +28,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(faviconMiddleware);
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 
 
 app.use(bodyParser.json());
@@ -40,10 +41,11 @@ app.use(cors());
 
 
 app.use(faviconMiddleware);
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 
 
 const mongoConnectionString = 'mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
@@ -64,7 +66,7 @@ app.use(session({
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../uploads/')
+        cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
@@ -85,7 +87,7 @@ const storage = multer.diskStorage({
 // --------------------- MongoDB connection ---------------------
 
 mongoose.connect('mongodb+srv://talha:talha@cluster0.uz91tck.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-    ssl: true,
+    ssl: true,  // Imp for deployment certificates (DNS servers)
 });
 
 
@@ -480,7 +482,7 @@ const GOOGLE_DRIVE_FOLDER_ID = '1CbO11lCNlmam55uIUemNHWC_QuNPYxQW';
 
 const USER_EMAIL = 'F2021266625@umt.edu.pk';
 
-const upload = multer({ dest: '../uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
+const upload = multer({ dest: 'uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
 
 const auth = new google.auth.GoogleAuth({
     
@@ -518,28 +520,28 @@ const drive = google.drive({ version: 'v3', auth });
 // --------------------- Routes ---------------------
 
 app.get('/', (req, res) => {
-    res.render("./main/landing-page");
+    res.render("main/landing-page");
 });
 
 
 
 
 app.get('/services', (req, res) => {
-    res.render("./main/services");
+    res.render("main/services");
 });
 
 
 
 
 app.get('/team', (req, res) => {
-    res.render("./main/our-team");
+    res.render("main/our-team");
 });
 
 
 
 
 app.get('/order-request-form', isAuthenticated, async (req, res) => {
-    res.render('./main/form')
+    res.render('main/form')
 })
 
 
@@ -995,7 +997,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             &fileUrl=${fileUrl}`
     );
     
-    } 
+    }
     
     catch (error) {
         console.log('Error:', error);
@@ -1067,7 +1069,7 @@ app.get('/results', (req, res) => {
     // Assuming totalCost needs to be formatted to two decimal places
     const formattedTotalCost = parseFloat(totalCost).toFixed(2);
 
-    res.render('./main/result', { 
+    res.render('main/result', { 
         assignmentType, 
         daysUntilDue, 
         exactDeadline, 
@@ -1091,7 +1093,7 @@ app.get('/results', (req, res) => {
 
 
 app.get('/login-user', (req, res) => {
-    res.render("./user/login-signup-user", { error: null });
+    res.render("user/login-signup-user", { error: null });
 });
 
 
@@ -1124,7 +1126,7 @@ app.post('/login-user', async (req, res) => {
         } 
         
         else {
-            res.render('./user/login-signup-user', { error: 'Invalid username, email, or password.' });
+            res.render('user/login-signup-user', { error: 'Invalid username, email, or password.' });
         }
     } 
     
@@ -1155,7 +1157,7 @@ app.post('/signup-user', async (req, res) => {
         const foundUser = await User.findOne({ username, email, password });
 
         if (foundUser) {
-            res.render('./user/user-dashboard', { user: foundUser});  // Render form with prefilled data
+            res.render('user/user-dashboard', { user: foundUser});  // Render form with prefilled data
         }
 
     } 
@@ -1174,7 +1176,7 @@ app.get('/user-dashboard', isAuthenticated, async (req, res) => {
     try {
         const assignments = await Assignment.find({ email: req.session.user.email }).sort({ createdAt: -1 });
         
-        res.render('./user/user-dashboard', { user: req.session.user, assignments });
+        res.render('user/user-dashboard', { user: req.session.user, assignments });
     } 
     
     catch (error) {
@@ -1282,11 +1284,11 @@ app.post('/reset-password-user', async (req, res) => {
 
             await transporter.sendMail(mailOptions);
         
-            res.render('./user/reset-password-user', { success: true, error: null });
+            res.render('user/reset-password-user', { success: true, error: null });
         } 
         
         else {
-            res.render('./user/reset-password-user', { error: 'Invalid email.' });
+            res.render('user/reset-password-user', { error: 'Invalid email.' });
         }
     } 
     
@@ -1306,11 +1308,11 @@ app.get('/reset-password-user/:resetToken', async (req, res) => {
         const foundUser = await User.findOne({ resetToken });
 
         if (foundUser && foundUser.resetTokenExpiration > Date.now()) {
-            res.render('./user/reset-password-user', { resetToken, user: foundUser, error: null, success: false });
+            res.render('user/reset-password-user', { resetToken, user: foundUser, error: null, success: false });
         } 
         
         else {
-            res.render('./user/reset-password-user', { resetToken, user: null, error: 'Invalid or expired reset token.', success: false });
+            res.render('user/reset-password-user', { resetToken, user: null, error: 'Invalid or expired reset token.', success: false });
         }
     } 
     
@@ -1335,11 +1337,11 @@ app.post('/reset-password-user/:resetToken', async (req, res) => {
             foundUser.resetToken = null;
             foundUser.resetTokenExpiration = null;
             await foundUser.save();
-            res.render('./user/password-reset-success-user', { message: 'Your password has been successfully reset.' });
+            res.render('user/password-reset-success-user', { message: 'Your password has been successfully reset.' });
         } 
         
         else {
-            res.render('./user/reset-password-user', { resetToken: null, user: null, error: 'Invalid or expired reset token.', success: false });
+            res.render('user/reset-password-user', { resetToken: null, user: null, error: 'Invalid or expired reset token.', success: false });
         }
     } 
     
@@ -1353,7 +1355,7 @@ app.post('/reset-password-user/:resetToken', async (req, res) => {
 
 
 app.get('/admin-login-signup', async (req, res) => {
-    res.render("./admin/login-signup-admin.ejs");
+    res.render("admin/login-signup-admin.ejs");
 });
 
 
@@ -1366,11 +1368,11 @@ app.post('/login-admin', async (req, res) => {
         const foundAdmin = await Admin.findOne({ email, password });
 
         if (foundAdmin) {
-            res.render('./admin/admin-dashboard', { user: foundAdmin });
+            res.render('admin/admin-dashboard', { user: foundAdmin });
         } 
         
         else {
-            res.render('./admin/login-signup-admin.ejs', { error: 'Invalid email or password.' });
+            res.render('admin/login-signup-admin.ejs', { error: 'Invalid email or password.' });
         }
     } 
     
@@ -1394,7 +1396,7 @@ app.post('/signup-admin', async (req, res) => {
         });
 
         await newAdmin.save();
-        res.render('./admin/admin-dashboard', { user: newAdmin });
+        res.render('admin/admin-dashboard', { user: newAdmin });
     } 
     
     catch (err) {
@@ -1459,11 +1461,11 @@ app.post('/reset-password-admin', async (req, res) => {
 
             await transporter.sendMail(mailOptions);
         
-            res.render('./admin/reset-password-admin', { success: true, error: null });
+            res.render('admin/reset-password-admin', { success: true, error: null });
         } 
         
         else {
-            res.render('./admin/reset-password-admin', { error: 'Invalid email.' });
+            res.render('admin/reset-password-admin', { error: 'Invalid email.' });
         }
     } 
     
@@ -1483,11 +1485,11 @@ app.get('/reset-password-admin/:resetToken', async (req, res) => {
         const foundAdmin = await Admin.findOne({ resetToken });
 
         if (foundAdmin && foundAdmin.resetTokenExpiration > Date.now()) {
-            res.render('./admin/reset-password-admin', { resetToken, user: foundAdmin, error: null, success: false });
+            res.render('admin/reset-password-admin', { resetToken, user: foundAdmin, error: null, success: false });
         } 
         
         else {
-            res.render('./admin/reset-password-admin', { resetToken, user: null, error: 'Invalid or expired reset token.', success: false });
+            res.render('admin/reset-password-admin', { resetToken, user: null, error: 'Invalid or expired reset token.', success: false });
         }
     } 
     
@@ -1513,11 +1515,11 @@ app.post('/reset-password-admin/:resetToken', async (req, res) => {
             foundAdmin.resetTokenExpiration = null;
             await foundAdmin.save();
             
-            res.render('./admin/password-reset-success-admin', { message: 'Your password has been successfully reset.' });
+            res.render('admin/password-reset-success-admin', { message: 'Your password has been successfully reset.' });
         } 
         
         else {
-            res.render('./admin/reset-password-admin', { resetToken: null, user: null, error: 'Invalid or expired reset token.', success: false });
+            res.render('admin/reset-password-admin', { resetToken: null, user: null, error: 'Invalid or expired reset token.', success: false });
         }
     } 
     
@@ -1587,5 +1589,5 @@ app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
 
-// --------------------- End ---------------------
 
+// --------------------- End ---------------------
