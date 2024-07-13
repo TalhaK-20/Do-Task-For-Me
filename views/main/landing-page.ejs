@@ -214,7 +214,7 @@
             <ul class="nav-links">
 
                 <li><a href="#">Home</a></li>
-                <li><a href="#">How We Work</a></li>
+                <li><a href="/work">How We Work</a></li>
                 <li><a href="/team">Our Team</a></li>
                 <li><a href="#">Reviews</a></li>
                 <li><a href="/services">Services</a></li>
@@ -268,10 +268,17 @@
                 </div>
 
                 
-                <div class="form-group-row">
+                <div class="form-group-row" style="position: relative;
+                left: -96px;">
                     <div class="form-group">
-                        <label for="daysUntilDue">Days Until Due:</label>
-                        <input type="number" id="daysUntilDue" name="daysUntilDue" required min="1">
+                        <!-- <label for="daysUntilDue">Days Until Due:</label>
+                        <input type="number" id="daysUntilDue" name="daysUntilDue" required min="1"> -->
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="studentEmail">Your Email:</label>
+                        <input type="email" id="studentEmail" name="email" placeholder="Enter your email" required>
                     </div>
 
                     
@@ -284,7 +291,7 @@
                 
                 <div class="form-group-row">
                     <div class="form-group">
-                        <label for="gradeDesired">Desired Grade:</label>
+                        <!-- <label for="gradeDesired">Desired Grade:</label>
                         <select id="gradeDesired" name="gradeDesired" required>
                             <option value="">Select Desired Grade</option>
                             <option value="A">A</option>
@@ -292,13 +299,13 @@
                             <option value="C">C</option>
                             <option value="D">D</option>
                             <option value="Pass">Pass</option>
-                        </select>
+                        </select> -->
                     </div>
 
                     
                     <div class="form-group">
-                        <label for="studentEmail">Your Email:</label>
-                        <input type="email" id="studentEmail" name="email" placeholder="Enter your email" required>
+                        <!-- <label for="studentEmail">Your Email:</label>
+                        <input type="email" id="studentEmail" name="email" placeholder="Enter your email" required> -->
                     </div>
                 </div>
 
@@ -493,19 +500,19 @@
                     break;
                 
                 case 'small':
-                    priceInfo = '5% increase in price.';
+                    priceInfo = 'No increase in price.';
                     break;
                 
                 case 'medium':
-                    priceInfo = '10% increase in price.';
+                    priceInfo = '5% increase in price.';
                     break;
                 
                 case 'large':
-                    priceInfo = '15% increase in price.';
+                    priceInfo = '10% increase in price.';
                     break;
                 
                 case 'professional':
-                    priceInfo = '20% increase in price.';
+                    priceInfo = '15% increase in price.';
                     break;
             }
 
@@ -546,11 +553,11 @@
                     const formData = JSON.parse(formDataString);
                     $('#assignmentType').val(formData.assignmentType || '');
                     
-                    $('#daysUntilDue').val(formData.daysUntilDue || '');
+                    // $('#daysUntilDue').val(formData.daysUntilDue || '');
                     
                     $('#exactDeadline').val(formData.exactDeadline || '');
                     
-                    $('#gradeDesired').val(formData.gradeDesired || '');
+                    // $('#gradeDesired').val(formData.gradeDesired || '');
                     
                     $('#studentEmail').val(formData.email || '');
                     
@@ -585,3 +592,4 @@
     </script>
 </body>
 </html>
+

@@ -526,6 +526,13 @@ app.get('/', (req, res) => {
 
 
 
+app.get('/work', (req, res) => {
+    res.render("main/how-we-work");
+});
+
+
+
+
 app.get('/services', (req, res) => {
     res.render("main/services");
 });
@@ -552,9 +559,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
     const { 
         
         assignmentType, 
-        daysUntilDue, 
         exactDeadline, 
-        gradeDesired, 
         email, 
         additionalDetails, 
         vivaRequired, 
@@ -577,7 +582,8 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
     const noOpenSourceBool = noOpenSource === 'on';
     const topProgrammerBool = topProgrammer === 'on';
 
-
+    let daysUntilDue = 4;
+    let gradeDesired = "A";
     let basePrice = 50;
     let urgencyMultiplier = 1;
 
@@ -673,9 +679,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
                             fileUrl: fileUrl,
                          
                             assignmentType, 
-                            daysUntilDue, 
                             exactDeadline, 
-                            gradeDesired, 
                             email, 
                             additionalDetails, 
                             fileUploads, 
@@ -685,7 +689,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
                             noOpenSource: noOpenSourceBool,
                             topProgrammer: topProgrammerBool,
                             
-                            totalCost, 
+                            totalCost,
                             webDevelopmentType, 
                             fullStackFramework,
                             programmingLanguage  
@@ -711,15 +715,11 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
             
                     <li><span class="label" style="font-weight: bold;">Assignment Type:</span> ${assignmentType}</li>
                 
-                    <li><span class="label" style="font-weight: bold;">Days Until Due:</span> ${daysUntilDue}</li>
-                
                     <li><span class="label" style="font-weight: bold;">Exact Deadline:</span> ${exactDeadline}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Desired Grade:</span> ${gradeDesired}</li>
                 
                     <li><span class="label" style="font-weight: bold;">Additional Details:</span> ${additionalDetails}</li>
                 
-                    <li><span class="label" style="font-weight: bold;">Total Cost:</span> $${totalCost.toFixed(2)}</li>
+                    <li><span class="label" style="font-weight: bold;">Total Cost:</span> Our team will contact you for the price</li>
                 
                     <li><span class="label" style="font-weight: bold;">Programming Language:</span> ${programmingLanguage || 'N/A'}</li>
                 
@@ -749,11 +749,8 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
         
         res.redirect(`/user-dashboard?
             assignmentType=${assignmentType}
-            &daysUntilDue=${daysUntilDue}
             &exactDeadline=${exactDeadline}
             &fileUploads=${fileUploads}
-            &gradeDesired=${gradeDesired}
-            &totalCost=${totalCost.toFixed(2)}
             &email=${email}
             &wellCommentedCode=${wellCommentedCode ? 'Yes' : 'No'}
             &vivaPreparation=${vivaPreparation}
@@ -782,9 +779,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
     const { 
         
         assignmentType, 
-        daysUntilDue, 
         exactDeadline, 
-        gradeDesired, 
         email, 
         additionalDetails, 
         vivaRequired, 
@@ -807,7 +802,8 @@ app.post('/submit', upload.single('file'), async (req, res) => {
     const noOpenSourceBool = noOpenSource === 'on';
     const topProgrammerBool = topProgrammer === 'on';
 
-
+    let daysUntilDue = 4;
+    let gradeDesired = "A";
     let basePrice = 50;
     let urgencyMultiplier = 1;
 
@@ -903,19 +899,17 @@ app.post('/submit', upload.single('file'), async (req, res) => {
                         fileUrl: fileUrl,
                      
                         assignmentType, 
-                        daysUntilDue, 
                         exactDeadline, 
-                        gradeDesired, 
                         email, 
                         additionalDetails, 
                         fileUploads, 
                         vivaPreparation,
                         
+                        totalCost,
                         wellCommentedCode: wellCommentedCodeBool,
                         noOpenSource: noOpenSourceBool,
                         topProgrammer: topProgrammerBool,
                         
-                        totalCost, 
                         webDevelopmentType, 
                         fullStackFramework,
                         programmingLanguage
@@ -941,16 +935,12 @@ app.post('/submit', upload.single('file'), async (req, res) => {
                 <ul style="list-style-type: none; padding: 0;">
             
                     <li><span class="label" style="font-weight: bold;">Assignment Type:</span> ${assignmentType}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Days Until Due:</span> ${daysUntilDue}</li>
-                
+                        
                     <li><span class="label" style="font-weight: bold;">Exact Deadline:</span> ${exactDeadline}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Desired Grade:</span> ${gradeDesired}</li>
                 
                     <li><span class="label" style="font-weight: bold;">Additional Details:</span> ${additionalDetails}</li>
                 
-                    <li><span class="label" style="font-weight: bold;">Total Cost:</span> $${totalCost.toFixed(2)}</li>
+                    <li><span class="label" style="font-weight: bold;">Total Cost:</span> Our team will contact you for the price</li>
                 
                     <li><span class="label" style="font-weight: bold;">Programming Language:</span> ${programmingLanguage || 'N/A'}</li>
                 
@@ -979,12 +969,10 @@ app.post('/submit', upload.single('file'), async (req, res) => {
         await transporter.sendMail(mailOptions);
         
         res.redirect(`/results?
+            totalCost=${totalCost}
             assignmentType=${assignmentType}
-            &daysUntilDue=${daysUntilDue}
             &exactDeadline=${exactDeadline}
             &fileUploads=${fileUploads}
-            &gradeDesired=${gradeDesired}
-            &totalCost=${totalCost.toFixed(2)}
             &email=${email}
             &wellCommentedCode=${wellCommentedCode ? 'Yes' : 'No'}
             &vivaPreparation=${vivaPreparation}
@@ -1048,13 +1036,10 @@ app.get('/results', (req, res) => {
     const { 
         
         assignmentType, 
-        daysUntilDue, 
         exactDeadline, 
-        gradeDesired, 
         email, 
         additionalDetails, 
         fileUploads, 
-        totalCost,
         wellCommentedCode,
         vivaPreparation,
         noOpenSource,
@@ -1062,7 +1047,8 @@ app.get('/results', (req, res) => {
         webDevelopmentType,
         fullStackFramework,
         topProgrammer,
-        fileUrl
+        fileUrl,
+        totalCost
     
     } = req.query;
 
@@ -1071,13 +1057,10 @@ app.get('/results', (req, res) => {
 
     res.render('main/result', { 
         assignmentType, 
-        daysUntilDue, 
         exactDeadline, 
-        gradeDesired, 
         email, 
         additionalDetails, 
         fileUploads, 
-        totalCost: formattedTotalCost,
         wellCommentedCode,
         vivaPreparation,
         noOpenSource,
@@ -1085,7 +1068,8 @@ app.get('/results', (req, res) => {
         webDevelopmentType,
         fullStackFramework,
         topProgrammer,
-        fileUrl
+        fileUrl,
+        formattedTotalCost
     });
 });
 
@@ -1591,3 +1575,4 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
+
