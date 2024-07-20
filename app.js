@@ -1031,6 +1031,50 @@ app.get('/fetch-assignments', async (req, res) => {
 
 
 
+app.get('/assignments/:id', async (req, res) => {
+    try {
+        const assignment = await Assignment.findById(req.params.id);
+        res.render('assignmentDetails', { assignment });
+    } 
+    
+    catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+
+
+
+app.get('/assignment-details', async (req, res) => {
+    const { username, assignmentId } = req.query;
+
+    if (!username || !assignmentId) {
+        return res.status(400).json({ message: 'Username and Assignment ID are required' });
+    }
+
+    try {
+        const foundAssignment = await Assignment.findOne({
+            _id: assignmentId,
+            email: username
+        });
+
+        if (foundAssignment) {
+            res.render('user/assignment-details', { assignment: foundAssignment });
+        } 
+        
+        else {
+            res.status(404).json({ message: 'Assignment not found' });
+        }
+    } 
+    
+    catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+
+
+
 app.get('/results', (req, res) => {
     
     const { 

@@ -7,8 +7,10 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" href="./css/user/user-dashboard.css">
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+    
     <style>
 
         /* Define CSS variables for light and dark modes */
@@ -157,7 +159,6 @@
                <div class="box-container">
                     <!-- Add more boxes as needed -->
                 </div>
-
                 
                 <div class="report-container">
                     <div class="report-header">
@@ -177,7 +178,8 @@
     
     
     <script>
-        
+
+
         // Function to toggle dark mode
         function toggleDarkMode() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -201,8 +203,11 @@
                         const li = document.createElement('li');
                         li.classList.add('order-item');
                         li.innerHTML = `
+                            
                             <div class="order-card">
                                 <div class="order-details">
+                                    
+                                    <p><strong>Task ID:</strong> ${assignment._id}</p>
                                     
                                     <p><strong>Assignment Type:</strong> ${assignment.assignmentType}</p>
                                     
@@ -231,6 +236,19 @@
                                     <p><strong>Top Programmer:</strong> ${assignment.topProgrammer}</p>
 
                                     <p><strong>File URL:</strong> <a href="${assignment.fileUrl}" target="_blank">View File</a></p>
+                                    
+                                    <p><strong>Assignment Link:</strong> <a href="/assignment-details?username=${encodeURIComponent(email)}&assignmentId=${encodeURIComponent(assignment._id)}" target="_blank">View Assignment</a></p>
+                                    
+                                    <br>
+                                    
+                                    <!-- WhatsApp Button -->
+                                    <p style="text-align: left;"><strong>Contact via WhatsApp:</strong></p>
+                                    
+                                    <a id="whatsapp-link" target="_blank" style="text-decoration: none;">
+                                        <button class="whatsapp-button" style="display: flex; align-items: center; padding: 10px; background-color: #25D366; color: white; border: none; border-radius: 5px;align-items: center; cursor: pointer;">
+                                            <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Message me on WhatsApp
+                                        </button>
+                                    </a>
 
                                 </div>
                          
@@ -238,11 +256,37 @@
 
                             </div>
                         `;
+        
                         ordersList.appendChild(li);
-                    });
+          
+                        const assignmentLink = `https://localhost:3000/assignment-details?username=${encodeURIComponent(assignment.username)}&assignmentId=${encodeURIComponent(assignment._id)}`;
+            
 
-                } 
-                
+
+                        
+                        // Construct the WhatsApp Message
+                        const message = `Hi, I have a query about the assignment. Here are the details:\n\n` +
+                        `Task ID: ${assignment._id}\n` +
+                        `Assignment Type: ${assignment.assignmentType}\n` +
+                        `Status: ${assignment.status}\n` +
+                        `Exact Deadline: ${assignment.exactDeadline}\n` +
+                        `Additional Details: ${assignment.additionalDetails}\n` +
+                        `Submitted On: ${new Date(assignment.createdAt).toLocaleString()}\n` +
+                        `Email: ${assignment.email}\n` +
+                        `Well Commented Code: ${assignment.wellCommentedCode}\n` +
+                        `Viva Preparation: ${assignment.vivaPreparation}\n` +
+                        `No Open Source: ${assignment.noOpenSource}\n` +
+                        `Programming Language: ${assignment.programmingLanguage}`;
+                        
+                        // Encode the message
+                        const encodedMessage = encodeURIComponent(message);
+
+                        // Set the WhatsApp link
+                        const whatsappLink = `https://wa.me/+923070282493?text=${encodedMessage}`;
+                        
+                        document.getElementById('whatsapp-link').setAttribute('href', whatsappLink);
+                    });
+                }
                 
                 else {
                     const li = document.createElement('li');
@@ -252,7 +296,7 @@
                 }
             } 
             
-            
+
             catch (error) {
                 console.error('Error fetching assignments:', error.message);
             }
