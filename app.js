@@ -136,6 +136,7 @@ const AssignmentSchema = new mongoose.Schema({
     fileUploads: String,
     totalCost: Number,
     status: { type: String, default: 'Not Started' },
+    payment_status: { type: String, default: 'Not Paid Yet' },
     professionalLevel: { type: Boolean, default: false },
     vivaRequired: { type: Boolean, default: false },
     programmingLanguage: String,
@@ -1613,9 +1614,48 @@ app.post('/admin/update-status/:id', async (req, res) => {
 
 
 
+app.post('/admin/update-payment-status/:id', async (req, res) => {
+    const { id } = req.params;
+    const { payment_status } = req.body;
+
+    try {
+        const assignment = await Assignment.findByIdAndUpdate(id, { payment_status }, { new: true });
+
+        if (payment_status === 'paid') {
+            const mailOptions = {
+                from: 'tk839587@gmail.com',
+                to: assignment.email,
+                subject: 'Payment Notification',
+                text: `Hello,
+
+                Your assignment "${assignment.assignmentType}" has been marked as paid.
+
+                Thank you,
+                Our Team
+                Do Task For Me
+                `
+            };
+
+            await transporter.sendMail(mailOptions);
+
+        }
+
+        res.json({ message: 'Status updated' });
+    } 
+    
+    catch (error) {
+        res.status(500).json({ message: 'Error updating status', error });
+    }
+
+});
+
+
+
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
 
 
 // --------------------- End ---------------------
+

@@ -9,7 +9,6 @@
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
     
     <style>
 
@@ -130,6 +129,14 @@
             color: var(--nav-text-color);
             font-size: 1.2rem;
         }
+        
+        .payment-status.paid {
+            color: green;
+        }
+
+        .payment-status.unpaid {
+            color: red;
+        }
 
     </style>
 
@@ -213,6 +220,12 @@
                                     
                                     <p><strong>Status:</strong> ${assignment.status}</p>
                                     
+                                    <p class="payment-status ${assignment.payment_status === 'paid' ? 'paid' : 'unpaid'}">
+                                    
+                                        <strong>Payment Status:</strong> ${assignment.payment_status}
+                                    
+                                    </p>
+
                                     <p><strong>Exact Deadline:</strong> ${assignment.exactDeadline}</p>
                                     
                                     <p><strong>Additional Details:</strong> ${assignment.additionalDetails}</p>
@@ -238,16 +251,21 @@
                                     <p><strong>File URL:</strong> <a href="${assignment.fileUrl}" target="_blank">View File</a></p>
                                     
                                     <p><strong>Assignment Link:</strong> <a href="/assignment-details?username=${encodeURIComponent(email)}&assignmentId=${encodeURIComponent(assignment._id)}" target="_blank">View Assignment</a></p>
-                                    
+                                                   
                                     <br>
                                     
                                     <!-- WhatsApp Button -->
+                                    
                                     <p style="text-align: left;"><strong>Contact via WhatsApp:</strong></p>
                                     
                                     <a id="whatsapp-link" target="_blank" style="text-decoration: none;">
+                                        
                                         <button class="whatsapp-button" style="display: flex; align-items: center; padding: 10px; background-color: #25D366; color: white; border: none; border-radius: 5px;align-items: center; cursor: pointer;">
+                                            
                                             <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Message me on WhatsApp
+                                        
                                         </button>
+                                    
                                     </a>
 
                                 </div>
@@ -258,13 +276,14 @@
                         `;
         
                         ordersList.appendChild(li);
-          
+                        
                         const assignmentLink = `https://localhost:3000/assignment-details?username=${encodeURIComponent(assignment.username)}&assignmentId=${encodeURIComponent(assignment._id)}`;
-            
-
 
                         
-                        // Construct the WhatsApp Message
+
+
+
+
                         const message = `Hi, I have a query about the assignment. Here are the details:\n\n` +
                         `Task ID: ${assignment._id}\n` +
                         `Assignment Type: ${assignment.assignmentType}\n` +
@@ -295,7 +314,7 @@
                     ordersList.appendChild(li);
                 }
             } 
-            
+
 
             catch (error) {
                 console.error('Error fetching assignments:', error.message);
@@ -341,3 +360,4 @@
 
 </body>
 </html>
+
