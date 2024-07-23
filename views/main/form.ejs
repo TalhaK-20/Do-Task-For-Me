@@ -3,12 +3,14 @@
 <head>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do Task for Me | Form</title>
+    <title>Do Task for Me | Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
     
-    
+
     <style>
         
         body {
@@ -16,15 +18,12 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            height: 10px;
         }
         
         .navbar {
             background-color: #2c3e50;
             padding: 1rem;
             transition: background-color 0.3s ease;
-            position: relative;
-            top: -380px;
         }
         
         .navbar:hover {
@@ -80,8 +79,6 @@
             display: flex;
             justify-content: center;
             transition: background-color 0.3s ease;
-            position: relative;
-            bottom: 116px;
         }
         
         .main-content:hover {
@@ -210,6 +207,7 @@
     
     </style>
 
+
 </head>
 
 <body>
@@ -219,7 +217,7 @@
             <ul class="nav-links">
 
                 <li><a href="#">Home</a></li>
-                <li><a href="#">How We Work</a></li>
+                <li><a href="/work">How We Work</a></li>
                 <li><a href="/team">Our Team</a></li>
                 <li><a href="#">Reviews</a></li>
                 <li><a href="/services">Services</a></li>
@@ -242,34 +240,57 @@
 
                 <div id="loginMessage" style="display:none; color:red;">Please log in or sign up to place the order.</div>
 
-                <div class="form-group">
-                    
-                    
+                <div class="form-group">    
                     <label for="assignmentType">Type of Assignment:</label>
+                    
                     <select id="assignmentType" name="assignmentType" required>
+                    
                         <option value="">Select Assignment Type</option>
-                        <option value="Essay">Essay</option>
-                        <option value="Research Paper">Research Paper</option>
-                        <option value="Project">Project</option>
-                        <option value="Presentation">Presentation</option>
+                    
+                        <option value="English Writing Based Assignments">English Writing Based Assignments</option>
+                    
+                        <option value="Research Paper (Thesis)">Research Paper (Thesis)</option>
+                    
+                        <option value="FYP Based">FYP Based</option>
+                    
+                        <option value="All Types of Presentations">All Types of Presentations</option>
+                    
                         <option value="App Development">App Development</option>
+                    
                         <option value="Game Development">Game Development</option>
+                    
                         <option value="Web Development">Web Development</option>
-                        <option value="Content Writing">Content Writing</option>
+                    
+                        <option value="Content Writing for Any Platform">Content Writing for Any Platform</option>
+                    
                         <option value="SEO">SEO</option>
+                    
                         <option value="Research">Research</option>
-                        <option value="Term Project">Term Project</option>
+                    
+                        <option value="Semester/Term Project">Semester/Term Project</option>
+                    
                         <option value="Professional Web App">Professional Web App</option>
+                    
                         <option value="Technical Report">Technical Report</option>
+                    
                         <option value="Lab Report">Lab Report</option>
+                    
                         <option value="Case Study">Case Study</option>
-                        <option value="Thesis">Thesis</option>
-                        <option value="Dissertation">Dissertation</option>
-                        <option value="Capstone Project">Capstone Project</option>
+                    
+                        <option value="Mathematics/Physics Based Assignments">Mathematics/Physics Based Assignments</option>
+                    
+                        <option value="Programming Tutoring">Programming Tutoring</option>
+                    
+                        <option value="All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)">All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)</option>
+                    
                         <option value="Article">Article</option>
+                    
                         <option value="Review Paper">Review Paper</option>
+                    
                         <option value="Creative Writing">Creative Writing</option>
+                    
                     </select>
+                
                 </div>
 
                 
@@ -308,9 +329,12 @@
                     </div>
 
                     
-                    <div class="form-group">
-                        <!-- <label for="studentEmail">Your Email:</label>
-                        <input type="email" id="studentEmail" name="email" placeholder="Enter your email" required> -->
+                    <div class="form-group" style="position: relative;
+                    right: 152px;
+                    margin: revert-layer;">
+                        <label for="whatsapp" style="text-align: center;
+                        margin-top: 6px;">WhatsApp Number (Optional):</label>
+                        <input id="whatsapp" type="text" name="whatsapp"/>
                     </div>
                 </div>
 
@@ -327,9 +351,9 @@
                             <label for="webDevelopmentType">Web Development Type:</label>
                             <select id="webDevelopmentType" name="webDevelopmentType">
                                 <option value="">Select Type</option>
-                                <option value="Frontend">Frontend</option>
-                                <option value="Backend">Backend</option>
-                                <option value="Full Stack">Full Stack</option>
+                                <option value="Frontend">Front-End</option>
+                                <option value="Backend">Back-End</option>
+                                <option value="Full Stack">Full Stack Development</option>
                             </select>
                         </div>
 
@@ -339,11 +363,11 @@
                                 <label for="fullStackFramework">Preferred Framework:</label>
                                 <select id="fullStackFramework" name="fullStackFramework">
                                     <option value="">Select Framework</option>
-                                    <option value="MERN">MERN</option>
-                                    <option value="MEAN">MEAN</option>
+                                    <option value="MERN">MERN Stack</option>
+                                    <option value="MEAN">MEAN Stack</option>
                                     <option value="Flask">Flask</option>
                                     <option value="Django">Django</option>
-                                    <option value="Basic EJS">Basic EJS</option>
+                                    <option value="Basic EJS">EJS Based</option>
                                 </select>
                             </div>
                         </div>
@@ -431,8 +455,75 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('studentEmail');
+            const form = document.querySelector('form');
+
+            emailInput.addEventListener('input', function() {
+                this.value = this.value.toLowerCase();
+            });
+
+            form.addEventListener('submit', function(event) {
+                emailInput.value = emailInput.value.toLowerCase();
+            });
+        });
+
+    </script>
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+
+    
+
+    <script>
+        const input = document.querySelector("#whatsapp");
+        window.intlTelInput(input, {
+            initialCountry: "auto",
+            
+            geoIpLookup: function(success, failure) {
+                fetch('https://ipinfo.io?token=<YOUR_TOKEN>', { headers: { 'Accept': 'application/json' } })
+            
+                    .then((resp) => resp.json())
+            
+                    .then((resp) => {
+                        const countryCode = (resp && resp.country) ? resp.country : "us";
+                        success(countryCode);
+                    })
+                
+                    .catch(() => {
+                        success("us");
+                    });
+            
+            },
+
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        
+        });
+
+    </script>
+
+
+
+
     <script>
 
 
@@ -501,23 +592,23 @@
             let priceInfo = '';
             switch(size) {
                 case 'extraSmall':
-                    priceInfo = 'No increase in price.';
+                    priceInfo = 'No increase in price. ( 1 Page Solution )';
                     break;
                 
                 case 'small':
-                    priceInfo = 'No increase in price.';
+                    priceInfo = 'No increase in price. ( Upto 3 Pages Solution )';
                     break;
                 
                 case 'medium':
-                    priceInfo = '5% increase in price.';
+                    priceInfo = '5% increase in price. ( 3-5 Pages Solution )';
                     break;
                 
                 case 'large':
-                    priceInfo = '10% increase in price.';
+                    priceInfo = '10% increase in price. ( 5-10 Pages Solution )';
                     break;
                 
                 case 'professional':
-                    priceInfo = '15% increase in price.';
+                    priceInfo = '15% increase in price. ( > 10 Pages Solution )';
                     break;
             }
 
@@ -565,6 +656,8 @@
                     // $('#gradeDesired').val(formData.gradeDesired || '');
                     
                     $('#studentEmail').val(formData.email || '');
+
+                    $('#whatsapp').val(formData.whatsapp || '');
                     
                     $('#additionalDetails').val(formData.additionalDetails || '');
                     
@@ -595,5 +688,6 @@
     });
 
     </script>
+
 </body>
 </html>

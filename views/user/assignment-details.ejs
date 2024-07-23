@@ -193,7 +193,9 @@
             <p><strong>Submitted On:</strong> <%= new Date(assignment.createdAt).toLocaleString() %></p>
         
             <p><strong>Email:</strong> <%= assignment.email %></p>
-        
+            
+            <p><strong>WhatsApp Number:</strong> <%= assignment.whatsapp %></p>
+            
             <p><strong>Well Commented Code:</strong> <%= assignment.wellCommentedCode %></p>
         
             <p><strong>Viva Preparation:</strong> <%= assignment.vivaPreparation %></p>
@@ -239,7 +241,7 @@
     
         });
 
-    
+
 
 
 
@@ -253,6 +255,7 @@
                 additionalDetails: '<%= assignment.additionalDetails %>',
                 createdAt: '<%= assignment.createdAt %>',
                 email: '<%= assignment.email %>',
+                whatsapp: '<%= assignment.whatsapp %>',
                 wellCommentedCode: '<%= assignment.wellCommentedCode %>',
                 vivaPreparation: '<%= assignment.vivaPreparation %>',
                 noOpenSource: '<%= assignment.noOpenSource %>',
@@ -281,3 +284,4 @@
 
 </body>
 </html>
+

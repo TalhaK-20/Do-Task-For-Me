@@ -132,6 +132,7 @@ const AssignmentSchema = new mongoose.Schema({
     exactDeadline: Date,
     gradeDesired: String,
     email: String,
+    whatsapp: String,
     additionalDetails: String,
     fileUploads: String,
     totalCost: Number,
@@ -562,6 +563,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
         assignmentType, 
         exactDeadline, 
         email, 
+        whatsapp, 
         additionalDetails, 
         vivaRequired, 
         fileUploads, 
@@ -682,6 +684,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
                             assignmentType, 
                             exactDeadline, 
                             email, 
+                            whatsapp, 
                             additionalDetails, 
                             fileUploads, 
                             vivaPreparation,
@@ -753,6 +756,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
             &exactDeadline=${exactDeadline}
             &fileUploads=${fileUploads}
             &email=${email}
+            &whatsapp=${whatsapp}
             &wellCommentedCode=${wellCommentedCode ? 'Yes' : 'No'}
             &vivaPreparation=${vivaPreparation}
             &noOpenSource=${noOpenSource}
@@ -782,6 +786,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
         assignmentType, 
         exactDeadline, 
         email, 
+        whatsapp, 
         additionalDetails, 
         vivaRequired, 
         fileUploads, 
@@ -902,6 +907,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
                         assignmentType, 
                         exactDeadline, 
                         email, 
+                        whatsapp, 
                         additionalDetails, 
                         fileUploads, 
                         vivaPreparation,
@@ -975,6 +981,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             &exactDeadline=${exactDeadline}
             &fileUploads=${fileUploads}
             &email=${email}
+            &whatsapp=${whatsapp}
             &wellCommentedCode=${wellCommentedCode ? 'Yes' : 'No'}
             &vivaPreparation=${vivaPreparation}
             &noOpenSource=${noOpenSource}
@@ -1083,6 +1090,7 @@ app.get('/results', (req, res) => {
         assignmentType, 
         exactDeadline, 
         email, 
+        whatsapp, 
         additionalDetails, 
         fileUploads, 
         wellCommentedCode,
@@ -1104,6 +1112,7 @@ app.get('/results', (req, res) => {
         assignmentType, 
         exactDeadline, 
         email, 
+        whatsapp, 
         additionalDetails, 
         fileUploads, 
         wellCommentedCode,
@@ -1658,4 +1667,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-

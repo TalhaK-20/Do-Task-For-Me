@@ -55,6 +55,7 @@
         <p>Type of Assignment: <%= assignmentType %></p>
         <p>Exact Deadline: <%= exactDeadline %></p>
         <p>Email: <%= email %></p>
+        <p>WhatsApp Number: <%= whatsapp %></p>
         <p>Well Commented Code: <%= wellCommentedCode %></p>
         <p>Viva Preparation: <%= vivaPreparation %></p>
         <p>No Open Source: <%= noOpenSource %></p>
@@ -78,8 +79,9 @@
         </div>
     </div>
 
+
     <script>
-        // Function to simulate progress bar animation
+    
         function move() {
             var elem = document.getElementById("progressBar");
             var width = 1;
@@ -97,27 +99,27 @@
             }
         }
 
-        // Show the message box for 3 seconds, then display login/sign up button
+
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('overlay');
-            overlay.style.display = 'flex'; // Show overlay
+            overlay.style.display = 'flex';
 
-            // Simulate progress bar animation
             move();
 
             setTimeout(function() {
-                overlay.style.display = 'none'; // Hide overlay after 3 seconds
-                document.getElementById('progressContainer').style.display = 'block'; // Show progress bar
+                overlay.style.display = 'none';
+                document.getElementById('progressContainer').style.display = 'block';
                 
-                // Redirect to login/sign up page after showing the message
                 setTimeout(function() {
-                    window.location.href = '/login-user'; // Adjust the URL as per your application's routes
-                }, 2000); // Redirect after 2 seconds of progress animation
-            }, 3000); // Adjust timing as needed (in milliseconds)
+                    window.location.href = '/login-user';
+
+                }, 2000);
+
+            }, 3000);
+
         });
         
     </script>
 
 </body>
 </html>
-
