@@ -521,6 +521,7 @@ const drive = google.drive({ version: 'v3', auth });
 
 // --------------------- Routes ---------------------
 
+
 app.get('/', (req, res) => {
     res.render("main/landing-page");
 });
@@ -1661,9 +1662,52 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
 
 
 
+app.get("/search-form", (req, res) => {
+    res.render("admin/search-form")
+})
+
+
+
+
+app.get("/search", async (req, res) => {
+    const { searchEmail, taskID } = req.query;
+  
+    try{
+      const user_email = await Assignment.find({ email: { $regex: searchEmail, $options: 'i' } });
+
+      const task_id = await Assignment.find({ id: { $eq: taskID }, Crime_Type: { $regex: taskID, $options: 'i' } });
+
+      const results = [
+        ...user_email,
+        ...task_id
+      ];
+  
+      res.render("admin/search-result", { results });
+
+    } 
+    
+    catch(error){
+      console.error(error);
+      res.status(500).send("An error occurred while searching.");
+    }
+});
+
+
+
+
+app.get("/assignment/:id", async (req, res) => {
+    const { id } = req.params;
+    const assignment = await Assignment.findById(id);
+    res.render("admin/assignment-details", { assignment });
+});
+  
+
+
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
 
 
 // --------------------- End ---------------------
+
