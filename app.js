@@ -10,6 +10,7 @@ const MongoStore = require('connect-mongo');
 const { GridFSBucket } = require('mongodb');
 const multer = require('multer');
 const fs = require('fs');
+const ejs = require('ejs');
 const { google } = require('googleapis');
 
 const { isAuthenticated, isAdminAuthenticated } = require('./middlewares/session.js');
@@ -928,52 +929,42 @@ app.post('/submit', upload.single('file'), async (req, res) => {
         
         fs.unlinkSync(filePath);
 
+        function generateEmailHtml() {
+            const templatePath = path.join(__dirname, 'views', 'main',  'email-templates', 'order-details.ejs');
+            
+            const template = fs.readFileSync(templatePath, 'utf-8');
+            
+            return ejs.render(template, {
+                assignmentType, 
+                exactDeadline, 
+                email, 
+                whatsapp, 
+                additionalDetails, 
+                vivaRequired, 
+                fileUploads,
+                fileUrl, 
+                professionalLevel, 
+                programmingLanguage, 
+                webDevelopmentType, 
+                fullStackFramework, 
+                topProgrammer, 
+                wellCommentedCode, 
+                noOpenSource, 
+                vivaPreparation, 
+                taskSize
+            });
+        }
+
+
+        const emailHtml = generateEmailHtml();
+
         const mailOptions = {
             from: 'tk839587@gmail.com',
             to: email,
             subject: 'Assignment Submission Confirmation',
-            html: `
-                <p>Thank you for submitting your assignment request. Below are the details:</p>
-                <body style="font-family: Arial, sans-serif; line-height: 1.6;">
-                
-                <div class="container" style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
-                
-                <h2 style="text-align: center; background: linear-gradient(to right, navy, white); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; margin-bottom: 20px;">Task Details</h2>
-                
-                <ul style="list-style-type: none; padding: 0;">
-            
-                    <li><span class="label" style="font-weight: bold;">Assignment Type:</span> ${assignmentType}</li>
-                        
-                    <li><span class="label" style="font-weight: bold;">Exact Deadline:</span> ${exactDeadline}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Additional Details:</span> ${additionalDetails}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Total Cost:</span> Our team will contact you for the price</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Programming Language:</span> ${programmingLanguage || 'N/A'}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Web Development Type:</span> ${webDevelopmentType || 'N/A'}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Full Stack Framework:</span> ${fullStackFramework || 'N/A'}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Top Programmer:</span> ${topProgrammer ? 'Yes' : 'No'}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Well-Commented Code:</span> ${wellCommentedCode ? 'Yes' : 'No'}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">No Open Source:</span> ${noOpenSource ? 'Yes' : 'No'}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">Viva Preparation:</span> ${vivaPreparation}</li>
-                
-                    <li><span class="label" style="font-weight: bold;">File Url:</span> ${fileUrl}</li>
-            
-                </ul>
-            </div>
-        </body>
-                <p>We will contact you shortly regarding your assignment.</p>
-            `
-        };
-
-
+            html: emailHtml
+        }; 
+        
         await transporter.sendMail(mailOptions);
         
         res.redirect(`/results?
@@ -1710,4 +1701,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-
