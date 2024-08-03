@@ -9,7 +9,7 @@
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
-    
+
 
     <style>
         
@@ -204,7 +204,12 @@
             background-color: #1e8449;
             transform: translateY(-2px);
         }
-    
+        
+        #taskSizeDetails {
+            white-space: pre-line; /* Preserves line breaks */
+        }
+
+
     </style>
 
 
@@ -263,8 +268,6 @@
                     
                         <option value="Content Writing for Any Platform">Content Writing for Any Platform</option>
                     
-                        <option value="SEO">SEO</option>
-                    
                         <option value="Research">Research</option>
                     
                         <option value="Semester/Term Project">Semester/Term Project</option>
@@ -279,7 +282,7 @@
                     
                         <option value="Mathematics/Physics Based Assignments">Mathematics/Physics Based Assignments</option>
                     
-                        <option value="Programming Tutoring">Programming Tutoring</option>
+                        <option value="Programming Tutoring">Programming Tutoring (If you have already your task/assignment/project)</option>
                     
                         <option value="All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)">All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)</option>
                     
@@ -296,6 +299,7 @@
                 
                 <div class="form-group-row" style="position: relative;
                 left: -96px;">
+
                     <div class="form-group">
                         <!-- <label for="daysUntilDue">Days Until Due:</label>
                         <input type="number" id="daysUntilDue" name="daysUntilDue" required min="1"> -->
@@ -316,6 +320,7 @@
 
                 
                 <div class="form-group-row">
+                    
                     <div class="form-group">
                         <!-- <label for="gradeDesired">Desired Grade:</label>
                         <select id="gradeDesired" name="gradeDesired" required>
@@ -407,7 +412,7 @@
                 
                 
                 <div class="form-group">
-                    <label>Task Size:</label>
+                    <label style="position: relative; top: 12px;">Task Size:</label>
                
                     <div class="button-group" id="taskSizeButtons">
                         <button type="button" data-size="extraSmall">Extra Small</button>
@@ -445,7 +450,12 @@
                         </select>
                     </div>
                 </div>
-              
+
+
+                <div id="priceDetails">
+                    <p id="priceMessage">Current Price: $<span id="currentPrice"></span></p>
+                </div>
+                
               
                 <input type="file" name="file" accept="*/*" required>
            
@@ -526,7 +536,6 @@
 
     <script>
 
-
         $(document).ready(function() {
             const assignmentTypeSelect = $('#assignmentType');
             const programmingDetails = $('#programmingDetails');
@@ -537,52 +546,59 @@
             const taskSizeDetails = $('#taskSizeDetails');
             const taskSizeButtons = $('#taskSizeButtons button');
             const taskSizeInput = $('#taskSize');
-
+            const daysUntilDueInput = $('#daysUntilDue');
+            const gradeDesiredInput = $('#gradeDesired');
+            const professionalLevelCheckbox = $('#professionalLevel');
+            const vivaRequiredCheckbox = $('#vivaRequired');
+            const topProgrammerCheckbox = $('#topProgrammer');
+            const vivaPreparationRadio = $('#vivaPreparation');
+            const totalCostDisplay = $('#totalCost');
+            const priceMessage = $('#priceMessage');
+            const currentPriceSpan = $('#currentPrice');
 
             function showElement(element) {
                 element.removeClass('hidden').addClass('show');
             }
-
 
             function hideElement(element) {
                 element.removeClass('show').addClass('hidden');
             }
 
 
-            assignmentTypeSelect.on('change', function() {
-                const selectedValue = $(this).val();
+        assignmentTypeSelect.on('change', function() {
+            const selectedValue = $(this).val();
     
-                if (['App Development', 'Game Development', 'Web Development'].includes(selectedValue)) {
-                    showElement(programmingDetails);
-                } 
-                
-                else {
-                    hideElement(programmingDetails);
-                    hideElement(webDevelopmentDetails);
-                    hideElement(fullStackDetails);
-                }
-
-                if (selectedValue === 'Web Development') {
-                    showElement(webDevelopmentDetails);
-                } 
-                
-                else {
-                    hideElement(webDevelopmentDetails);
-                }
-            });
-
-
-            $('#webDevelopmentType').on('change', function() {
-                if ($(this).val() === 'Full Stack') {
-                    showElement(fullStackDetails);
-                } 
-                
-                else {
-                    hideElement(fullStackDetails);
-                }
-            });
-
+            if (['App Development', 'Game Development', 'Web Development'].includes(selectedValue)) {
+                showElement(programmingDetails);
+            } 
             
+            else {
+                hideElement(programmingDetails);
+                hideElement(webDevelopmentDetails);
+                hideElement(fullStackDetails);
+            }
+
+            if (selectedValue === 'Web Development') {
+                showElement(webDevelopmentDetails);
+            } 
+            
+            else {
+                hideElement(webDevelopmentDetails);
+            }
+        });
+
+
+        $('#webDevelopmentType').on('change', function() {
+            if ($(this).val() === 'Full Stack') {
+                showElement(fullStackDetails);
+            } 
+            
+            else {
+                hideElement(fullStackDetails);
+            }
+        });
+
+
         taskSizeButtons.on('click', function() {
             taskSizeButtons.removeClass('active');
             $(this).addClass('active');
@@ -591,56 +607,126 @@
 
             let priceInfo = '';
             switch(size) {
+                
                 case 'extraSmall':
-                    priceInfo = 'No increase in price. ( 1 Page Solution )';
+                    priceInfo = '<b> Up to 3 short practice problems </b> <br> <br>✔️ 3 functions/outputs <br>✔️ Class (OOP) with 1-3 simple methods <br>✔️ Set of short practice tasks <br> <br> <b>Possible deliverables </b> <br> <br>☑️ Source code <br>☑️ Screenshots of outputs <br>☑️ Short answers to questions <br>';
                     break;
+                
                 
                 case 'small':
-                    priceInfo = 'No increase in price. ( Upto 3 Pages Solution )';
+                    priceInfo = '<b> Up to 7 short practice problems, a simple program with up to 7 functions </b> <br> <br>✔️ Small user interface <br>✔️ Data visualization with 3-4 plots <br>✔️ Set of short practice tasks <br> <br> <b>Possible deliverables </b> <br> <br>☑️ Source code <br>☑️ Screenshots of outputs <br>☑️ Short answers to questions <br>';
                     break;
+                
                 
                 case 'medium':
-                    priceInfo = '5% increase in price. ( 3-5 Pages Solution )';
+                    priceInfo = '<b> Up to 12 practice problems, a small lab report, well-defined project or a landing page </b> <br> <br>✔️ Data visualization up to 7 plots <br>✔️ Small lab report <br>✔️ Compiler prototype for a simple language <br>✔️ Database with up to 10 tables <br>✔️ Simple console game <br>✔️ Simple algorithm for 1 scenario <br>✔️ simple model converted from a drawing <br>✔️ Data analysis project on 1 dataset <br> <br> <b>Possible deliverables </b> <br> <br>☑️ Source code <br>☑️ Screenshots of outputs <br>☑️ Detailed Report <br>';
                     break;
+                
                 
                 case 'large':
-                    priceInfo = '10% increase in price. ( 5-10 Pages Solution )';
+                    priceInfo = '<b> Large programming tasks or projects, extensive lab report </b> <br> <br>✔️ Extensive lab report <br>✔️ Simple game with UI <br>✔️ Web-based product with 1-2 scenarios <br>✔️ Application with 1-2 scenario <br>✔️ API <br>✔️ Responsive website of 2-4 pages <br>✔️ Model development from scratch <br>✔️ Data analysis project on 1 dataset <br>✔️ Data analysis project for a business problem based on 2-3 datasets <br> <br> <b>Possible deliverables </b> <br> <br>☑️ Source code <br>☑️ Screenshots of outputs <br>☑️ Detailed Report <br>☑️ Documentation <br>☑️ Presentation <br>';
                     break;
                 
+                
                 case 'professional':
-                    priceInfo = '15% increase in price. ( > 10 Pages Solution )';
+                    priceInfo = '<b> Large programming tasks or projects, extensive lab report </b> <br> <br>✔️ Extensive lab report <br>✔️ Meduim Based game with UI <br>✔️ Web-based product with 1-2 scenarios <br>✔️ Application with 1-2 scenario <br>✔️ API <br>✔️ Responsive website of 4-8 pages <br>✔️ Model development from scratch <br>✔️ Data analysis project on 2-4 datasets <br>✔️ Data analysis project for a business problem based on 4-6 datasets <br> <br> <b>Possible deliverables </b> <br> <br>☑️ Source code <br>☑️ Screenshots of outputs <br>☑️ Detailed Report <br>☑️ Documentation <br>☑️ Presentation <br>';
                     break;
             }
 
-            $('#taskSizeDetails').text(priceInfo).fadeIn();
-        
+
+            $('#taskSizeDetails').html(priceInfo).fadeIn();
+            calculateTotalCost(); // Recalculate cost when task size changes
         });
 
 
-            vivaPreparationSelect.on('change', function() {
-                if ($(this).val() === 'yes') {
-                    showElement(vivaTiming);
-                }
-
-                else {
-                    hideElement(vivaTiming);
-                }
-            });
-
-
-            $('#assignmentForm').on('submit', function(e) {
-                sessionStorage.removeItem('formData');
-            });
+        vivaPreparationSelect.on('change', function() {
+            if ($(this).val() === 'yes') {
+                showElement(vivaTiming);
+            } 
+            
+            else {
+                hideElement(vivaTiming);
+            }
+            
+            calculateTotalCost(); // Recalculate cost when viva preparation changes
+        });
 
 
-            document.getElementById('#assignmentForm').addEventListener('submit', function(e) {
+        function calculateTotalCost() {
+            const daysUntilDue = parseInt(daysUntilDueInput.val()) || 0;
+            const gradeDesired = gradeDesiredInput.val();
+            const basePrice = 30; // Base price for calculation
+
+            // Urgency Multiplier
+            let urgencyMultiplier = 1;
+            if (daysUntilDue <= 3) {
+                urgencyMultiplier = 2;
+            } 
+            
+            else if (daysUntilDue <= 7) {
+                urgencyMultiplier = 1.5;
+            }
+
+            // Grade Multiplier
+            let gradeMultiplier = 1;
+            if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'a') {
+                gradeMultiplier = 1.5;
+            } 
+            
+            else if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'b') {
+                gradeMultiplier = 1.2;
+            }
+
+            // Additional Costs
+            const professionalLevel = professionalLevelCheckbox.is(':checked');
+            const vivaRequired = vivaRequiredCheckbox.is(':checked');
+            const topProgrammer = topProgrammerCheckbox.is(':checked');
+            const vivaPreparation = vivaPreparationRadio.val();
+
+            const professionalLevelCost = professionalLevel ? basePrice * 0.3 : 0;
+            const vivaCost = vivaRequired ? basePrice * 0.2 : 0;
+            const topProgrammerCost = topProgrammer ? basePrice * 0.1 : 0;
+            const vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 0.60 : 0;
+
+            // Task Size Multipliers
+            const taskSize = taskSizeInput.val();
+            let taskSizeMultiplier = 1;
+            
+            switch (taskSize) {
+                
+                case 'extraSmall': taskSizeMultiplier = 0.2; break;
+                
+                case 'small': taskSizeMultiplier = 0.5; break;
+                
+                case 'medium': taskSizeMultiplier = 1.5; break;
+                
+                case 'large': taskSizeMultiplier = 2; break;
+                
+                case 'professional': taskSizeMultiplier = 3; break;
+            }
+
+
+            // Total Cost Calculation
+            const totalCost = basePrice * urgencyMultiplier * gradeMultiplier * taskSizeMultiplier + professionalLevelCost + vivaCost + topProgrammerCost + vivaPreparationCost;
+
+            currentPriceSpan.text(totalCost.toFixed(2));
+            priceMessage.fadeIn(); // Show price details to user
+        }
+
+
+        // Initial calculation on page load
+        calculateTotalCost();
+
+
+        $('#assignmentForm').on('submit', function(e) {
             sessionStorage.removeItem('formData');
-             });
+            calculateTotalCost(); // Calculate total cost before form submission
+        });
 
-        
-            // Prefill the form with data from sessionStorage if available
-            window.onload = function() {
-            const formDataString = sessionStorage.getItem('formData');
+
+        // Prefill the form with data from sessionStorage if available
+        window.onload = function() {
+        const formDataString = sessionStorage.getItem('formData');
             
             if (formDataString) {
                 
