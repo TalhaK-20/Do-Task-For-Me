@@ -999,15 +999,12 @@ app.post('/submit', upload.single('file'), async (req, res) => {
 app.get('/fetch-assignments', async (req, res) => {
 
     try {
-        // Extract email from query parameters
         const email = req.query.email;
 
-        // Check if the email is present and is a string
         if (typeof email !== 'string') {
             return res.status(400).send('Invalid email format');
         }
 
-        // Find the user based on email
         const foundUser = await User.findOne({ email });
 
         if (!foundUser) {
@@ -1016,7 +1013,6 @@ app.get('/fetch-assignments', async (req, res) => {
 
         console.log(`User found: ${foundUser}`);
 
-        // Find assignments specific to the user's email
         const assignments = await Assignment.find({ email });
 
         res.json(assignments);
@@ -1031,7 +1027,45 @@ app.get('/fetch-assignments', async (req, res) => {
 
 
 
-app.get('/assignments/:id', async (req, res) => {
+app.get('/fetch-users', async (req, res) => {
+    
+    try {
+        const users = await User.find({});
+
+        const usersWithAssignments = await Promise.all(users.map(async (user) => {
+            const assignments = await Assignment.find({ email: user.email });
+
+            const whatsapp = assignments.length > 0 ? assignments[0].whatsapp : 'N/A';
+
+            return {
+                ...user._doc,
+                whatsapp,
+                totalAssignments: assignments.length // Count of assignments
+            };
+
+        }));
+
+        const sortBy = req.query.sortBy || 'totalAssignments';
+
+        const sortedUsers = usersWithAssignments.sort((a, b) => b[sortBy] - a[sortBy]);
+        
+        res.render('admin/fetch-all-users', { 
+            users: sortedUsers,
+            sortBy: sortBy
+        });
+
+    } 
+    
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+app.get('/assignments/:id', async (req, res) => { 
     try {
         const assignment = await Assignment.findById(req.params.id);
         res.render('assignmentDetails', { assignment });

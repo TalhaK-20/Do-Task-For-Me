@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | All Users</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
+        
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .filter-form {
+            margin-bottom: 20px;
+        }
+        .filter-form select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>All Users</h1>
+        
+        <form class="filter-form" method="get" action="/fetch-users">
+            <label for="sortBy">Sort by:</label>
+            
+            <select id="sortBy" name="sortBy" onchange="this.form.submit()">
+                
+                <option value="totalAssignments" <%= (sortBy === 'totalAssignments') ? 'selected' : '' %>>Maximum Orders</option>
+                
+                <option value="dateJoined" <%= (sortBy === 'dateJoined') ? 'selected' : '' %>>Default</option>
+            
+            </select>
+        </form>
+        
+        
+        
+        
+        
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Serial No.</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>WhatsApp Number</th>
+                    <th>Total Assignments Ordered</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+        
+                <% users.forEach((user, index) => { %>
+       
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.whatsapp || 'N/A' %></td>
+                        <td><%= user.totalAssignments %></td>
+                    </tr>
+        
+                <% }) %>
+    
+            </tbody>
+    
+        </table>
+    
+    </div>
+
+</body>
+
+</html>
