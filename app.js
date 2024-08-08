@@ -128,7 +128,9 @@ const AssignmentSchema = new mongoose.Schema({
     mimeType: String,
     googleDriveId: String,
     fileUrl: String,
+    taskSubmissionUrl: String,
     assignmentType: String,
+    developer: String,
     daysUntilDue: Number,
     exactDeadline: Date,
     gradeDesired: String,
@@ -1027,45 +1029,8 @@ app.get('/fetch-assignments', async (req, res) => {
 
 
 
-app.get('/fetch-users', async (req, res) => {
-    
-    try {
-        const users = await User.find({});
-
-        const usersWithAssignments = await Promise.all(users.map(async (user) => {
-            const assignments = await Assignment.find({ email: user.email });
-
-            const whatsapp = assignments.length > 0 ? assignments[0].whatsapp : 'N/A';
-
-            return {
-                ...user._doc,
-                whatsapp,
-                totalAssignments: assignments.length // Count of assignments
-            };
-
-        }));
-
-        const sortBy = req.query.sortBy || 'totalAssignments';
-
-        const sortedUsers = usersWithAssignments.sort((a, b) => b[sortBy] - a[sortBy]);
-        
-        res.render('admin/fetch-all-users', { 
-            users: sortedUsers,
-            sortBy: sortBy
-        });
-
-    } 
-    
-    catch (error) {
-        console.error(error);
-        res.status(500).send('Server Error');
-    }
-});
-
-
-
-
 app.get('/assignments/:id', async (req, res) => { 
+    
     try {
         const assignment = await Assignment.findById(req.params.id);
         res.render('assignmentDetails', { assignment });
@@ -1074,6 +1039,7 @@ app.get('/assignments/:id', async (req, res) => {
     catch (err) {
     res.status(500).send('Server Error');
   }
+
 });
 
 
@@ -1618,7 +1584,8 @@ app.post('/admin/update-status/:id', async (req, res) => {
     try {
         const assignment = await Assignment.findByIdAndUpdate(id, { status }, { new: true });
 
-        if (status === 'started') {
+        if (status === 'Started') {
+   
             const mailOptions = {
                 from: 'tk839587@gmail.com',
                 to: assignment.email,
@@ -1630,6 +1597,47 @@ app.post('/admin/update-status/:id', async (req, res) => {
                 Thank you,
                 Our Team
                 Do Task For Me
+   
+                `
+            };
+
+            await transporter.sendMail(mailOptions);
+
+        }
+
+        res.json({ message: 'Status updated' });
+    } 
+    
+    catch (error) {
+        res.status(500).json({ message: 'Error updating status', error });
+    }
+
+});
+
+
+
+
+app.post('/admin/update-status/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        const assignment = await Assignment.findByIdAndUpdate(id, { status }, { new: true });
+
+        if (status === 'Completed') {
+
+            const mailOptions = {
+                from: 'tk839587@gmail.com',
+                to: assignment.email,
+                subject: 'Work Completion Notification',
+                text: `Hello,
+
+                Your assignment "${assignment.assignmentType}" has been marked as completed.
+
+                Thank you,
+                Our Team
+                Do Task For Me
+
                 `
             };
 
@@ -1656,7 +1664,7 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
     try {
         const assignment = await Assignment.findByIdAndUpdate(id, { payment_status }, { new: true });
 
-        if (payment_status === 'paid') {
+        if (payment_status === 'Paid') {
             const mailOptions = {
                 from: 'tk839587@gmail.com',
                 to: assignment.email,
@@ -1668,6 +1676,7 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
                 Thank you,
                 Our Team
                 Do Task For Me
+     
                 `
             };
 
@@ -1682,6 +1691,326 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
         res.status(500).json({ message: 'Error updating status', error });
     }
 
+});
+
+
+
+
+app.get('/admin-assignment/:id', async (req, res) => {
+    
+    const { id } = req.params;
+    const assignment = await Assignment.findById(id);
+    res.render("admin/assignment-details", { assignment });
+
+});
+
+
+
+
+app.get('/fetch-users', async (req, res) => {
+    
+    try {
+        const users = await User.find({});
+
+        const usersWithAssignments = await Promise.all(users.map(async (user) => {
+            const assignments = await Assignment.find({ email: user.email });
+
+            const whatsapp = assignments.length > 0 ? assignments[0].whatsapp : 'N/A';
+
+            return {
+                ...user._doc,
+                whatsapp,
+                totalAssignments: assignments.length // Count of assignments
+            };
+
+        }));
+
+        const sortBy = req.query.sortBy || 'totalAssignments';
+
+        const sortedUsers = usersWithAssignments.sort((a, b) => b[sortBy] - a[sortBy]);
+        
+        res.render('admin/fetch-all-users', { 
+            users: sortedUsers,
+            sortBy: sortBy
+        });
+
+    } 
+    
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+app.get('/fetch-all-assignments', async (req, res) => {
+
+    try {
+        let assignments = await Assignment.find({});
+
+        const statusFilter = req.query['status-filter'] || 'all';
+
+        if (statusFilter !== 'all') {
+
+            switch (statusFilter) {
+
+                case 'not-started':
+                    assignments = assignments.filter(assignment => assignment.status === 'Not Started');
+                    break;
+
+                case 'Paid':
+                    assignments = assignments.filter(assignment => assignment.payment_status === 'Paid');
+                    break;
+                
+                case 'completed':
+                    assignments = assignments.filter(assignment => assignment.status === 'Completed');
+                    break;
+                
+                case 'in-progress':
+                    assignments = assignments.filter(assignment => assignment.status === 'Started');
+                    break;
+                
+                default:
+                    assignments = [];
+            }
+        }
+
+        res.render('admin/fetch-assignments', { 
+            assignments: assignments,
+            statusFilter: statusFilter
+        });
+
+    } 
+    
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+app.post('/admin/update-developer/:assignmentId', async (req, res) => {
+    
+    try {
+        const { assignmentId } = req.params;
+        const { developer } = req.body;
+
+        const updatedAssignment = await Assignment.findByIdAndUpdate(
+    
+            assignmentId,
+            { developer },
+            { new: true }
+    
+        );
+
+        if (updatedAssignment) {
+            res.json({ message: 'Developer updated' });
+        } 
+        
+        else {
+            res.status(404).json({ message: 'Assignment not found' });
+        }
+    } 
+    
+    catch (error) {
+        console.error('Error updating developer:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+
+
+app.get('/assignment/:id', async (req, res) => {
+    
+    try {
+        const assignment = await Assignment.findById(req.params.id);
+        
+        if (!assignment) {
+            return res.status(404).send('Assignment not found');
+        }
+        
+        res.render('admin/admin-dashboard', { assignment });
+    } 
+    
+    catch (error) {
+        console.error('Error fetching assignment:', error);
+        res.status(500).send('Server error');
+    }
+});
+
+
+
+
+app.post('/admin/completed-work/submission', upload.single('file'), async (req, res) => {
+    
+    const { assignmentId } = req.body;
+    const filePath = path.join(__dirname, 'uploads', req.file.filename);
+    const mimeType = req.file.mimetype;
+
+    try {
+        
+        const assignment = await Assignment.findById(assignmentId);
+        
+        if (!assignment) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        const response = await drive.files.create({
+            requestBody: {
+                name: req.file.originalname,
+                mimeType: mimeType,
+            },
+            media: {
+                mimeType: mimeType,
+                body: fs.createReadStream(filePath),
+            },
+        });
+
+        const fileId = response.data.id;
+
+        await drive.permissions.create({
+            fileId: fileId,
+            requestBody: {
+                role: 'reader',
+                type: 'anyone',
+            },
+        });
+
+        const fileDownloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+        assignment.taskSubmissionUrl = fileDownloadUrl;
+        await assignment.save();
+
+        const mailOptions = {
+            from: 'tk839587@gmail.com',
+            to: assignment.email,
+            subject: 'Task Completed Notification',
+            html: 
+            
+            `<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        color: #333;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #f5f5f5;
+                    }
+
+                    .container {
+                        width: 100%;
+                        max-width: 600px;
+                        margin: 20px auto;
+                        padding: 20px;
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .header {
+                        background-color: #007bff;
+                        color: #ffffff;
+                        padding: 10px 0;
+                        text-align: center;
+                        border-radius: 8px 8px 0 0;
+                        font-size: 24px;
+                    }
+
+                    .content {
+                        padding: 20px;
+                        line-height: 1.6;
+                    }
+
+                    .button {
+                        display: inline-block;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        color: #ffffff;
+                        background-color: #28a745;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        text-align: center;
+                        margin-top: 20px;
+                        transition: background-color 0.3s;
+                    }
+
+                    .button:hover {
+                        background-color: #218838;
+                    }
+
+                    .footer {
+                        text-align: center;
+                        padding: 10px 0;
+                        border-top: 1px solid #eaeaea;
+                        margin-top: 20px;
+                        font-size: 14px;
+                        color: #888;
+                    }
+
+                    .footer a {
+                        color: #007bff;
+                        text-decoration: none;
+                    }
+
+                    .ii a[href] {
+                        color: #ffff;
+                    }
+                </style>
+                
+            </head>
+            <body>
+                <div class="container">
+                    
+                    <div class="header">
+                        Do Task For Me
+                    </div>
+                    
+                    <div class="content">
+                        <p>Dear User,</p>
+                        
+                        <p>Your task has been completed and uploaded successfully. You          can download it by clicking the button below:</p>
+                        
+                        <a href="${fileDownloadUrl}" class="button">Download 🔗</a>
+                        
+                        <p>Best regards,<br>CEO - Do Task For Me</p>
+                    
+                    </div>
+                    
+                    <div class="footer">
+                        &copy; 2024 Do Task For Me. All rights reserved.<br>
+                        <a href="https://dotaskforme.onrender.com">Visit our website</a>
+                    </div>
+                
+                </div>
+            
+            </body>
+            </html>
+            
+            `,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        fs.unlinkSync(filePath);
+
+        res.redirect(`/admin-assignment/${assignment._id}`);
+
+    } 
+    
+    catch (error) {
+        console.log('Error:', error);
+        res.status(500).json({ message: 'Error submitting assignment', error });
+    }
 });
 
 
@@ -1735,3 +2064,4 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
+

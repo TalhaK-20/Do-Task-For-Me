@@ -56,7 +56,6 @@
 
 
 
-
     </nav>
     <div class="container-fluid">
         <div class="row">
@@ -70,7 +69,7 @@
                         </li>
         
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-file-alt"></i> Assignments</a>
+                            <a class="nav-link" href="/fetch-all-assignments"><i class="fas fa-file-alt"></i> Assignments</a>
                         </li>
         
                         <li class="nav-item">
@@ -97,16 +96,40 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
+                    
+                    <div>
+                        <button class="btn btn-primary" id="show-detailed-view">Show Detailed View</button>
+                        <button class="btn btn-secondary" id="show-table-view">Show Table View</button>
+                    </div>
+
                 </div>
-        
+
+                
+
+
                 <div id="assignments-container" class="row"></div>
-        
+
+                <div id="table-view" class="table-view">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Serial No.</th>
+                                <th>Assignment ID</th>
+                                <th>Assignment Type</th>
+                                <th>Email</th>
+                                <th>WhatsApp Number</th>
+                                <th>Payment Status</th>
+                                <th>Work Status</th>
+                                <th>Assigned To</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
             </main>
-        
         </div>
-    
     </div>
-    
+
 
 
 
@@ -120,6 +143,8 @@
     
     
     <script>
+
+        let serialNumber = 1;
     
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/admin/dashboard')
@@ -127,10 +152,16 @@
     
                 .then(assignments => {
                     const assignmentsContainer = document.getElementById('assignments-container');
+                    const tableBody = document.getElementById('table-body');
     
     
                     assignments.forEach(assignment => {
                         const paymentTag = assignment.payment_status === 'paid' ? '<span class="tag">Payment Done</span>' : '';
+
+                           
+                        const isDeveloperAssigned = assignment.developer && assignment.developer !== '';
+
+
                         const assignmentCard = `
                             <div class="col-md-4 mb-4">
                                 <div class="card">
@@ -138,7 +169,7 @@
     
                                         <h5 class="card-title">${assignment.assignmentType}</h5>
 
-                                        <p><strong>Task ID:</strong> ${assignment._id}</p>
+                                        <p><strong>Task ID:</strong><a href="/admin-assignment/${assignment._id}" class="task-link"> ${assignment._id}</a></p>
     
                                         <p class="card-text">Exact Deadline: ${assignment.exactDeadline}</p>
     
@@ -167,22 +198,78 @@
                                         <p class="card-text">Status: ${assignment.status}</p>
     
                                         <p class="card-text payment-status-container">Payment Status: ${assignment.payment_status} ${paymentTag}</p>
-    
+                                         
                                         <p><strong>File URL:</strong> <a href="${assignment.fileUrl}" target="_blank">View File</a></p>
-    
-                                        <div class="form-check">
-                                            <input class="form-check-input work-started-checkbox" type="checkbox" value="" id="started-${assignment._id}" ${assignment.status === 'started' ? 'checked' : ''} data-id="${assignment._id}">
+        
+                                        <hr>    
+                                        <br>
+                                        <br>
+                                        
+                                        <h6 class="card-text"><b>Assigned To: ${assignment.developer}</b></h6>
+                                        
+                                        <h6 class="card-text"><b>Task Submission URL: <a href="${assignment.taskSubmissionUrl}" target="_blank">Our Work</a></b></h6>
 
-                                            <label class="form-check-label" for="started-${assignment._id}">Work Started</label>
+                                        <br>
+                                        <br>
+                                        <hr>
+
+                                        <div class="form-check">
+                                            
+                                            <input class="form-check-input work-started-checkbox" type="checkbox" value="" id="Started-${assignment._id}" ${assignment.status === 'Started' ? 'checked' : ''} data-id="${assignment._id}">
+
+                                            <label class="form-check-label" for="Started-${assignment._id}">Work Started</label>
+                                             
+                                            <br>
+
+                                            <input class="form-check-input work-ended-checkbox" type="checkbox" value="" id="Completed-${assignment._id}" ${assignment.status === 'Completed' ? 'checked' : ''} data-id="${assignment._id}">
+
+                                            <label class="form-check-label" for="Completed-${assignment._id}">Work Completed</label>
 
                                         </div>
    
                                         <div class="form-check">
-                                            <input class="form-check-input payment-status-checkbox" type="checkbox" value="" id="paid-${assignment._id}" ${assignment.payment_status === 'paid' ? 'checked' : ''} data-id="${assignment._id}">
                                             
-                                            <label class="form-check-label" for="paid-${assignment._id}">Mark as Paid</label>
+                                            <input class="form-check-input payment-status-checkbox" type="checkbox" value="" id="Paid-${assignment._id}" ${assignment.payment_status === 'Paid' ? 'checked' : ''} data-id="${assignment._id}">
+                                            
+                                            <label class="form-check-label" for="Paid-${assignment._id}">Mark as Paid</label>
 
                                         </div>
+
+                                        <br>
+
+                                        <form class="developer-form">
+                                            
+                                            <div class="form-group">
+                                                
+                                                <label for="developer-${assignment._id}">Task Assigned to:</label>
+                                                
+                                                <select id="developer-${assignment._id}"                            class="form-control" data-id="${assignment._id}">
+                                                    
+                                                    <option value="">Select Developer</option>
+
+                                                    <option value="Rana Waqas Ali">Rana Waqas Ali</option>
+                                            
+                                                    <option value="Talha Khalid">Talha Khalid</option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <button type="button" class="btn btn-primary                            assign-developer-btn" data-id="${assignment._id}">Assign to Developer</button>
+
+                                        </form>
+
+                                        <br>
+
+                                        <form id="assignmentForm" action="/admin/completed-work/submission" method="POST" enctype="multipart/form-data">
+                                            
+                                            <input type="hidden" name="assignmentId" value="${ assignment._id}">
+                                            
+                                            <input type="file" name="file" accept="*/*" required>
+                                            
+                                            <button type="submit" class="submit-btn">Send to User</button>
+                                            
+                                        </form>
 
                                     </div>
 
@@ -190,10 +277,49 @@
 
                             </div>
                         `;
-                        
-                        
+                       
                         assignmentsContainer.insertAdjacentHTML('beforeend', assignmentCard);
+
+
+                        const tableRow = `
+                             <tr>
+                                <td>${serialNumber++}</td>
+                                <td><a href="/admin-assignment/${assignment._id}" class="task-link">${assignment._id}</a></td>
+                                <td>${assignment.assignmentType}</td>
+                                <td>${assignment.email}</td>
+                                <td>${assignment.whatsapp}</td>
+                                <td>${assignment.payment_status}</td>
+                                <td>${assignment.status}</td>
+                                <td>${isDeveloperAssigned ? assignment.developer : 'Not Assigned'}</td>
+                            </tr>
+                        `;
+
+                        tableBody.insertAdjacentHTML('beforeend', tableRow);
                     });
+
+
+
+
+
+
+                    document.getElementById('show-detailed-view').addEventListener('click', () => {
+                        document.getElementById('assignments-container').style.display = 'flex';
+                        document.getElementById('table-view').style.display = 'none';
+                    });
+
+
+
+
+
+
+                    document.getElementById('show-table-view').addEventListener('click', () => {
+                        document.getElementById('assignments-container').style.display = 'none';
+                        document.getElementById('table-view').style.display = 'block';                    
+                    });
+
+
+
+
 
 
                     document.querySelectorAll('.work-started-checkbox').forEach(checkbox => {
@@ -208,10 +334,11 @@
                                     'Content-Type': 'application/json'
                                 },
                     
-                                body: JSON.stringify({ status: isChecked ? 'started' : 'not started' })
+                                body: JSON.stringify({ status: isChecked ? 'Started' : 'Not Started' })
                             })
                     
                             .then(response => response.json())
+                            
                             .then(data => {
                     
                                 if (data.message === 'Status updated') {
@@ -231,23 +358,69 @@
                         });
                     });
                     
+
+
+
+
+
+                    document.querySelectorAll('.work-ended-checkbox').forEach(checkbox => {
                     
-                    document.querySelectorAll('.payment-status-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const assignmentId = this.getAttribute('data-id');
+                        const isChecked = this.checked;
+                
+                        fetch(`/admin/update-status/${assignmentId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                
+                            body: JSON.stringify({ status: isChecked ? 'Completed' : 'Not Completed' })
+                        })
+                
+                        .then(response => response.json())
                     
-                        checkbox.addEventListener('change', function () {
-                            const assignmentId = this.getAttribute('data-id');
-                            const isChecked = this.checked;
+                        .then(data => {
+                
+                            if (data.message === 'Status updated') {
+                                alert('Status updated and email sent to user');
+
+                                this.disabled = true;
+                                this.closest('.form-check').classList.add('frozen');
+                            } 
+                            
+                            else {
+                                alert('Error updating status');
+                            }
+                        })
+                        
+                        .catch(error => console.error('Error updating status:', error));
+
+                    });
+                });
+
+
+
+
+
+
+                document.querySelectorAll('.payment-status-checkbox').forEach(checkbox => {
                     
-                            fetch(`/admin/update-payment-status/${assignmentId}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
+                    checkbox.addEventListener('change', function () {
+                        const assignmentId = this.getAttribute('data-id');
+                        const isChecked = this.checked;
                     
-                                body: JSON.stringify({ payment_status: isChecked ? 'paid' : 'not paid yet' })
+                        fetch(`/admin/update-payment-status/${assignmentId}`, {
+                            method: 'POST',
+                            headers: {
+                            'Content-Type': 'application/json'
+                            },
+                    
+                            body: JSON.stringify({ payment_status: isChecked ? 'Paid' : 'Not Paid Yet' })
                             })
                     
                             .then(response => response.json())
+                            
                             .then(data => {
                     
                                 if (data.message === 'Status updated') {
@@ -285,14 +458,77 @@
                             .catch(error => console.error('Error updating payment status:', error));
 
                         });
-
                     });
 
-                })
+                    
+
+
+
+
+                    document.querySelectorAll('.assign-developer-btn').forEach(button => {
+                        button.addEventListener('click', function () {
+                        const assignmentId = this.getAttribute('data-id');
+                        const developerSelect = document.getElementById(`developer-${assignmentId}`);
+                        const developerName = developerSelect.value;
+
+                        if (!developerName) {
+                            alert('Please select a developer');
+                            return;
+                        }
+
+                        fetch(`/admin/update-developer/${assignmentId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ developer: developerName })
+                        })
+
+                        .then(response => response.json())
+                        
+                        .then(data => {
+                            
+                            if (data.message === 'Developer updated') {
+                                alert('Developer assigned successfully');
+                                const cardBody = this.closest('.card-body');
+                                const developerInfo = cardBody.querySelector('.developer-info');
+
+                            if (developerInfo) {
+                                developerInfo.textContent = `Developer: ${developerName}`;
+                            } 
+                            
+                            else {
+                                const newInfo = document.createElement('p');
+                                newInfo.classList.add('developer-info');
+                                newInfo.textContent = `Developer: ${developerName}`;
+                                cardBody.appendChild(newInfo);
+                            }
+
+                            const form = cardBody.querySelector('.developer-form');
+                            
+                            if (form) {
+                                form.remove();
+                            }
+
+                            this.disabled = true;
+                            developerSelect.disabled = true;
+                        } 
+                        
+                        else {
+                            alert('Error updating developer');
+                        }
+                    })
+
+                    .catch(error => console.error('Error updating developer:', error));
+
+                });
+            });
+
+            })
                                 
                 .catch(error => console.error('Error fetching assignments:', error));
 
-        });
+            });
 
 
     </script>
