@@ -16,7 +16,7 @@ body, html {
 
 /* Navbar */
 .navbar {
-    background: #001f3f; /* Navy blue */
+    background: #06234A; /* Navy blue */
     color: #fff;
     padding: 10px 0;
     position: sticky;
@@ -389,4 +389,3 @@ body {
     font-size: 1rem;
     margin-top: 1.5rem;
 }
-    

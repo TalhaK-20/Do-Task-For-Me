@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-family: 'Roboto', sans-serif;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
         }
         
         .navbar {
-            background-color: #2c3e50;
+            background-color: #06234A;
             padding: 1rem;
             transition: background-color 0.3s ease;
         }
@@ -91,7 +91,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
         
@@ -101,6 +101,8 @@
         }
         
         .form-container h1 {
+            text-align: center;
+            text-decoration: underline;
             margin-bottom: 1.5rem;
             color: #2c3e50;
         }
@@ -215,8 +217,8 @@
 
 </head>
 
-<body>
-    <nav class="navbar">
+<body style="font-family: 'Roboto', sans-serif;">
+    <nav class="navbar" style="font-family: 'Roboto', sans-serif;">
         <div class="container">
             <a href="#" class="logo"><img src="/images/logo.jpg" alt="Company Logo"></a>
             <ul class="nav-links">
@@ -238,7 +240,7 @@
 
 
 
-    <div class="main-content">
+    <div class="main-content" style="font-family: 'Roboto', sans-serif;">
         <div class="form-container">
             <form id="assignmentForm" action="/submit" method="POST" enctype="multipart/form-data">
                 <h1>Assignment Request Form</h1>
@@ -466,6 +468,7 @@
     </div>
 
 
+    <%- include("../partials/footer.ejs") %>
 
 
 
@@ -777,3 +780,4 @@
 
 </body>
 </html>
+
