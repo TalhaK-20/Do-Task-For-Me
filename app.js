@@ -526,6 +526,13 @@ const drive = google.drive({ version: 'v3', auth });
 
 
 app.get('/', (req, res) => {
+    res.render("main/main-landing-page");
+});
+
+
+
+
+app.get('/form', (req, res) => {
     res.render("main/landing-page");
 });
 
@@ -2064,4 +2071,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-
