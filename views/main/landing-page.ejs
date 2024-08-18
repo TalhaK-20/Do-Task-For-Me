@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do Task for Me | Order</title>
+    <title>Do Task for Me | Task Request Form</title>
 
     <link rel="stylesheet" href="./css/main/form-responsiveness.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -464,7 +464,7 @@
 
 
                 <div id="priceDetails">
-                    <p id="priceMessage">Current Price: $<span id="currentPrice"></span></p>
+                    <p id="priceMessage">Current Price (Tentative): $<span id="currentPrice"></span></p>
                 </div>
                 
               
@@ -667,7 +667,7 @@
         function calculateTotalCost() {
             const daysUntilDue = parseInt(daysUntilDueInput.val()) || 0;
             const gradeDesired = gradeDesiredInput.val();
-            const basePrice = 30; // Base price for calculation
+            const basePrice = 0.5; // Base price for calculation
 
             // Urgency Multiplier
             let urgencyMultiplier = 1;
@@ -695,10 +695,10 @@
             const topProgrammer = topProgrammerCheckbox.is(':checked');
             const vivaPreparation = vivaPreparationRadio.val();
 
-            const professionalLevelCost = professionalLevel ? basePrice * 0.3 : 0;
-            const vivaCost = vivaRequired ? basePrice * 0.2 : 0;
-            const topProgrammerCost = topProgrammer ? basePrice * 0.1 : 0;
-            const vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 0.60 : 0;
+            const professionalLevelCost = professionalLevel ? basePrice * 90 : 0;
+            const vivaCost = vivaRequired ? basePrice * 30 : 0;
+            const topProgrammerCost = topProgrammer ? basePrice * 30 : 0;
+            const vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 40 : 0;
 
             // Task Size Multipliers
             const taskSize = taskSizeInput.val();
@@ -706,15 +706,15 @@
             
             switch (taskSize) {
                 
-                case 'extraSmall': taskSizeMultiplier = 0.2; break;
+                case 'extraSmall': taskSizeMultiplier = 15; break;
                 
-                case 'small': taskSizeMultiplier = 0.5; break;
+                case 'small': taskSizeMultiplier = 30; break;
                 
-                case 'medium': taskSizeMultiplier = 1.5; break;
+                case 'medium': taskSizeMultiplier = 50; break;
                 
-                case 'large': taskSizeMultiplier = 2; break;
+                case 'large': taskSizeMultiplier = 100; break;
                 
-                case 'professional': taskSizeMultiplier = 3; break;
+                case 'professional': taskSizeMultiplier = 200; break;
             }
 
 
