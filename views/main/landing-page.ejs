@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Do Task for Me | Order</title>
+
+    <link rel="stylesheet" href="./css/main/form-responsiveness.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
@@ -51,18 +53,18 @@
             display: inline;
         }
         
-        .navbar .nav-links li a, .contact-btn {
+        /* .navbar .nav-links li a, .contact-btn {
             color: #ecf0f1;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
-        }
+        } */
         
-        .navbar .nav-links li a:hover, .contact-btn:hover {
+        /* .navbar .nav-links li a:hover, .contact-btn:hover {
             color: #f39c12;
-        }
+        } */
         
-        .contact-btn {
+        /* .contact-btn {
             background-color: #06234A;
             padding: 0.5rem 1rem;
             border-radius: 5px;
@@ -74,7 +76,7 @@
             background-color: white;
             text-decoration: none;
             color: #06234A;
-        }
+        } */
         
         .main-content {
             padding: 2rem;
@@ -96,6 +98,7 @@
             width: 100%;
             max-width: 700px;
             transition: box-shadow 0.3s ease, transform 0.3s ease;
+            margin-top: 100px
         }
         
         .form-container:hover {
@@ -221,7 +224,10 @@
 </head>
 
 <body style="font-family: 'Roboto', sans-serif;">
-    <nav class="navbar" style="font-family: 'Roboto', sans-serif;">
+
+    <%- include("../partials/header.ejs") %>
+
+    <!-- <nav class="navbar" style="font-family: 'Roboto', sans-serif;">
         <div class="container">
             <a href="/" class="logo"><img src="/images/logo.jpg" alt="Company Logo"></a>
             <ul class="nav-links">
@@ -236,7 +242,7 @@
             </ul>
             <a href="/login-user" class="contact-btn">Manage Orders</a>
         </div>
-    </nav>
+    </nav> -->
 
 
 
@@ -311,13 +317,13 @@
                     </div>
 
                     
-                    <div class="form-group">
+                    <div class="form-group-email">
                         <label for="studentEmail">Your Email:</label>
                         <input type="email" id="studentEmail" name="email" placeholder="Enter your email" required>
                     </div>
 
                     
-                    <div class="form-group">
+                    <div class="form-group-deadline">
                         <label for="exactDeadline">Exact Deadline:</label>
                         <input type="datetime-local" id="exactDeadline" name="exactDeadline" required>
                     </div>
@@ -339,7 +345,7 @@
                     </div>
 
                     
-                    <div class="form-group" style="position: relative;
+                    <div class="form-group-whatsapp" style="position: relative;
                     right: 152px;
                     margin: revert-layer;">
                         <label for="whatsapp" style="text-align: center;
