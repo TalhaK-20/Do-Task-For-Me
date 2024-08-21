@@ -547,7 +547,14 @@ app.get('/work', (req, res) => {
 
 
 app.get('/services', (req, res) => {
-    res.render("main/services");
+    res.render("main/our-services");
+});
+
+
+
+
+app.get('/contact-us', (req, res) => {
+    res.render("main/contact-us");
 });
 
 
@@ -2071,3 +2078,4 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
+
