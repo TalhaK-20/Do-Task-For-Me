@@ -5,7 +5,7 @@
 	<meta  charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 	
-	<!-- <meta name="description" content="DoMyAssignments is one of the best assignment writing services, offering a 20% discount with professional experts' assistance. Our writing narration skills are unmatched, making us the best homework writing services for all your academic needs"> -->
+	<!-- <meta name="description" content="Do Task For Me is one of the best assignment writing services, offering a 20% discount with professional experts' assistance. Our writing narration skills are unmatched, making us the best homework writing services for all your academic needs"> -->
 
 	<title>Our Services</title>
 
@@ -151,6 +151,7 @@ p, h1, h2, h3 {
         height: 100px;
 		width: 100px;
 		border-radius: 10px;
+		margin-top: 24px;
     }
 }
 
@@ -164,6 +165,15 @@ p, h1, h2, h3 {
         padding-bottom: 112px;
         min-height: 300px;
     }
+}
+
+@media (max-width: 450px) {
+	.section-top-landing__heading {
+    	max-width: 43.1rem;
+    	margin: 0 auto;
+    	text-align: center;
+		margin-top: 70px;
+	}	
 }
 
 </style>
@@ -220,7 +230,7 @@ window.dataLayer = window.dataLayer || [];dataLayer.push({'userId' : null,'event
 	<div class="container">
 		<div class="scroll-to-service__inner is-open" id="scroll-to-service-inner">
 			<div class="scroll-to-service__clone-open-btn" id="scroll-to-service-close-open-btn"></div>
-			<div class="scroll-to-service__btns-wrapper">
+			<div class="scroll-to-service__btns-wrapper" style="display: none;">
 				<a href="#service-academic" class="scroll-to-service__btn is-active">Academic writing</a>
 				<a href="#service-stem" class="scroll-to-service__btn">STEM assignment</a>
 			</div>
@@ -324,7 +334,7 @@ window.dataLayer = window.dataLayer || [];dataLayer.push({'userId' : null,'event
     <div class="calculator">
       <h2 class="h2">Check out how much your paper will cost</h2>
       <div class="CalcFull" data-calc-mini data-calculator-default>
-  <form name="uvocalculator" class="Calc" method="get" action="https://domyassignments.com/" data-calculator-form>
+  <form name="uvocalculator" class="Calc" method="get" action="#" data-calculator-form>
     <select name="topcatId" style="display: none;" data-discipline-select></select>
     <div class="Calc__wrapper">
       <div class="Calc__cell Calc__cell--type-of-paper">
@@ -619,7 +629,7 @@ window.dataLayer = window.dataLayer || [];dataLayer.push({'userId' : null,'event
       >
       <h5>Get your task done by a pro</h5>
       <p>Share your instructions, and we`ll find a great specialist in your discipline.</p>
-      <a rel="nofollow" href="dashboard/orders/create/index.html" class="btn btn--black-white">Place an order</a>
+      <a rel="nofollow" href="/form" class="btn btn--black-white">Place an order</a>
     </div>
   </div>
 </div>

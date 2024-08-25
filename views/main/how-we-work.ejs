@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How We Work</title>
+    <title>How we work</title>
     <link rel="stylesheet" href="./css/main/how-we-work.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
@@ -18,7 +18,7 @@
         }
         
         .navbar:hover {
-          background-color: #34495e;
+          background-color: #06234A;
         }
         
         .navbar .container {
@@ -52,6 +52,32 @@
         .navbar .nav-links li a:hover, .contact-btn:hover {
           color: #f39c12;
         }
+
+        .btn--black-white {
+          background: #06234a;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          text-decoration: none;
+          text-align: center;
+          margin-right: 280px;
+        }
+        
+        .btn--black-white:hover {
+          background: #06234a;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          text-decoration: none;
+          text-align: center;
+        }
+        
+        .section-cta {
+          background: white;
+          color: #fff;
+          padding: 3rem 0;
+          text-align: center;
+        }
         
         .contact-btn {
           background-color: #e74c3c;
@@ -64,11 +90,50 @@
           background-color: #c0392b;
         }
 
+        @media (max-width: 768px) {
+          .steps__tabs {
+            border-right: none;
+            border-bottom: 2px solid #f0f0f0;
+            flex-direction: column;
+            overflow-x: auto;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .container {
+            max-width: 1220px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            bottom: 42px;
+            color: #06234A;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .section-cta {
+            padding-top: 110px;
+            background: white;
+            color: #06234A;
+          }
+        }
+
+        @media (max-width: 500px) {
+          .contact-btn {
+            position: relative;
+            margin-right: 155px;
+            width: 144px;
+            margin-top: 36px;
+          }
+        }
+
 </style>
 
 <body>
 
-    <nav class="navbar">
+  <%- include("../partials/header.ejs") %>
+    
+  <!-- <nav class="navbar">
         <div class="container">
             <a href="#" class="logo"><img src="/images/logo.jpg" alt="Company Logo"></a>
             <ul class="nav-links">
@@ -83,14 +148,14 @@
             </ul>
             <a href="/login-user" class="contact-btn">Manage Orders</a>
         </div>
-    </nav>
+    </nav> -->
 
 
 
 
 
 
-<div class="section section-top-landing">
+<div class="section section-top-landing" style="background-color: #06234A; color: white;">
   <div class="container">
     <div class="section-top-landing__inner">
     
@@ -99,7 +164,7 @@
         </ul>
       </div>
     
-      <div class="section-top-landing__heading">
+      <div class="section-top-landing__heading" style="color: white;">
         <h1>How we work</h1>
         <p class="section__subtitle">If you’re new to our service, take a look at how it works.</p>
       </div>
@@ -115,7 +180,7 @@
 
 <div class="section section-steps">
 
-  <div class="container">
+  <div class="container" style="text-align: center;">
     <h2>Placing your order: A short guide</h2>
     <p><b>Take these steps you need to get a paper from us.</b></p>
 
@@ -203,10 +268,10 @@
 <div class="section section-cta">
   <div class="container">
 
-    <div class="section-cta__inner">
-      <h5>Now you know everything</h5>
-      <p>Go ahead and let us help you deal with any troubling tasks.</p>
-      <a rel="nofollow" href="/" class="btn btn--black-white">Place an order</a>
+    <div class="section-cta__inner" style="color: #06234A;">
+      <h5 style="color: #06234A;">Now you know everything</h5>
+      <p style="color: #06234A;">Go ahead and let us help you deal with any troubling tasks.</p>
+      <a rel="nofollow" href="/form" class="btn btn--black-white">Place an order</a>
     </div>
 
   </div>
@@ -218,7 +283,9 @@
 
 
 
-<footer class="footer">
+<%- include("../partials/footer.ejs") %>
+
+<!-- <footer class="footer">
   <div class="container">
     <button class="scroll-to-top" data-observed-bg></button>
     <div class="footer__top">
@@ -310,7 +377,7 @@
 
   </div>
 
-</footer>
+</footer> -->
 
 </body>
 </html>
