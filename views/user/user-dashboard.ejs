@@ -14,6 +14,7 @@
 
         /* Define CSS variables for light and dark modes */
         :root {
+            --heading-color: #06234A;
             --bg-color: #f0f0f0;
             --text-color: #000;
             --nav-bg-color: #333;
@@ -25,6 +26,7 @@
 
         /* Dark mode variables */
         [data-theme="dark"] {
+            --heading-color: white;
             --bg-color: #1e1e1e;
             --text-color: #fff;
             --nav-bg-color: #000;
@@ -37,6 +39,10 @@
 
         [data-theme="dark"] a {
             color: var(--link-color);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--heading-color);
         }
 
         body {
@@ -52,15 +58,17 @@
         }
 
         .navbar {
-            background-color: var(--nav-bg-color);
+            background-color: #06234A;
             color: var(--nav-text-color);
             padding: 10px 0;
+            height: 90px;
         }
 
         .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: -30px;
         }
 
         .navbar .nav-links {
@@ -146,9 +154,9 @@
 
     <nav class="navbar">
         <div class="container">
-            <div class="logo">Do Task For Me</div>
+            <div class="logo"><a href="/"><img src="/images/logo.jpg" alt="" width="90px" height="80px"></a></div>
             <ul class="nav-links">
-                <li><a href="/order-request-form">Order Now</a></li>
+                <li><a href="/form">Order Now</a></li>
                 <li><a href="/logout">Logout</a></li>
                 <li><button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-adjust"></i></button></li>
             </ul>
@@ -167,9 +175,9 @@
                     <!-- Add more boxes as needed -->
                 </div>
                 
-                <div class="report-container">
+                <div class="report-container" style="background-color: #cfe3ff;">
                     <div class="report-header">
-                        <h1 class="recent-Articles">Your Orders</h1>
+                        <h1 class="recent-Articles" style="color: #06234A;">Your Orders</h1>
                     </div>
                
                     <ul class="orders-list" id="ordersList">

@@ -399,11 +399,42 @@ nav .nav-bar {
     justify-content: space-between;
 }
 
+.section-cta--type-gray .section-cta__inner {
+    background-color: #ffffff;
+}
+
+.section-cta--type-gray .section-cta__inner h5 {
+    background-color: #ffffff;
+    color: #06234A;
+}
+
+
+@media (min-width: 1024px) {
+    .section-top-home-no-guarantees__title {
+        max-width: 52.7rem;
+        margin-bottom: 1.8rem;
+        position: relative;
+        top: 62px;
+        margin-left: 164px;
+        text-align: center;
+    }
+}
+
 
 @media (max-width: 1024px) {
     .section-unique-paper__inner {
         background-image: linear-gradient(312deg, #06234A 100%, #06234A 99%);
         color: whitesmoke;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .types-of-services__description-img {
+        width: 130px;
+        height: auto;
+        right: 70px;
+        bottom: 44px;
     }
 }
 
@@ -588,7 +619,6 @@ nav .nav-bar {
     margin: auto;
 }
 
-
 .our-guarantees__statistics__numbers {
     font-family: Bebas Neue, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     font-weight: 400;
@@ -599,6 +629,17 @@ nav .nav-bar {
 }
 
 
+@media (min-width: 400px) {
+    .section-cta__inner .btn {
+        width: 100%;
+        max-width: 17.5rem;
+        text-align: center;
+        background: white;
+        color: #06234A;
+    }
+}
+
+
 @media (min-width: 1024px) {
     .our-guarantees__statistics__description {
         max-width: 200px;
@@ -606,6 +647,14 @@ nav .nav-bar {
         line-height: 24px;
         margin: 0 auto;
         color: whitesmoke;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .section-unique-paper img {
+        right: 0rem;
+        width: 253px;
     }
 }
 
@@ -712,6 +761,10 @@ nav .nav-bar {
         transition: all 0.4s ease;
         color: black;
     }
+
+    .section-top-home-no-guarantees__title p{
+        display: none;
+    }
 }
 
 
@@ -719,7 +772,13 @@ nav .nav-bar {
     .section-top-home-no-guarantees__title p{
         display: none;
     }
+
+    .section-top-home-no-guarantees__title> {
+        all: unset;
+        display: none;
+    }
 }
+
 
 </style>
 
@@ -804,13 +863,13 @@ nav .nav-bar {
         </span> -->
       </div>
     </div>
-	  <img
+	  <!-- <img
 	    src="/images/main-landing-page-images/redesign/home/section-top/img_man-section-top.webp"
 	    width="1265"
 	    height="678"
 	    alt="picture with man typing"
 	    class="section-top-home-no-guarantees__img"
-    >
+    > -->
 	  <div class="section-top-home-no-guarantees__services-forms-wrapper">
       
 <!-- <div class="Tabs types-of-services" data-type-of-services>
@@ -928,7 +987,7 @@ nav .nav-bar {
 				          <li>Download the finished work.</li>
 							</ol>
 			<img
-				src="/images/main-landing-page-images/redesign/home/section-top/img_paper-section-top.webp"
+				src="/images/main-landing-page-images/redesign/home/section-top/img_paper-section-top.jpg"
 				alt="Paper image"
 				width="70"
 				height="86"
@@ -1110,7 +1169,7 @@ nav .nav-bar {
 			</div>
 		</div>
 		<img
-			src="/images/main-landing-page-images/redesign/home/our-guarantees/img_man-thinking.webp"
+			src="/images/main-landing-page-images/redesign/home/our-guarantees/img_man-thinking.jpg"
 			width="135"
 			height="111"
 			loading="lazy"
@@ -1274,7 +1333,7 @@ nav .nav-bar {
   <div class="container">
     <div class="section-cta__inner">
       <img
-        src="/images/main-landing-page-images/redesign/decorations/img_calendar.svg"
+        src="/images/main-landing-page-images/redesign/decorations/img_calendar.jpg"
         width="83"
         height="68"
         alt="Decorative picture"
@@ -1282,7 +1341,7 @@ nav .nav-bar {
       >
       <h5>By the way, you can save money if you set a longer deadline</h5>
       <p>The sooner you order, the more money you save. Don’t hesitate!</p>
-      <a rel="nofollow" href="/form" class="btn btn--orange">Place an order</a>
+      <a rel="nofollow" href="/form" class="btn btn--orange" style="background-color: #06234A; color: white;">Place an order</a>
     </div>
   </div>
 </div>
@@ -1448,7 +1507,7 @@ nav .nav-bar {
         <p>We always scan each writing task for plagiarism. You can also ask us to provide you with an originality report.</p>
       </div>
       <img
-        src="/images/main-landing-page-images/redesign/decorations/img_plagcheck.svg"
+        src="/images/main-landing-page-images/redesign/decorations/img_plagcheck.jpg"
         width="264"
         height="143"
         loading="lazy"
@@ -1647,7 +1706,7 @@ nav .nav-bar {
   <div class="container">
     <div class="section-cta__inner">
       <img
-        src="/images/main-landing-page-images/redesign/decorations/img_clock.svg"
+        src="/images/main-landing-page-images/redesign/decorations/img_clock.jpg"
         width="66"
         height="73"
         alt="Decorative picture"
