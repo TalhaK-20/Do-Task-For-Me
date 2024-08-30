@@ -183,8 +183,8 @@ const User = mongoose.models.User || mongoose.model('User', UserSchema);
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'tk839587@gmail.com',
-        pass: 'gton tyhv hdem npun'
+        user: 'dotaskforme@gmail.com',
+        pass: 'pont itwv rxqx bjpc'
     }
 });
 
@@ -229,7 +229,7 @@ passport.use(new GoogleStrategy({
 
             // Send email with user details
             const mailOptions = {
-                from: 'tk839587@gmail.com',
+                from: 'dotaskforme@gmail.com',
                 to: user.email,
                 subject: 'Welcome to Do Task For Me.com',
                 html: 
@@ -722,7 +722,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
         fs.unlinkSync(filePath);
 
         const mailOptions = {
-            from: 'tk839587@gmail.com',
+            from: 'dotaskforme@gmail.com',
             to: email,
             subject: 'Assignment Submission Confirmation',
             html: `
@@ -975,7 +975,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
         const emailHtml = generateEmailHtml();
 
         const mailOptions = {
-            from: 'tk839587@gmail.com',
+            from: 'dotaskforme@gmail.com',
             to: email,
             subject: 'Assignment Submission Confirmation',
             html: emailHtml
@@ -1288,7 +1288,7 @@ app.post('/reset-password-user', async (req, res) => {
             await foundUser.save();
 
             const mailOptions = {
-                from: 'tk839587@gmail.com',
+                from: 'dotaskforme@gmail.com',
                 to: foundUser.email,
                 subject: 'Password Reset',
 
@@ -1465,7 +1465,7 @@ app.post('/reset-password-admin', async (req, res) => {
             await foundAdmin.save();
 
             const mailOptions = {
-                from: 'tk839587@gmail.com',
+                from: 'dotaskforme@gmail.com',
                 to: foundAdmin.email,
                 subject: 'Password Reset',
                 
@@ -1601,7 +1601,7 @@ app.post('/admin/update-status/:id', async (req, res) => {
         if (status === 'Started') {
    
             const mailOptions = {
-                from: 'tk839587@gmail.com',
+                from: 'dotaskforme@gmail.com',
                 to: assignment.email,
                 subject: 'Work Started Notification',
                 text: `Hello,
@@ -1641,7 +1641,7 @@ app.post('/admin/update-status/:id', async (req, res) => {
         if (status === 'Completed') {
 
             const mailOptions = {
-                from: 'tk839587@gmail.com',
+                from: 'dotaskforme@gmail.com',
                 to: assignment.email,
                 subject: 'Work Completion Notification',
                 text: `Hello,
@@ -1680,7 +1680,7 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
 
         if (payment_status === 'Paid') {
             const mailOptions = {
-                from: 'tk839587@gmail.com',
+                from: 'dotaskforme@gmail.com',
                 to: assignment.email,
                 subject: 'Payment Notification',
                 text: `Hello,
@@ -1901,7 +1901,7 @@ app.post('/admin/completed-work/submission', upload.single('file'), async (req, 
         await assignment.save();
 
         const mailOptions = {
-            from: 'tk839587@gmail.com',
+            from: 'dotaskforme@gmail.com',
             to: assignment.email,
             subject: 'Task Completed Notification',
             html: 
