@@ -73,30 +73,94 @@
         
     </head>
     <body>
+    
     <div class="container">
         <h1>All Assignments</h1>
-        
+
 
         <form class="filter-form" method="get" action="/fetch-all-assignments">
+            <div class="form-group">
+
+                <!-- Status Filters Section -->
+
+                <label for="status-filter"><b>Filter by Status:</b></label>
+                
+                <select id="status-filter" name="status-filter" onchange="this.form.submit()">
+                    
+                    <option value="all" <%= (statusFilter === 'all') ? 'selected' : '' %>>All</option>
+                    
+                    <option value="Not Started" <%= (statusFilter === 'Not Started') ? 'selected' : '' %>>Not Started</option>
+                    
+                    <option value="Paid" <%= (statusFilter === 'Paid') ? 'selected' : '' %>>Paid</option>
+                    
+                    <option value="completed" <%= (statusFilter === 'completed') ? 'selected' : '' %>>Completed</option>
+                    
+                    <option value="in-progress" <%= (statusFilter === 'in-progress') ? 'selected' : '' %>>In Progress</option>
+                
+                </select>
             
-            <label for="status-filter">Filter by status:</label>
-            
-            <select id="status-filter" name="status-filter" onchange="this.form.submit()">
-            
-                <option value="all" <%= (statusFilter === 'all') ? 'selected' : '' %>>All</option>
-            
-                <option value="not-started" <%= (statusFilter === 'not-started') ? 'selected' : '' %>>Not Started</option>
-            
-                <option value="Paid" <%= (statusFilter === 'Paid') ? 'selected' : '' %>>Paid</option>
-            
-                <option value="completed" <%= (statusFilter === 'completed') ? 'selected' : '' %>>Completed</option>
-            
-                <option value="in-progress" <%= (statusFilter === 'in-progress') ? 'selected' : '' %>>In Progress</option>
-            
-            </select>
-        
+            </div>
+
+
+
+
+            <!-- Assignment Type Filters Section -->
+
+            <div class="form-group">    
+                
+                <label for="assignmentType"><b>Type of Assignment:</b></label>
+                
+                <select id="assignmentType" name="assignmentType" onchange="this.form.submit()">
+                    
+                    <option value="all" <%= (assignmentTypeFilter === 'all') ? 'selected' : '' %>>All Types</option>
+                    
+                    <option value="English Writing Based Assignments" <%= (assignmentTypeFilter === 'English Writing Based Assignments') ? 'selected' : '' %>>English Writing Based Assignments</option>
+                    
+                    <option value="Research Paper (Thesis)" <%= (assignmentTypeFilter === 'Research Paper (Thesis)') ? 'selected' : '' %>>Research Paper (Thesis)</option>
+                    
+                    <option value="FYP Based" <%= (assignmentTypeFilter === 'FYP Based') ? 'selected' : '' %>>FYP Based</option>
+                    
+                    <option value="All Types of Presentations" <%= (assignmentTypeFilter === 'All Types of Presentations') ? 'selected' : '' %>>All Types of Presentations</option>
+                    
+                    <option value="App Development" <%= (assignmentTypeFilter === 'App Development') ? 'selected' : '' %>>App Development</option>
+                    
+                    <option value="Game Development" <%= (assignmentTypeFilter === 'Game Development') ? 'selected' : '' %>>Game Development</option>
+                    
+                    <option value="Web Development" <%= (assignmentTypeFilter === 'Web Development') ? 'selected' : '' %>>Web Development</option>
+                    
+                    <option value="Content Writing for Any Platform" <%= (assignmentTypeFilter === 'Content Writing for Any Platform') ? 'selected' : '' %>>Content Writing for Any Platform</option>
+                    
+                    <option value="Research" <%= (assignmentTypeFilter === 'Research') ? 'selected' : '' %>>Research</option>
+                    
+                    <option value="Semester/Term Project" <%= (assignmentTypeFilter === 'Semester/Term Project') ? 'selected' : '' %>>Semester/Term Project</option>
+                    
+                    <option value="Professional Web App" <%= (assignmentTypeFilter === 'Professional Web App') ? 'selected' : '' %>>Professional Web App</option>
+                    
+                    <option value="Technical Report" <%= (assignmentTypeFilter === 'Technical Report') ? 'selected' : '' %>>Technical Report</option>
+                    
+                    <option value="Lab Report" <%= (assignmentTypeFilter === 'Lab Report') ? 'selected' : '' %>>Lab Report</option>
+                    
+                    <option value="Case Study" <%= (assignmentTypeFilter === 'Case Study') ? 'selected' : '' %>>Case Study</option>
+                    
+                    <option value="Mathematics/Physics Based Assignments" <%= (assignmentTypeFilter === 'Mathematics/Physics Based Assignments') ? 'selected' : '' %>>Mathematics/Physics Based Assignments</option>
+                    
+                    <option value="Programming Tutoring" <%= (assignmentTypeFilter === 'Programming Tutoring') ? 'selected' : '' %>>Programming Tutoring</option>
+                    
+                    <option value="All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)" <%= (assignmentTypeFilter === 'All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)') ? 'selected' : '' %>>All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)</option>
+                    
+                    <option value="Article" <%= (assignmentTypeFilter === 'Article') ? 'selected' : '' %>>Article</option>
+                    
+                    <option value="Review Paper" <%= (assignmentTypeFilter === 'Review Paper') ? 'selected' : '' %>>Review Paper</option>
+                    
+                    <option value="Creative Writing" <%= (assignmentTypeFilter === 'Creative Writing') ? 'selected' : '' %>>Creative Writing</option>
+
+                </select>
+
+            </div>
+
         </form>
-        
+
+
 
         <table>
             <thead>

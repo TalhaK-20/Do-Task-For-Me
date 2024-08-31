@@ -1760,20 +1760,21 @@ app.get('/fetch-users', async (req, res) => {
 
 
 app.get('/fetch-all-assignments', async (req, res) => {
-
+    
     try {
         let assignments = await Assignment.find({});
 
         const statusFilter = req.query['status-filter'] || 'all';
+        const assignmentTypeFilter = req.query['assignmentType'] || 'all';
 
         if (statusFilter !== 'all') {
-
+            
             switch (statusFilter) {
-
-                case 'not-started':
+                
+                case 'Not Started':
                     assignments = assignments.filter(assignment => assignment.status === 'Not Started');
                     break;
-
+                
                 case 'Paid':
                     assignments = assignments.filter(assignment => assignment.payment_status === 'Paid');
                     break;
@@ -1791,9 +1792,100 @@ app.get('/fetch-all-assignments', async (req, res) => {
             }
         }
 
+        
+        if (assignmentTypeFilter !== 'all') {
+            
+            switch (assignmentTypeFilter) {
+                
+                case 'Web Development':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Web Development');
+                    break;
+                
+                case 'Game Development':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Game Development');
+                    break;
+                
+                case 'FYP Based':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'FYP Based');
+                    break;
+                
+                case 'App Development':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'App Development');
+                    break;
+                
+                case 'English Writing Based Assignments':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'English Writing Based Assignments');
+                    break;
+                
+                case 'Research Paper (Thesis)':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Research Paper (Thesis)');
+                    break;
+                
+                case 'All Types of Presentations':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'All Types of Presentations');
+                    break;
+                
+                case 'Content Writing for Any Platform':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Content Writing for Any Platform');
+                    break;
+                
+                case 'Research':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Research');
+                    break;
+                
+                case 'Semester/Term Project':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Semester/Term Project');
+                    break;
+                
+                case 'Professional Web App':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Professional Web App');
+                    break;
+                
+                case 'Technical Report':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Technical Report');
+                    break;
+                
+                case 'Lab Report':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Lab Report');
+                    break;
+                
+                case 'Case Study':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Case Study');
+                    break;
+                
+                case 'Mathematics/Physics Based Assignments':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Mathematics/Physics Based Assignments');
+                    break;
+                
+                case 'Programming Tutoring':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Programming Tutoring');
+                    break;
+                
+                case 'All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc');
+                    break;
+                
+                case 'Article':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Article');
+                    break;
+                
+                case 'Review Paper':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Review Paper');
+                    break;
+                
+                case 'Creative Writing':
+                    assignments = assignments.filter(assignment => assignment.assignmentType === 'Creative Writing');
+                    break;
+                
+                default:
+                    assignments = [];
+            }
+        }
+
         res.render('admin/fetch-assignments', { 
             assignments: assignments,
-            statusFilter: statusFilter
+            statusFilter: statusFilter,
+            assignmentTypeFilter: assignmentTypeFilter
         });
 
     } 
@@ -1802,6 +1894,7 @@ app.get('/fetch-all-assignments', async (req, res) => {
         console.error(error);
         res.status(500).send('Server Error');
     }
+
 });
 
 
@@ -2078,4 +2171,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-
