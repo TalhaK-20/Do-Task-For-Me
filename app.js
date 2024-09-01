@@ -720,10 +720,18 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
         await newAssignment.save();
         
         fs.unlinkSync(filePath);
-
+        
+        const recipients = [
+            'dotaskforme@gmail.com',
+            'F2021266625@umt.edu.pk',
+            'waqasali@ucp.edu.pk',
+            'ranawaqas.pa@gmail.com'
+        ]
+        
         const mailOptions = {
             from: 'dotaskforme@gmail.com',
             to: email,
+            cc: recipients.join(','),
             subject: 'Assignment Submission Confirmation',
             html: `
                 <p>Thank you for submitting your assignment request. Below are the details:</p>
