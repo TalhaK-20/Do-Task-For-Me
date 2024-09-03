@@ -1406,7 +1406,7 @@ app.post('/reset-password-user/:resetToken', async (req, res) => {
 
 
 
-app.get('/admin-login-signup', async (req, res) => {
+app.get('/auth-dotaskforme-com|authorize?admin_id=66484204284568551012458856', async (req, res) => {
     res.render("admin/login-signup-admin.ejs");
 });
 
@@ -1415,16 +1415,26 @@ app.get('/admin-login-signup', async (req, res) => {
 
 app.post('/login-admin', async (req, res) => {
     const { email, password } = req.body;
+    const securityKey = req.body.securityKey;
+    const predefinedSecurityKey = '+44-P@k!$t@n_1947-#06234A-A!CE';
 
     try {
-        const foundAdmin = await Admin.findOne({ email, password });
-
-        if (foundAdmin) {
-            res.render('admin/admin-dashboard', { user: foundAdmin });
-        } 
         
+        if(securityKey === predefinedSecurityKey){
+
+            const foundAdmin = await Admin.findOne({ email, password });
+
+            if (foundAdmin) {
+                res.render('admin/admin-dashboard', { user: foundAdmin });
+            } 
+
+            else {
+                res.render('admin/login-signup-admin.ejs', { error: 'Invalid email or password.' });
+            }
+        }
+
         else {
-            res.render('admin/login-signup-admin.ejs', { error: 'Invalid email or password.' });
+            res.render('admin/login-signup-admin.ejs', { error: 'Invalid security key.' });
         }
     } 
     
@@ -1438,17 +1448,27 @@ app.post('/login-admin', async (req, res) => {
 
 
 app.post('/signup-admin', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password } = req.body;    
+    const securityKey = req.body.securityKey;
+    const predefinedSecurityKey = '+44-P@k!$t@n_1947-#06234A-A!CE';
 
     try {
-        const newAdmin = new Admin({
-            name,
-            email,
-            password
-        });
 
-        await newAdmin.save();
-        res.render('admin/admin-dashboard', { user: newAdmin });
+        if(securityKey === predefinedSecurityKey){
+
+            const newAdmin = new Admin({
+                name,
+                email,
+                password
+            });
+
+            await newAdmin.save();
+            res.render('admin/admin-dashboard', { user: newAdmin });
+        }
+
+        else {
+            res.render('admin/login-signup-admin.ejs', { error: 'Invalid security key.' });
+        }
     } 
     
     catch (err) {
@@ -1462,62 +1482,76 @@ app.post('/signup-admin', async (req, res) => {
 
 app.post('/reset-password-admin', async (req, res) => {
     const email = req.body.email;
+    const securityKey = req.body.securityKey;
 
     try {
-        const foundAdmin = await Admin.findOne({ email });
+        
+        const predefinedSecurityKey = '+44-P@k!$t@n_1947-#06234A-A!CE';
 
-        if (foundAdmin) {
-            const resetToken = crypto.randomBytes(20).toString('hex');
-            foundAdmin.resetToken = resetToken;
-            foundAdmin.resetTokenExpiration = Date.now() + 3600000; // 1 hour
-            await foundAdmin.save();
+        if(securityKey === predefinedSecurityKey){
+            const foundAdmin = await Admin.findOne({ email });
 
-            const mailOptions = {
-                from: 'dotaskforme@gmail.com',
-                to: foundAdmin.email,
-                subject: 'Password Reset',
+            if (foundAdmin) {
+                const resetToken = crypto.randomBytes(20).toString('hex');
+                foundAdmin.resetToken = resetToken;
+                foundAdmin.resetTokenExpiration = Date.now() + 3600000; // 1 hour
+                await foundAdmin.save();
+
+                const mailOptions = {
+                    from: 'dotaskforme@gmail.com',
+                    to: foundAdmin.email,
+                    subject: 'Password Reset',
                 
-                html: 
+                    html: 
                 
-                `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background: linear-gradient(to right, navy, white); text-align: center; position: relative;">
+                    `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background: linear-gradient(to right, navy, white); text-align: center; position: relative;">
                     
-                    <h1 style="color: #fff; margin-top: 0; padding: 20px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); animation: fadeIn 2s ease-in-out;">
+                        <h1 style="color: #fff; margin-top: 0; padding: 20px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); animation: fadeIn 2s ease-in-out;">
                     
-                    <span style="font-weight: bold; font-size: 24px;">Do Task For Me</span>
+                        <span style="font-weight: bold; font-size: 24px;">Do Task For Me</span>
                
-                    </h1>
+                        </h1>
                     
-                    <div style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <div style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     
-                    <p style="margin-bottom: 20px; color: #333;">You are receiving this email because you requested a password reset.</p>
+                        <p style="margin-bottom: 20px; color: #333;">You are receiving this email because you requested a password reset.</p>
                     
-                    <p style="margin-bottom: 20px; color: #333;">Please click the following link to reset your password:</p>
+                        <p style="margin-bottom: 20px; color: #333;">Please click the following link to reset your password:</p>
                     
-                    <a href="http://localhost:3000/reset-password-admin/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
-                </div>
-            </div>
-    
-            <style>
-                @keyframes fadeIn {
-                    0% {
-                        opacity: 0;
-                    }
-                100% {
-                    opacity: 1;
-                }
-            }
-            </style>
-        `
-            };
+                        <a href="http://localhost:3000/reset-password-admin/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
 
-            await transporter.sendMail(mailOptions);
+                    </div>
+
+                </div>
+    
+                <style>
+
+                    @keyframes fadeIn {
+                        0% {
+                            opacity: 0;
+                        }
+                    100% {
+                        opacity: 1;
+                    }
+                }
+
+                </style>
+            `
+                };
+
+                await transporter.sendMail(mailOptions);
         
-            res.render('admin/reset-password-admin', { success: true, error: null });
-        } 
+                res.render('admin/reset-password-admin', { success: true, error: null });
+            } 
         
+            else {
+                res.render('admin/reset-password-admin', { error: 'Invalid email.' });
+            }
+        }
+
         else {
-            res.render('admin/reset-password-admin', { error: 'Invalid email.' });
+            res.render('admin/reset-password-admin', {  error: 'Invalid security key.', securityKeyError: true });
         }
     } 
     
