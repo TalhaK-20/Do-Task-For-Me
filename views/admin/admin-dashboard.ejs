@@ -32,6 +32,10 @@
         color: #888;
     }
 
+    b {
+        text-decoration: underline;
+    }
+
 </style>
 
 <body>
@@ -107,10 +111,10 @@
                 
 
 
-                <div id="assignments-container" class="row"></div>
+                <div id="assignments-container" class="row" style="font-size: small;"></div>
 
-                <div id="table-view" class="table-view">
-                    <table class="table table-striped">
+                <div id="table-view" class="table-view" style="font-size: small;">
+                    <table class="table table-striped" style="font-size: small;">
                         <thead>
                             <tr>
                                 <th>Serial No.</th>
@@ -169,37 +173,37 @@
     
                                         <h5 class="card-title">${assignment.assignmentType}</h5>
 
-                                        <p><strong>Task ID:</strong><a href="/admin-assignment/${assignment._id}" class="task-link"> ${assignment._id}</a></p>
+                                        <p><b>Task ID: </b> <a href="/admin-assignment/${assignment._id}" class="task-link"> &nbsp ${assignment._id}</a></p>
     
-                                        <p class="card-text">Exact Deadline: ${assignment.exactDeadline}</p>
+                                        <p class="card-text"><b>Exact Deadline: </b> &nbsp ${assignment.exactDeadline}</p>
     
-                                        <p class="card-text">Email: ${assignment.email}</p>
+                                        <p class="card-text"><b>Email: </b> &nbsp ${assignment.email}</p>
 
-                                        <p class="card-text">WhatsApp Number: ${assignment.whatsapp}</p>
+                                        <p class="card-text"><b>WhatsApp Number: </b> &nbsp ${assignment.whatsapp}</p>
     
-                                        <p class="card-text">Additional Details: ${assignment.additionalDetails}</p>
+                                        <p class="card-text"><b>Additional Details: </b> &nbsp ${assignment.additionalDetails}</p>
     
-                                        <p class="card-text">Well Commented Code: ${assignment.wellCommentedCode}</p>
+                                        <p class="card-text"><b>Well Commented Code: </b> &nbsp ${assignment.wellCommentedCode}</p>
     
-                                        <p class="card-text">Viva Preparation: ${assignment.vivaPreparation}</p>
+                                        <p class="card-text"><b>Viva Preparation: </b> &nbsp ${assignment.vivaPreparation}</p>
     
-                                        <p class="card-text">No Open Source: ${assignment.noOpenSource}</p>
+                                        <p class="card-text"><b>No Open Source: </b> &nbsp ${assignment.noOpenSource}</p>
     
-                                        <p class="card-text">Programming Language: ${assignment.programmingLanguage}</p>
+                                        <p class="card-text"><b>Programming Language: </b> &nbsp ${assignment.programmingLanguage}</p>
     
-                                        <p class="card-text">Web Development Type: ${assignment.webDevelopmentType}</p>
+                                        <p class="card-text"><b>Web Development Type: </b> &nbsp ${assignment.webDevelopmentType}</p>
     
-                                        <p class="card-text">Full Stack Framework: ${assignment.fullStackFramework}</p>
+                                        <p class="card-text"><b>Full Stack Framework: </b> &nbsp ${assignment.fullStackFramework}</p>
     
-                                        <p class="card-text">Top Programmer: ${assignment.topProgrammer}</p>
+                                        <p class="card-text"><b>Top Programmer: </b> &nbsp ${assignment.topProgrammer}</p>
     
-                                        <p class="card-text">Total Cost (Tentative): $${assignment.totalCost.toFixed(2)}</p>
+                                        <p class="card-text"><b>Total Cost (Tentative): </b> &nbsp $${assignment.totalCost.toFixed(2)}</p>
     
-                                        <p class="card-text">Status: ${assignment.status}</p>
+                                        <p class="card-text"><b>Status: </b> &nbsp ${assignment.status}</p>
     
-                                        <p class="card-text payment-status-container">Payment Status: ${assignment.payment_status} ${paymentTag}</p>
+                                        <p class="card-text payment-status-container"><b>Payment Status: </b> &nbsp ${assignment.payment_status} ${paymentTag}</p>
                                          
-                                        <p><strong>File URL:</strong> <a href="${assignment.fileUrl}" target="_blank">View File</a></p>
+                                        <p><b>File URL: </b> &nbsp <a href="${assignment.fileUrl}" target="_blank">View File</a></p>
         
                                         <hr>    
                                         <br>
@@ -241,7 +245,7 @@
                                             
                                             <div class="form-group">
                                                 
-                                                <label for="developer-${assignment._id}">Task Assigned to:</label>
+                                                <label for="developer-${assignment._id}"> <strong>Task Assigned to: </strong></label>
                                                 
                                                 <select id="developer-${assignment._id}"                            class="form-control" data-id="${assignment._id}">
                                                     
@@ -255,11 +259,33 @@
 
                                             </div>
 
-                                            <button type="button" class="btn btn-primary                            assign-developer-btn" data-id="${assignment._id}">Assign to Developer</button>
+                                            <button type="button" class="btn btn-primary assign-developer-btn" data-id="${assignment._id}">Assign to Developer</button>
 
                                         </form>
 
                                         <br>
+
+                                        <hr>
+
+                                        <!-- Cost Update Form -->
+
+                                        <form class="cost-form">
+                                            
+                                            <div class="form-group">
+                                                
+                                                <label for="cost-${assignment._id}"> <strong>Update Total Cost: </strong></label>
+                                                
+                                                <input type="number" id="cost-${assignment._id}" class="form-control" data-id="${assignment._id}" step="0.01" min="0" />
+
+                                            </div>
+                                            
+                                            <button type="button" class="btn btn-secondary update-cost-btn" data-id="${assignment._id}">Update Cost</button>
+                                            
+                                        </form>
+
+                                        <br>
+
+                                        <hr>
 
                                         <form id="assignmentForm" action="/admin/completed-work/submission" method="POST" enctype="multipart/form-data">
                                             
@@ -369,7 +395,7 @@
                         const assignmentId = this.getAttribute('data-id');
                         const isChecked = this.checked;
                 
-                        fetch(`/admin/update-status/${assignmentId}`, {
+                        fetch(`/admin/update-completion-status/${assignmentId}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -460,12 +486,81 @@
                         });
                     });
 
+    
+
+
+
+
+                document.querySelectorAll('.update-cost-btn').forEach(button => {
+                
+                    button.addEventListener('click', function () {
                     
+                        const assignmentId = this.getAttribute('data-id');
+                        const costInput = document.getElementById(`cost-${assignmentId}`);
+                        const cost = costInput.value;
+                
+                        if (isNaN(cost) || cost < 0) {
+                            alert('Please enter a valid cost');
+                            return;
+                        }
+                
+                        fetch(`/admin/update-cost/${assignmentId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ cost: parseFloat(cost) })
+                    })
+                    
+                    .then(response => response.json())
+                    
+                    .then(data => {
+                    
+                        if (data.message === 'Cost updated') {
+                            alert('Cost updated successfully');
+                            const cardBody = this.closest('.card-body');
+                            let costInfo = cardBody.querySelector('.cost-info');
+                            
+                            location.reload();
+                        
+                            if (costInfo) {
+                                costInfo.textContent = `Cost: $${cost}`;
+                            } 
+                            
+                            else {
+                                // costInfo = document.createElement('p');
+                                // costInfo.classList.add('cost-info');
+                                // costInfo.textContent = `Cost: $${cost}`;
+                                cardBody.appendChild(costInfo);
+                            }
+                        
+                            const form = cardBody.querySelector('.cost-form');
+                            
+                            if (form) {
+                                form.remove();
+                            }
+                        
+                            this.disabled = true;
+                            costInput.disabled = true;
+                        } 
+                        
+                        else {
+                            alert(data.message);
+                        }
+                    })
+
+                    .catch(error => console.error('Error updating cost:', error));
+
+                });
+
+            });
 
 
 
 
-                    document.querySelectorAll('.assign-developer-btn').forEach(button => {
+
+
+            document.querySelectorAll('.assign-developer-btn').forEach(button => {
                         button.addEventListener('click', function () {
                         const assignmentId = this.getAttribute('data-id');
                         const developerSelect = document.getElementById(`developer-${assignmentId}`);
@@ -532,6 +627,6 @@
 
 
     </script>
+
 </body>
 </html>
-

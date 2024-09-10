@@ -517,28 +517,47 @@
     
 
     <script>
+
         const input = document.querySelector("#whatsapp");
-        window.intlTelInput(input, {
+    
+        const iti = window.intlTelInput(input, {
+            
             initialCountry: "auto",
             
             geoIpLookup: function(success, failure) {
-                fetch('https://ipinfo.io?token=<YOUR_TOKEN>', { headers: { 'Accept': 'application/json' } })
-            
+                fetch('https://ipinfo.io?token=e932ef37602dda', { headers: { 'Accept': 'application/json' } })
+                    
                     .then((resp) => resp.json())
-            
+                    
                     .then((resp) => {
                         const countryCode = (resp && resp.country) ? resp.country : "us";
                         success(countryCode);
                     })
-                
+
                     .catch(() => {
                         success("us");
                     });
-            
             },
 
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-        
+
+        });
+    
+        function formatPhoneNumber(number) {
+            return number.replace(/\D/g, '');
+        }
+    
+        input.addEventListener('input', function() {
+            const rawValue = input.value;
+            const formattedValue = formatPhoneNumber(rawValue);
+            input.value = formattedValue;
+        });
+    
+        input.addEventListener('countrychange', function() {
+            const countryData = iti.getSelectedCountryData();
+            let rawValue = input.value;
+            rawValue = formatPhoneNumber(rawValue);
+            input.value = '+' + countryData.dialCode + rawValue;
         });
 
     </script>

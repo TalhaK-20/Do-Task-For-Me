@@ -151,7 +151,8 @@ const AssignmentSchema = new mongoose.Schema({
     noOpenSource: { type: Boolean, default: false },
     taskSize: String,
     vivaPreparation: String,
-    vivaTiming: String
+    vivaTiming: String,
+    editCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const Assignment = mongoose.models.Assignment || mongoose.model('Assignment', AssignmentSchema);
@@ -836,7 +837,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
 
     let daysUntilDue = 4;
     let gradeDesired = "A";
-    let basePrice = 50;
+    let basePrice = 0.5;
     let urgencyMultiplier = 1;
 
     if (daysUntilDue <= 3) {
@@ -858,24 +859,25 @@ app.post('/submit', upload.single('file'), async (req, res) => {
     }
 
 
-    let professionalLevelCost = professionalLevel ? basePrice * 0.3 : 0; // Additional 30% for professional level
+    let professionalLevelCost = professionalLevel ? basePrice * 90 : 0; // Additional 30% for professional level
     
-    let vivaCost = vivaRequired ? basePrice * 0.2 : 0; // Additional 20% for viva
+    let vivaCost = vivaRequired ? basePrice * 30 : 0; // Additional 20% for viva
     
-    let topProgrammerCost = topProgrammer ? basePrice * 0.1 : 0; // Additional 10% for top programmer
+    let topProgrammerCost = topProgrammer ? basePrice * 30 : 0; // Additional 10% for top programmer
     
-    let vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 0.15 : 0; // Additional 15% for viva preparation
+    let vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 40 : 0; // Additional 15% for viva preparation
 
     
     // Task size multipliers
     let taskSizeMultiplier = 1;
     
+
     switch (taskSize) {
-        case 'extraSmall': taskSizeMultiplier = 0.5; break;
-        case 'small': taskSizeMultiplier = 0.75; break;
-        case 'medium': taskSizeMultiplier = 1; break;
-        case 'large': taskSizeMultiplier = 1.25; break;
-        case 'professional': taskSizeMultiplier = 1.5; break;
+        case 'extraSmall': taskSizeMultiplier = 15; break;
+        case 'small': taskSizeMultiplier = 30; break;
+        case 'medium': taskSizeMultiplier = 50; break;
+        case 'large': taskSizeMultiplier = 100; break;
+        case 'professional': taskSizeMultiplier = 200; break;
     }
 
     
@@ -1166,10 +1168,10 @@ app.get('/check-login-status', (req, res) => {
 
 
 app.post('/login-user', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const foundUser = await User.findOne({ username, email, password });
+        const foundUser = await User.findOne({ email, password });
 
         if (foundUser) {
             // Store user data in session
@@ -1198,7 +1200,9 @@ app.post('/signup-user', async (req, res) => {
 
         // Check if user already exists
         const existingUser = await User.findOne({ username });
-        if (existingUser) {
+        const existingUser2 = await User.findOne({ email });
+
+        if (existingUser || existingUser2) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
@@ -1209,7 +1213,8 @@ app.post('/signup-user', async (req, res) => {
         const foundUser = await User.findOne({ username, email, password });
 
         if (foundUser) {
-            res.render('user/user-dashboard', { user: foundUser});  // Render form with prefilled data
+            req.session.user = foundUser;
+            res.redirect('/user-dashboard');
         }
 
     } 
@@ -1281,13 +1286,38 @@ app.get('/check-username', async (req, res) => {
 
 
 
+app.get('/check-email', async (req, res) => {
+    const { email } = req.query;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (user) {
+            res.json({ exists: true });
+        } 
+        
+        else {
+            res.json({ exists: false });
+        }
+    } 
+    
+    catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+
+});
+
+
+
+
 app.post('/reset-password-user', async (req, res) => {
 
     const email = req.body.email;
-    const username = req.body.username
+    // const username = req.body.username
 
     try {
-        const foundUser = await User.findOne({ email, username });
+        const foundUser = await User.findOne({ email });
 
         if (foundUser) {
             const resetToken = crypto.randomBytes(20).toString('hex');
@@ -1317,7 +1347,8 @@ app.post('/reset-password-user', async (req, res) => {
                     
                     <p style="margin-bottom: 20px; color: #333;">Please click the following link to reset your password:</p>
                     
-                    <a href="http://localhost:3000/reset-password-user/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                    <a href="https://dotaskforme.onrender.com/reset-password-user/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+
                 </div>
             </div>
             <style>
@@ -1519,7 +1550,7 @@ app.post('/reset-password-admin', async (req, res) => {
                     
                         <p style="margin-bottom: 20px; color: #333;">Please click the following link to reset your password:</p>
                     
-                        <a href="http://localhost:3000/reset-password-admin/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                        <a href="http://dotaskforme.onrender.com/reset-password-admin/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
 
                     </div>
 
@@ -1673,7 +1704,7 @@ app.post('/admin/update-status/:id', async (req, res) => {
 
 
 
-app.post('/admin/update-status/:id', async (req, res) => {
+app.post('/admin/update-completion-status/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
@@ -1747,6 +1778,44 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
         res.status(500).json({ message: 'Error updating status', error });
     }
 
+});
+
+
+
+
+app.post('/admin/update-cost/:id', async (req, res) => {
+    const { id } = req.params;
+    const { cost } = req.body;
+
+    try {
+        const assignment = await Assignment.findById(id);
+
+        if (!assignment) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        if (assignment.editCount === undefined) {
+            assignment.editCount = 1;
+        } 
+        
+        else {
+            assignment.editCount += 1;
+        }
+
+        if (assignment.editCount > 2) {
+            return res.status(400).json({ message: 'Cost can only be updated two times' });
+        }
+
+        assignment.totalCost = cost;
+        await assignment.save();
+
+        res.json({ message: 'Cost updated' });
+    } 
+    
+    catch (error) {
+        console.error('Error updating cost:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 
@@ -2213,3 +2282,4 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
+

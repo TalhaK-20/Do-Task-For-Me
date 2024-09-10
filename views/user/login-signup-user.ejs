@@ -8,6 +8,7 @@
     <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
 
     <style>
+
         #username-container input {
             background-color: #eee;
             border: none;
@@ -20,7 +21,7 @@
 
         #username-container .error {
             position: absolute;
-            bottom: 36px;
+            bottom: 80px;
             left: 53px;
             width: 72%;
             color: rgb(255, 255, 255);
@@ -33,6 +34,34 @@
         }
 
         #username-container input.error {
+            border: 2px solid red;
+        }
+
+        #email-container input {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 143%;
+            position: relative;
+            right: 41px;
+        }
+
+        #email-container .error {
+            position: absolute;
+            bottom: 80px;
+            left: 53px;
+            width: 72%;
+            color: rgb(255, 255, 255);
+            font-size: 0.8em;
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+            border-radius: 14px;
+            border: 1px solid #ff8989;
+            background-color: #ff8989;
+        }
+
+        #email-container input.error {
             border: 2px solid red;
         }
 
@@ -79,13 +108,17 @@
                 </div>
         
                 <span>or use your email for registration</span>
-                <input type="text" placeholder="Name" name="name" autocomplete="name" required>
+                <!-- <input type="text" placeholder="Name" name="name" autocomplete="name" required> -->
                 <div id="username-container">
                     <input type="text" placeholder="Username" name="username" id="usernameSignup" autocomplete="username" required>
                     <p id="username-error" class="error" style="display: none;">Username already exists. Please try a different username</p>
                 </div>
-        
-                <input type="email" placeholder="Email" name="email" autocomplete="email" required>
+                
+                <div id="email-container">
+                    <input type="email" placeholder="Email" name="email" autocomplete="email" id="emailSignup" autocomplete="username" required>
+                    <p id="email-error" class="error" style="display: none;">Email already exists. Please try a different email</p>
+                </div>
+                
                 <input type="password" placeholder="Password" name="password" autocomplete="current-password" required>
                 <button type="submit">Sign Up</button>
             </form>
@@ -115,7 +148,7 @@
                 </div>
             
                 <span>or use your account</span>
-                <input type="text" placeholder="Username" name="username" autocomplete="username" required>
+                <!-- <input type="text" placeholder="Username" name="username" autocomplete="username"> -->
                 <input type="email" placeholder="Email" name="email" autocomplete="email" required>
                 <input type="password" placeholder="Password" name="password" autocomplete="current-password">
                 <a href="#" onclick="toggleForm('reset-password-form')">Forgot your password?</a>
@@ -166,7 +199,7 @@
     <h2 id="Resetify"></h2>
     
     <form action="/reset-password-user" method="POST">
-        <input type="text" placeholder="Username" name="username" autocomplete="username" required>
+        <!-- <input type="text" placeholder="Username" name="username" autocomplete="username"> -->
         <input type="email" placeholder="Email" name="email" autocomplete="email" required>
         <button type="submit">Reset Password</button>
     </form>
@@ -272,6 +305,7 @@
         }
     });
 
+
     // Handle form submission and check for username existence without page reload
     document.getElementById('signupForm').addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -293,6 +327,58 @@
             e.target.submit();
         }
     });
+
+
+    // Live check for email availability
+    document.getElementById('emailSignup').addEventListener('input', async function (e) {
+        const email = e.target.value;
+        const emailError = document.getElementById('email-error');
+        const signUpButton = document.querySelector('#signupForm button');
+
+        if (email.length > 0) {
+            const response = await fetch(`/check-email?email=${email}`);
+
+            const result = await response.json();
+
+            if (result.exists) {
+                emailError.style.display = 'block';
+                signUpButton.classList.add('hidden');
+            } 
+            
+            else {
+                emailError.style.display = 'none';
+                signUpButton.classList.remove('hidden');
+            }
+        } 
+        
+        else {
+            emailError.style.display = 'none';
+            signUpButton.classList.remove('hidden');
+        }
+    });
+
+
+    document.getElementById('signupForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const emailError = document.getElementById('email-error');
+        const signUpButton = document.querySelector('#signupForm button');
+
+        const response = await fetch(`/check-email?email=${email}`);
+        const result = await response.json();
+
+        if (result.exists) {
+            emailError.style.display = 'block';
+            signUpButton.classList.add('hidden');
+        } 
+        
+        else {
+            emailError.style.display = 'none';
+            signUpButton.classList.remove('hidden');
+            e.target.submit();
+        }
+    });
+
 
     function typeWelcomeMessage() {
         const usernameHeading = document.getElementById('Resetify');
@@ -316,4 +402,3 @@
 </script>
 </body>
 </html>
-

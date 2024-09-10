@@ -21,6 +21,7 @@
                 padding: 20px;
                 background: #fff;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                font-size: small;
             }
             h1 {
                 text-align: center;
@@ -184,7 +185,11 @@
                         <td><a href="/admin-assignment/<%= assignment._id %>"><%= assignment._id %></a></td>
                         <td><%= assignment.assignmentType %></td>
                         <td><%= assignment.email %></td>
-                        <td><%= assignment.whatsapp || 'N/A' %></td>
+
+                        <td>
+                            <a href="https://wa.me/<%= assignment.whatsapp %>" target="_blank"><%= assignment.whatsapp || 'N/A' %></a>
+                        </td>
+                        
                         <td><%= assignment.payment_status %></td>
                         <td><%= assignment.status %></td>
                         <td><%= assignment.developer || 'Not Assigned' %></td>
@@ -195,5 +200,37 @@
             </tbody>
         </table>
     </div>
+
+
+
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const assignment = {
+                _id: '<%= assignments._id %>',
+                assignmentType: '<%= assignments.assignmentType %>',
+                status: '<%= assignments.status %>',
+                exactDeadline: '<%= assignments.exactDeadline %>',
+                additionalDetails: '<%= assignments.additionalDetails %>',
+                createdAt: '<%= assignments.createdAt %>',
+                email: '<%= assignments.email %>',
+                whatsapp: '<%= assignments.whatsapp %>',
+                wellCommentedCode: '<%= assignments.wellCommentedCode %>',
+                vivaPreparation: '<%= assignments.vivaPreparation %>',
+                noOpenSource: '<%= assignments.noOpenSource %>',
+                programmingLanguage: '<%= assignments.programmingLanguage %>'
+            };
+
+            const message = `*Hi, this is the official WhatApp Business Number of Do Task For Me.com*`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${assignments.whatsapp}?text=${encodedMessage}`;
+            document.getElementById('whatsapp-link').setAttribute('href', whatsappLink);
+        });
+    
+    </script>
+
+
 </body>
 </html>

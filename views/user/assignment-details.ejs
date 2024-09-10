@@ -264,18 +264,18 @@
                 programmingLanguage: '<%= assignment.programmingLanguage %>'
             };
 
-            const message = `Hi, I have a query about the assignment. Here are the details:\n\n` +
-                            `Task ID: ${assignment._id}\n` +
-                            `Assignment Type: ${assignment.assignmentType}\n` +
-                            `Status: ${assignment.status}\n` +
-                            `Exact Deadline: ${assignment.exactDeadline}\n` +
-                            `Additional Details: ${assignment.additionalDetails}\n` +
-                            `Submitted On: ${new Date(assignment.createdAt).toLocaleString()}\n` +
-                            `Email: ${assignment.email}\n` +
-                            `Well Commented Code: ${assignment.wellCommentedCode}\n` +
-                            `Viva Preparation: ${assignment.vivaPreparation}\n` +
-                            `No Open Source: ${assignment.noOpenSource}\n` +
-                            `Programming Language: ${assignment.programmingLanguage}`;
+            const message = `*Hi, I have a query about the assignment. Here are the details:*\n\n` +
+                            `*Task ID:* *${assignment._id}*\n` +
+                            `*Assignment Type:* *${assignment.assignmentType}*\n` +
+                            `*Status:* ${assignment.status}\n` +
+                            `*Exact Deadline:* ${assignment.exactDeadline}\n` +
+                            `*Additional Details:* ${assignment.additionalDetails}\n` +
+                            `*Submitted On:* ${new Date(assignment.createdAt).toLocaleString()}\n` +
+                            `*Email:* ${assignment.email}\n` +
+                            `*Well Commented Code:* ${assignment.wellCommentedCode}\n` +
+                            `*Viva Preparation:* ${assignment.vivaPreparation}\n` +
+                            `*No Open Source:* ${assignment.noOpenSource}\n` +
+                            `*Programming Language:* ${assignment.programmingLanguage}`;
 
             const encodedMessage = encodeURIComponent(message);
             const whatsappLink = `https://wa.me/+447769108567?text=${encodedMessage}`;
