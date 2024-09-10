@@ -636,8 +636,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
     
     let vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 0.15 : 0; // Additional 15% for viva preparation
 
-    
-    // Task size multipliers
+
     let taskSizeMultiplier = 1;
     
     switch (taskSize) {
@@ -2282,4 +2281,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-
