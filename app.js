@@ -228,7 +228,7 @@ passport.use(new GoogleStrategy({
             });
             await user.save();
 
-            // Send email with user details
+
             const mailOptions = {
                 from: 'dotaskforme@gmail.com',
                 to: user.email,
