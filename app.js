@@ -628,7 +628,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
     }
 
 
-    let professionalLevelCost = professionalLevel ? basePrice * 0.3 : 0; // Additional 30% for professional level
+    let professionalLevelCost = professionalLevel ? basePrice * 0.3 : 0;
     
     let vivaCost = vivaRequired ? basePrice * 0.2 : 0; // Additional 20% for viva
     
