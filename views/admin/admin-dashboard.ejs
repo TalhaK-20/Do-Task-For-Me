@@ -12,28 +12,189 @@
 
 <style>
     
-    .tag {
-        display: inline-block;
-        padding: 0.25em 0.5em;
-        background-color: #60f881;
-        color: #ffffff;
-        border-radius: 3px;
-        font-size: 0.875em;
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .navbar {
+        background: linear-gradient(45deg, #06234A, #0d3b66);
+        color: white;
+        padding: 1rem 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        height: 84px;
+    }
+
+    .navbar-brand {
+        font-size: 1.8rem;
         font-weight: bold;
-        margin-left: 0.5em;
+        color: #60f881;
+        letter-spacing: 1px;
     }
 
-    .frozen .form-check-input {
-        cursor: not-allowed;
-        opacity: 0.5;
+    .navbar-nav .nav-link {
+        color: #fff;
+        margin-left: 30px;
+        font-size: 1.1rem;
     }
 
-    .frozen .form-check-label {
-        color: #888;
+    .navbar-nav .nav-link:hover {
+        color: #60f881;
+        border-bottom: 2px solid #60f881;
     }
 
-    b {
-        text-decoration: underline;
+    .nav-item i {
+        margin-right: 8px;
+    }
+
+    .sidebar {
+        background-color: #041833;
+        width: 225px;
+        height: 100vh;
+        position: fixed;
+        top: 60px;
+        padding: 2rem 0;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .sidebar ul li {
+        padding: 15px 25px;
+    }
+
+    .sidebar ul li a {
+        display: flex;
+        align-items: center;
+        color: #ccc;
+        font-size: 1.1rem;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar ul li a:hover, 
+    .sidebar ul li a.active {
+        background-color: #60f881;
+        color: #041833;
+        border-radius: 8px;
+    }
+
+    .sidebar ul li a i {
+        margin-right: 12px;
+    }
+
+    main {
+        margin-left: 260px;
+        margin-top: 80px;
+        padding: 2rem;
+        transition: margin-left 0.3s ease;
+        background-color: #f5f5f5;
+    }
+
+    .main-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #06234A;
+    }
+
+    .btn-primary, .btn-secondary {
+        background-color: #06234A;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+        background-color: #60f881;
+        color: #06234A;
+    }
+
+    .dashboard-card {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        left: 200px;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .dashboard-card h5 {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #06234A;
+    }
+
+    .dashboard-card .card-icon {
+        font-size: 2rem;
+        color: #60f881;
+    }
+
+    .dashboard-card p {
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .table-container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #06234A;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        main {
+            margin-left: 0;
+        }
+
+        .navbar {
+            position: relative;
+        }
     }
 
 </style>
@@ -41,29 +202,41 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
+        
+        <span class="navbar-brand"><a href="/"><img src="/images/logo.jpg" alt="" width="74px" height="74px"></a></span>
+        
         <div class="collapse navbar-collapse">
 
             <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-user"></i> Admin</a>
+                <li class="nav-item" style="color: white;">
+                    <a class="nav-link" href="#" style="color: white;">
+                        <i class="fas fa-user" style="color: white;"></i> Admin
+                    </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/auth-dotaskforme-com|authorize?admin_id=66484204284568551012458856"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <li class="nav-item" style="color: white;">
+                    <a class="nav-link" href="/auth-dotaskforme-com|authorize?admin_id=66484204284568551012458856" style="color: white;">
+                        <i class="fas fa-sign-out-alt" style="color: white;"></i> Logout
+                    </a>
+
                 </li>
 
             </ul>
 
         </div>
 
-
-
     </nav>
+
+
+
+
+
+
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-3 bg-light sidebar">
+                
                 <div class="sidebar-sticky">
         
                     <ul class="nav flex-column">
@@ -93,45 +266,117 @@
                 </div>
 
             </nav>
-        
 
 
-        
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
+
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3" style="border-bottom: 2px solid #06234A;">
+                    
+                    <h1 class="h2" style="color: #06234A; font-weight: bold; letter-spacing: 1px;">Dashboard</h1>
                     
                     <div>
-                        <button class="btn btn-primary" id="show-detailed-view">Show Detailed View</button>
-                        <button class="btn btn-secondary" id="show-table-view">Show Table View</button>
+                        <button class="btn btn-primary" id="show-detailed-view" style="background-color: #06234A; border: none; border-radius: 20px; padding: 10px 20px; transition: background-color 0.3s ease;">
+                            Show Detailed View
+                        </button>
+                        
+                        <button class="btn btn-secondary" id="show-table-view" style="background-color: #60f881; color: #06234A; border: none; border-radius: 20px; padding: 10px 20px; margin-left: 10px; transition: background-color 0.3s ease;">
+                            Show Table View
+                        </button>
+
                     </div>
 
                 </div>
 
-                
+                <br>
+                <br>
+
+                <div class="row mt-12">
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            
+                            <div class="d-flex justify-content-between">
+                                <h5>Total Assignments</h5>
+                                <span class="card-icon"><i class="fas fa-file-alt"></i></span>
+                            </div>
+                            
+                            <p>10 Active Assignments</p>
+                        
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            
+                            <div class="d-flex justify-content-between">
+                                <h5>Users</h5>
+                                <span class="card-icon"><i class="fas fa-users"></i></span>
+                            </div>
+
+                            <p>8 Registered Users</p>
+                        
+                        </div>
+
+                        <br>
+                        <hr>
+                        <br>
+                        <br>
+
+                    </div>
+
+                    <hr>
+                    <br>
+                    <br>
+                    
+                    <!-- <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between">
+                                <h5>Search Reports</h5>
+                                <span class="card-icon"><i class="fas fa-search"></i></span>
+                            </div>
+                            <p>200 Reports Found</p>
+                        </div>
+                    </div>
+                </div> -->
 
 
-                <div id="assignments-container" class="row" style="font-size: small;"></div>
-
-                <div id="table-view" class="table-view" style="font-size: small;">
+                <!-- Assignments Section -->
+                <div id="assignments-container" class="row" style="font-size: small; transition: opacity 0.5s ease, transform 0.5s ease; opacity: 1; transform: translateY(0);"></div>
+            
+                <!-- Table Section -->
+                <div id="table-view" class="table-view" style="font-size: small; padding: 20px; background-color: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); margin-top: 20px; transition: opacity 0.5s ease, transform 0.5s ease;">
+                    
                     <table class="table table-striped" style="font-size: small;">
                         <thead>
-                            <tr>
-                                <th>Serial No.</th>
-                                <th>Assignment ID</th>
-                                <th>Assignment Type</th>
-                                <th>Email</th>
-                                <th>WhatsApp Number</th>
-                                <th>Payment Status</th>
-                                <th>Work Status</th>
-                                <th>Assigned To</th>
+                            <tr style="background-color: #06234A; color: #fff;">
+
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Serial No.</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Assignment ID</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Assignment Type</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Email</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">WhatsApp Number</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Payment Status</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Work Status</th>
+                                <th style="padding: 15px; border-bottom: 2px solid #60f881;">Assigned To</th>
+
                             </tr>
+
                         </thead>
-                        <tbody id="table-body"></tbody>
+
+                        <tbody id="table-body">
+                            <!-- Dynamic content here -->
+                        </tbody>
+
                     </table>
+
                 </div>
+
             </main>
+
         </div>
+
     </div>
 
 

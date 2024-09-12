@@ -9,6 +9,7 @@
         <link rel="icon" href="/images/logo.jpg" type="image/jpeg">
             
         <style>
+
             body {
                 font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
@@ -73,16 +74,17 @@
         </style>
         
     </head>
-    <body>
-    
-    <div class="container">
-        <h1>All Assignments</h1>
 
+    <body>
+
+    <%- include("../partials/admin-header.ejs") %>
+
+    <div class="container">
+
+        <h1>All Assignments</h1>
 
         <form class="filter-form" method="get" action="/fetch-all-assignments">
             <div class="form-group">
-
-                <!-- Status Filters Section -->
 
                 <label for="status-filter"><b>Filter by Status:</b></label>
                 
