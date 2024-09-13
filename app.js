@@ -1205,7 +1205,6 @@ app.post('/signup-user', async (req, res) => {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        // Create a new user
         const newUser = new User({ username, email, password});
         await newUser.save();
 
@@ -2281,3 +2280,4 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
+
