@@ -8,173 +8,175 @@
     <link rel="stylesheet" href="/path/to/custom-styles.css">
 
     <style>
-
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            color: #06234A;
         }
 
         .container {
-            max-width: 900px;
-            margin: 30px auto;
+            max-width: 1200px;
+            margin: 50px auto;
             padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
             animation: fadeIn 1s ease-in-out;
         }
 
-        h1 {
-            font-size: 24px;
-            color: #333;
-            text-align: center;
+        .card {
+            background: #f0f4f8;
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 20px;
-            animation: slideInFromTop 1s ease-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card {
-            padding: 20px;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            animation: scaleUp 1s ease-in-out;
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h1 {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #06234A;
         }
 
         .card p {
             margin: 10px 0;
             font-size: 16px;
-            color: #555;
+            color: #06234A;
+            font-weight: 500;
         }
 
         .card p strong {
-            color: #333;
+            color: #06234A;
         }
 
-        .whatsapp-button2 {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+        .task-link {
+            color: #06234A;
+            text-decoration: underline;
         }
 
-        .whatsapp-btn {
+        .form-check {
+            margin: 15px 0;
+            font-size: 18px;
             display: flex;
             align-items: center;
-            padding: 10px 20px;
-            background-color: #25D366;
+        }
+
+        .form-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .form-check input[type="checkbox"]:checked {
+            background-color: #06234A;
+            border-color: #06234A;
+        }
+
+        .form-check label {
+            color: #06234A;
+            font-weight: 600;
+        }
+
+        .form-control {
+            padding: 10px;
+            border: 2px solid #06234A;
+            border-radius: 8px;
+            width: 100%;
+            transition: 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(6, 35, 74, 0.2);
+            border-color: #06234A;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #06234A;
             color: white;
             border: none;
             border-radius: 8px;
+            margin-top: 20px;
             font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
             cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: bounceIn 1s ease;
+            transition: all 0.3s ease;
         }
 
-        .whatsapp-btn:hover {
-            background-color: #128C7E;
+        .form-group {
+            width: 12%;
+            margin-top: 20px;
+        }
+
+        .form-group input {
+            margin-top: 20px;
+        }
+
+        .developer-form .form-group {
+            width: 240px;
+            margin-top: 20px;
+        }
+
+        .developer-form .form-group select {
+            margin-top: 20px;
+        }
+ 
+        .btn:hover {
+            background-color: #044367;
+            transform: translateY(-3px);
+        }
+
+        .whatsapp-button {
+            background-color: #25D366;
+            padding: 12px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #20b357;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .whatsapp-icon {
-            margin-right: 8px;
             font-size: 20px;
-            animation: rotate 1s infinite linear;
+            margin-right: 10px;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
-            .whatsapp-btn {
-                font-size: 14px;
-                padding: 8px 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .whatsapp-btn {
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-                font-size: 14px;
-            }
-        }
-
-        /* Animations */
         @keyframes fadeIn {
-            from {
+            0% {
                 opacity: 0;
+                transform: translateY(30px);
             }
-            to {
+            100% {
                 opacity: 1;
-            }
-        }
-
-        @keyframes slideInFromTop {
-            from {
-                transform: translateY(-30px);
-                opacity: 0;
-            }
-            to {
                 transform: translateY(0);
-                opacity: 1;
             }
         }
-
-        @keyframes scaleUp {
-            from {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes bounceIn {
-            from {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.05);
-                opacity: 1;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .card { margin-bottom: 20px; }
-
-        .tag { background-color: #28a745; color: white; padding: 2px 5px; border-radius: 3px; }
-
-        .frozen { opacity: 0.6; pointer-events: none; }
 
     </style>
 
@@ -236,6 +238,7 @@
                             <br>
                             <br>
                             <hr>
+                            <br>
 
                             <div class="form-check">
                                 
@@ -273,7 +276,7 @@
 
                                 </div>
                                 
-                                <button type="button" class="btn btn-secondary update-cost-btn" data-id="<%= assignment._id %>">Update Cost</button>
+                                <button onclick="reloadPage()" type="button" class="btn btn-secondary update-cost-btn" data-id="<%= assignment._id %>">Update Cost</button>
                                 
                             </form>
 
@@ -297,12 +300,15 @@
                                 
                                 </div>
                                 
-                                <button type="button" class="btn btn-primary assign-developer-btn" data-id="<%= assignment._id %>">Assign to Developer</button>
+                                <button onclick="reloadPage()" type="button" class="btn btn-primary assign-developer-btn" data-id="<%= assignment._id %>">Assign to Developer</button>
                             
                             </form>
                             
                             <br>
+                            <hr>
+                            <br>
                             
+                            <h4>Send the completed work file to Client</h4>
                             <form id="assignmentForm" action="/admin/completed-work/submission" method="POST" enctype="multipart/form-data">
                                 
                                 <input type="hidden" name="assignmentId" value="<%= assignment._id %>">
@@ -337,8 +343,15 @@
     <script src="/path/to/bootstrap.bundle.min.js"></script>
     
     <script src="/path/to/custom-scripts.js"></script>
-    
-    
+
+    <script>
+        
+        function reloadPage() {
+            location.reload();
+        }
+
+    </script>
+
     <script>
 
 
