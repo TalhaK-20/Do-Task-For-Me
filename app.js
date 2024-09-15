@@ -224,7 +224,7 @@ passport.use(new GoogleStrategy({
                 googleId: profile.id,
                 username: profile.displayName,
                 email: profile.emails[0].value,
-                password: profile.id  // Save Google ID as the password
+                password: profile.id  // Save Google ID as the Password
             });
             await user.save();
 
