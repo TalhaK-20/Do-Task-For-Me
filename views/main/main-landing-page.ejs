@@ -2020,7 +2020,7 @@ nav .nav-bar {
               <span class="hidden-info" data-title="Lahore"></span>,
               <span class="hidden-info" data-title="Pakistan"></span>.
 			      </span>
-			      <span class="Footer__contacts__copyright">&copy; 2024 Do Task For Me</span>
+			      <span class="Footer__contacts__copyright">&copy; 2024 Do Task For Me. A project of <a href="https://aicexpert.com/?i=1" target="_blank" style="color: #fff;"> AICE XPERT</a>.</span>
 		      </div>
 	      </div>
       </div>
@@ -2031,37 +2031,40 @@ nav .nav-bar {
 
 
 <script>
-	const body2 = document.querySelector("body"),
-		  nav = document.querySelector("nav"),
-		  modeToggle = document.querySelector(".dark-light"),
-		  searchToggle = document.querySelector(".searchToggle"),
-		  sidebarOpen = document.querySelector(".sidebarOpen"),
-		  siderbarClose = document.querySelector(".siderbarClose");
-		  let getMode = localStorage.getItem("mode");
-      
-			  if(getMode && getMode === "dark-mode"){
-				body2.classList.add("dark");
-			  }
 
-	    // js code to toggle dark and light mode
-		  modeToggle.addEventListener("click" , () =>{
-			modeToggle.classList.toggle("active");
-			body2.classList.toggle("dark");
-			// js code to keep user selected mode even page refresh or file reopen
-			
-      if(!body2.classList.contains("dark")){
-				localStorage.setItem("mode" , "light-mode");
-			}
+	// const body2 = document.querySelector("body"),
+	// 	  nav = document.querySelector("nav"),
+	// 	  modeToggle = document.querySelector(".dark-light"),
+	// 	  searchToggle = document.querySelector(".searchToggle"),
+	// 	  sidebarOpen = document.querySelector(".sidebarOpen"),
+	// 	  siderbarClose = document.querySelector(".siderbarClose");
+	// 	  let getMode = localStorage.getItem("mode");
       
-      else{
-				localStorage.setItem("mode" , "dark-mode");
-			}
+	// 		  if(getMode && getMode === "dark-mode"){
+	// 			body2.classList.add("dark");
+	// 		  }
+
+	//     // js code to toggle dark and light mode
+	// 	  modeToggle.addEventListener("click" , () =>{
+	// 		modeToggle.classList.toggle("active");
+	// 		body2.classList.toggle("dark");
+	// 		// js code to keep user selected mode even page refresh or file reopen
+			
+  //     if(!body2.classList.contains("dark")){
+	// 			localStorage.setItem("mode" , "light-mode");
+	// 		}
+      
+  //     else{
+	// 			localStorage.setItem("mode" , "dark-mode");
+	// 		}
 		  
-      });
-	    // js code to toggle search box
-			searchToggle.addEventListener("click" , () =>{
-			searchToggle.classList.toggle("active");
-		  });
+  //     });
+
+
+	// js code to toggle search box
+	searchToggle.addEventListener("click" , () =>{
+	searchToggle.classList.toggle("active");
+	});
  
 	// js code to toggle sidebar
 	sidebarOpen.addEventListener("click" , () =>{

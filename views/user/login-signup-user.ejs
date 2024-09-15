@@ -18,7 +18,7 @@
         .container {
             border: 2px solid white;
             margin-left: 400px;
-            border-radius: 100px;
+            border-radius: 80px;
             margin-bottom: -32px;
         }
 
@@ -99,7 +99,38 @@
             position: relative;
             top: 100px;
         }
-    
+
+        @media (max-width: 600px) {
+            #reset-password-form-container {
+	            background: none;
+                background-color: aqua;
+            }
+
+            #Resetify {
+	            margin-top: 40px;
+            }
+
+            #reset-password-form-container form {
+	            height: 500px;
+            }
+        }
+
+        @media (min-width: 1000px) {
+            #reset-password-form-container {
+	            background: none;
+            }
+
+            #Resetify {
+	            margin-top: 40px;
+            }
+
+            #reset-password-form-container form {
+	            border-radius: 58px; 
+	            border: 6px solid #06234A; 
+	            margin-top: 30px;
+            }
+        }
+
     </style>
 
 </head>
