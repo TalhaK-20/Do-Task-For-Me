@@ -144,7 +144,7 @@
       font-weight: 400;
       color: var(--text-color);
       text-decoration: none;
-      padding: 10px;
+      padding: 22px;
   }
   
   .nav-links li a::before{
@@ -334,8 +334,14 @@
           margin: 0;
           position: relative;
       }
+
+      #order-now-btn {
+          width: 130px;
+          text-align: center;
+      }
   }
   
+
   .section-cta.decor-2 p {
       max-width: 100%;
       color: whitesmoke;
@@ -414,6 +420,11 @@
           padding: 110px 24px;
           position: relative;
           top: 100px;
+      }
+      
+      .contact-btn {
+          position: relative;
+          left: 149px;
       }
   }
   
@@ -615,7 +626,7 @@
 
       .contact-btn {
           position: relative;
-          left: 169px;
+          left: 148px;
       }
   }
 
@@ -687,9 +698,9 @@
                     <li><a href="/work">How we work</a></li>
                     <!-- <li><a href="#">Portfolio</a></li> -->
                     <li><a href="/services">Services</a></li>
-                    <li><a href="/contact-us">Contact</a></li>
+                    <li><a href="/contact-us">Contact Us</a></li>
                     <a href="/login-user" class="contact-btn">Manage Orders</a>
-                    <a href="/form" class="contact-btn">Submit Your Task</a>
+                    <a href="/form" class="contact-btn" id="order-now-btn">Order Now</a>
                 </ul>
             </div>
             <div class="darkLight-searchBox">
@@ -722,31 +733,29 @@
                       siderbarClose = document.querySelector(".siderbarClose");
                       let getMode = localStorage.getItem("mode");
                   
-                          if(getMode && getMode === "dark-mode"){
+                        if(getMode && getMode === "dark-mode"){
                             body2.classList.add("dark");
-                          }
+                        }
             
-                    // js code to toggle dark and light mode
-                      modeToggle.addEventListener("click" , () =>{
+                        modeToggle.addEventListener("click" , () =>{
                         modeToggle.classList.toggle("active");
                         body2.classList.toggle("dark");
-                        // js code to keep user selected mode even page refresh or file reopen
                         
-                  if(!body2.classList.contains("dark")){
-                            localStorage.setItem("mode" , "light-mode");
-                        }
+                    if(!body2.classList.contains("dark")){
+                        localStorage.setItem("mode" , "light-mode");
+                    }
                   
-                  else{
-                            localStorage.setItem("mode" , "dark-mode");
-                        }
+                    else{
+                        localStorage.setItem("mode" , "dark-mode");
+                    }
                       
                   });
-                    // js code to toggle search box
+                    
                         searchToggle.addEventListener("click" , () =>{
                         searchToggle.classList.toggle("active");
-                      });
+
+                    });
              
-                // js code to toggle sidebar
                 sidebarOpen.addEventListener("click" , () =>{
                     nav.classList.add("active");
                 });
@@ -759,3 +768,4 @@
                     }
                 });
             </script>
+

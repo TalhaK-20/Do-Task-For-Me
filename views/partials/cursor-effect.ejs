@@ -1,0 +1,26 @@
+<script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
+
+<style>
+  .cursor-effect {
+    background-color: white !important;
+    border: none !important;
+  }
+</style>
+
+<script type="module">
+  import { followingDotCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
+
+  const cursor = new followingDotCursor();
+
+  window.addEventListener("load", (event) => {
+    const cursorElement = document.querySelector('.cursor-effect');
+
+    if (cursorElement) {
+      cursorElement.classList.add('cursor-effect');
+    }
+
+    new followingDotCursor();
+
+  });
+
+</script>

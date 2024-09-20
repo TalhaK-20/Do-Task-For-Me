@@ -93,11 +93,30 @@
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
+        #container {
+            max-width: 1220px;
+            position: relative;
+            bottom: -30px;
+            margin-left: 504px;
+        }
+
+        img {
+            width: 80px !important;
+            height: 80px !important;
+        }
+
         #signupForm button.hidden {
             opacity: 0;
             visibility: hidden;
             position: relative;
             top: 100px;
+        }
+
+        @media (min-width: 1024px) {
+            .contact-btn {
+                position: relative;
+                left: 124px !important;
+            }
         }
 
         @media (max-width: 600px) {
@@ -140,10 +159,20 @@
             }
         }
 
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1220px;
+                position: relative;
+                bottom: -34px;
+            }
+        }
+
     </style>
 
 </head>
 <body>
+
+    <%- include("../partials/header.ejs") %>
 
 <div class="container" id="container">
     <div class="form-container sign-up-container">
