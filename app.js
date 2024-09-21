@@ -214,7 +214,7 @@ const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 passport.use(new GoogleStrategy({
     clientID: '561313317956-b22rnrjp8h2aelrdvu42699cqc6ib9ld.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: 'https://dotaskforme.com/auth/google/callback'
 }, async (token, tokenSecret, profile, done) => {
     
     try {
