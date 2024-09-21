@@ -259,6 +259,15 @@ a:hover :active {
     }
 }
 
+@media (max-width: 790px) {
+    .nav-links li a {
+        display: block;
+        margin-top: -10px;
+        width: 176px;
+        text-align: center;
+    }
+}
+
 	</style>
 
 
@@ -299,8 +308,6 @@ window.dataLayer = window.dataLayer || [];dataLayer.push({'userId' : null,'event
 	<%- include("../partials/header.ejs") %>	
     <%- include("../partials/whatsapp-contact.ejs") %>	
     <%- include("../partials/cursor-effect.ejs") %>
-
-
 
 <div class="section section-top-landing ">
 	<div class="container">
@@ -450,7 +457,7 @@ window.dataLayer = window.dataLayer || [];dataLayer.push({'userId' : null,'event
               </a>
             </li>
             <li class="Footer__menu__list-item">
-              <a href="#" class="Footer__menu__link" rel="nofollow">
+              <a href="/pricing" class="Footer__menu__link" rel="nofollow">
                 Pricing
               </a>
             </li>

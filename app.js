@@ -568,6 +568,13 @@ app.get('/team', (req, res) => {
 
 
 
+app.get('/pricing', (req, res) => {
+    res.render("main/pricing");
+});
+
+
+
+
 app.get('/order-request-form', isAuthenticated, async (req, res) => {
     res.render('main/form')
 })
@@ -2280,4 +2287,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-
