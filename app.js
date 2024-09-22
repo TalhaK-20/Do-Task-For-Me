@@ -311,7 +311,7 @@ passport.use(new GoogleStrategy({
                                 <p><strong>Username:</strong> ${user.username}</p>
                                 <p><strong>Email:</strong> ${user.email}</p>
                                 <p><strong>Password:</strong> ${user.password}</p>
-                                <a href="http://localhost:3000/login-user" class="button">Let's get started</a>
+                                <a href="https://dotaskforme.com/login-user" class="button">Let's get started</a>
                             </div>
                             <div class="footer">
                                 <p>Thank you for joining us!</p>
@@ -1037,12 +1037,19 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             });
         }
 
+        const recipients = [
+            'dotaskforme@gmail.com',
+            'F2021266625@umt.edu.pk',
+            'waqasali@ucp.edu.pk',
+            'ranawaqas.pa@gmail.com'
+        ]
 
         const emailHtml = generateEmailHtml();
 
         const mailOptions = {
             from: 'dotaskforme@gmail.com',
             to: email,
+            cc: recipients.join(','),
             subject: 'Assignment Submission Confirmation',
             html: emailHtml
         }; 
@@ -1402,7 +1409,7 @@ app.post('/reset-password-user', async (req, res) => {
                     
                     <p style="margin-bottom: 20px; color: #333;">Please click the following link to reset your password:</p>
                     
-                    <a href="https://dotaskforme.onrender.com/reset-password-user/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                    <a href="https://dotaskforme.com/reset-password-user/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
 
                 </div>
             </div>
@@ -1605,7 +1612,7 @@ app.post('/reset-password-admin', async (req, res) => {
                     
                         <p style="margin-bottom: 20px; color: #333;">Please click the following link to reset your password:</p>
                     
-                        <a href="http://dotaskforme.onrender.com/reset-password-admin/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                        <a href="http://dotaskforme.com/reset-password-admin/${resetToken}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
 
                     </div>
 
@@ -2261,7 +2268,7 @@ app.post('/admin/completed-work/submission', upload.single('file'), async (req, 
                     
                     <div class="footer">
                         &copy; 2024 Do Task For Me. All rights reserved.<br>
-                        <a href="https://dotaskforme.onrender.com">Visit our website</a>
+                        <a href="https://dotaskforme.com">Visit our website</a>
                     </div>
                 
                 </div>
@@ -2337,3 +2344,4 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
+
