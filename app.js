@@ -568,9 +568,59 @@ app.get('/team', (req, res) => {
 
 
 
+// ---------- Footer Routes ----------
 app.get('/pricing', (req, res) => {
     res.render("main/pricing");
 });
+
+app.get('/writers', (req, res) => {
+    res.render("main/our-writers");
+});
+
+app.get('/faq', (req, res) => {
+    res.render("main/faq");
+});
+
+app.get('/delivery', (req, res) => {
+    res.render("main/delivery");
+});
+
+app.get('/blog', (req, res) => {
+    res.render("main/blog");
+});
+
+app.get('/terms-conditions', (req, res) => {
+    res.render("main/terms-conditions");
+});
+
+app.get('/guarantees', (req, res) => {
+    res.render("main/guarantees");
+});
+
+app.get('/money-back-guarantee', (req, res) => {
+    res.render("main/money-back-guarantee");
+});
+
+app.get('/revision-policy', (req, res) => {
+    res.render("main/revision-policy");
+});
+
+app.get('/privacy-policy', (req, res) => {
+    res.render("main/privacy-policy");
+});
+
+app.get('/cookie-policy', (req, res) => {
+    res.render("main/cookie-policy");
+});
+
+app.get('/plagiarism-free', (req, res) => {
+    res.render("main/plagiarism-free");
+});
+
+app.get('/social-responsibility-policy', (req, res) => {
+    res.render("main/social-responsibility-policy");
+});
+// ---------- Footer Routes Ends Here ----------
 
 
 

@@ -500,7 +500,7 @@ select::-ms-expand {
 .Select__container:after {
     width: 11px;
     height: 8px;
-    background: url(/images/redesign/icons/ico_select-arrow.svg) 50%/contain no-repeat;
+    background: url(../../../images/footer-related-links-images/redesign/icons/ico_select-arrow.svg) 50%/contain no-repeat;
     margin: auto;
     right: 15px
 }
@@ -548,7 +548,7 @@ select::-ms-expand {
     height: 8px;
     position: absolute;
     display: inline-block;
-    background: url(/images/redesign/icons/ico_select-arrow.svg) 50%/contain no-repeat;
+    background: url(../../../images/footer-related-links-images/redesign/icons/ico_select-arrow.svg) 50%/contain no-repeat;
     right: 1rem;
     top: calc(50% - 4px)
 }
@@ -726,7 +726,7 @@ a:active {
 }
 
 .link-animated.load-bg:after {
-    background-image: url(/images/redesign/icons/ico_arrow-orange.svg)
+    background-image: url(../../../images/footer-related-links-images/redesign/icons/ico_arrow-orange.svg)
 }
 
 .link-animated:focus,
@@ -800,7 +800,7 @@ ul li {
     position: absolute;
     top: 0;
     left: 0;
-    background: url(/images/redesign/icons/ico_tick.svg) 50%/contain no-repeat
+    background: url(../../../images/footer-related-links-images/redesign/icons/ico_tick.svg) 50%/contain no-repeat
 }
 
 @media (min-width:1024px) {
@@ -837,7 +837,7 @@ ul li {
 .list--black-check-in-circle li:before {
     width: 24px;
     height: 24px;
-    background: url(/images/redesign/icons/ico_tick-2.svg) 50%/contain no-repeat
+    background: url(../../../images/footer-related-links-images/redesign/icons/ico_tick-2.svg) 50%/contain no-repeat
 }
 
 @media (min-width:1024px) {
@@ -867,7 +867,7 @@ ul li {
     top: 6px;
     left: 0;
     display: inline-block;
-    background: url(/images/ico_check.svg) 50% no-repeat;
+    background: url(../../../images/footer-related-links-images/ico_check.svg) 50% no-repeat;
     background-size: contain
 }
 
@@ -1080,7 +1080,7 @@ p {
 
 .section-top-landing {
     background-color: #06234A;
-    background-image: url(/images/redesign/decorations/img_circle-theme-color.svg), url(/images/redesign/decorations/img_circle-additional-dark_thin.svg), url(/images/redesign/decorations/img_circle-theme-color.svg), url(/images/redesign/decorations/img_circle-additional-dark-004_wide.svg);
+    background-image: url(../../../images/footer-related-links-images/redesign/decorations/img_circle-theme-color.svg), url(../../../images/footer-related-links-images/redesign/decorations/img_circle-additional-dark_thin.svg), url(../../../images/footer-related-links-images/redesign/decorations/img_circle-theme-color.svg), url(/images/redesign/decorations/img_circle-additional-dark-004_wide.svg);
     background-size: 13px, 39px, 20px, 128px;
     background-repeat: no-repeat;
     background-position: right -2px top 49px, right -3px top 55px, left 17px bottom 26px, left -54px top 88px;
@@ -1622,7 +1622,7 @@ p {
     width: 54px;
     height: 54px;
     border-radius: 50%;
-    background: #fff url(/images/redesign/icons/ico_tick.svg) 50% no-repeat;
+    background: #fff url(../../../images/footer-related-links-images/redesign/icons/ico_select-arrow.svg) 50% no-repeat;
     background-size: 20px 20px;
     -webkit-box-shadow: 0 15px 40px rgba(16, 8, 3, .08);
     box-shadow: 0 15px 40px rgba(16, 8, 3, .08)
@@ -1715,13 +1715,13 @@ p {
 }
 
 .section-writers .levels__item--advanced.load-bg {
-    background-image: url(/images/redesign/icons/ico_advanced.svg)
+    background-image: url(../../../images/footer-related-links-images/redesign/icons/ico_select-arrow.svg)
 }
 
 .section-writers .levels__item--top10.load-bg {
-    background-image: url(/images/redesign/icons/icon_top10.svg)
+    background-image: url(../../../images/footer-related-links-images/redesign/icons/ico_select-arrow.svg)
 }
 
 .section-writers .levels__item--best-available.load-bg {
-    background-image: url(/images/redesign/icons/icon_best-available.svg)
+    background-image: url(../../../images/footer-related-links-images/redesign/icons/ico_select-arrow.svg)
 }

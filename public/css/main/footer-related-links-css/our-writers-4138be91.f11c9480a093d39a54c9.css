@@ -69,7 +69,7 @@
     top: 0;
     left: 1.5rem;
     background-color: #f3f3f3;
-    background-image: url(../images/redesign/icons/ico_quotes-orange.svg);
+    background-image: url(../../../images/footer-related-links-images/redesign/icons/ico_quotes-blue.svg);
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: 22px 14px;
@@ -168,4 +168,3 @@
       width: calc(33.3333% - 16px);
     }
   }
-  
