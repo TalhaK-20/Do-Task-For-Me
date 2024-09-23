@@ -582,7 +582,7 @@ app.get('/faq', (req, res) => {
 });
 
 app.get('/delivery', (req, res) => {
-    res.render("main/delivery");
+    res.render("main/progressive-delivery");
 });
 
 app.get('/blog', (req, res) => {
