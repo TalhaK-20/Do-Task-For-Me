@@ -570,55 +570,63 @@ app.get('/team', (req, res) => {
 
 // ---------- Footer Routes ----------
 app.get('/pricing', (req, res) => {
-    res.render("main/pricing");
+    res.render("main/footer-pages/pricing");
 });
 
 app.get('/writers', (req, res) => {
-    res.render("main/our-writers");
+    res.render("main/footer-pages/our-writers");
 });
 
 app.get('/faq', (req, res) => {
-    res.render("main/faq");
+    res.render("main/footer-pages/faq");
 });
 
 app.get('/delivery', (req, res) => {
-    res.render("main/progressive-delivery");
+    res.render("main/footer-pages/progressive-delivery");
 });
 
+
+
+
+// ---------- Blog Routes Starts From Here ----------
 app.get('/blog', (req, res) => {
-    res.render("main/blog");
+    res.render("main/footer-pages/blog/index");
 });
+// ---------- Blog Routes Ends Here ----------
+
+
+
 
 app.get('/terms-conditions', (req, res) => {
-    res.render("main/terms-conditions");
+    res.render("main/footer-pages/terms-conditions");
 });
 
 app.get('/guarantees', (req, res) => {
-    res.render("main/guarantees");
+    res.render("main/footer-pages/guarantees");
 });
 
 app.get('/money-back-guarantee', (req, res) => {
-    res.render("main/money-back-guarantee");
+    res.render("main/footer-pages/money-back-guarantee");
 });
 
 app.get('/revision-policy', (req, res) => {
-    res.render("main/revision-policy");
+    res.render("main/footer-pages/revision-policy");
 });
 
 app.get('/privacy-policy', (req, res) => {
-    res.render("main/privacy-policy");
+    res.render("main/footer-pages/privacy-policy");
 });
 
 app.get('/cookie-policy', (req, res) => {
-    res.render("main/cookie-policy");
+    res.render("main/footer-pages/cookie-policy");
 });
 
 app.get('/plagiarism-free', (req, res) => {
-    res.render("main/plagiarism-free");
+    res.render("main/footer-pages/plagiarism-free");
 });
 
 app.get('/social-responsibility-policy', (req, res) => {
-    res.render("main/social-responsibility-policy");
+    res.render("main/footer-pages/social-responsibility-policy");
 });
 // ---------- Footer Routes Ends Here ----------
 
