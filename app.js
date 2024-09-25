@@ -610,7 +610,7 @@ app.get('/money-back-guarantee', (req, res) => {
 });
 
 app.get('/revision-policy', (req, res) => {
-    res.render("main/footer-pages/revision-policy");
+    res.render("main/footer-pages/revisions-policy");
 });
 
 app.get('/privacy-policy', (req, res) => {
@@ -622,11 +622,11 @@ app.get('/cookie-policy', (req, res) => {
 });
 
 app.get('/plagiarism-free', (req, res) => {
-    res.render("main/footer-pages/plagiarism-free");
+    res.render("main/footer-pages/plagiarism-free-guarantee");
 });
 
 app.get('/social-responsibility-policy', (req, res) => {
-    res.render("main/footer-pages/social-responsibility-policy");
+    res.render("main/footer-pages/social-responsibility-notice");
 });
 // ---------- Footer Routes Ends Here ----------
 

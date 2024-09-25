@@ -230,6 +230,56 @@
         }
 
 
+        @media (max-width : 375px ){
+            .button-group {
+                display: flex;
+                gap: 8px;
+                margin-top: 1rem;
+                margin-left: -9px;
+            }
+
+            .form-group-whatsapp {
+                display: flex;
+                position: relative;
+                left: -128px;
+                flex-direction: column;
+                transition: all 0.3s ease;
+                margin-right: -123px;
+                margin-top: 4px;
+                margin-bottom: 30px;
+            }
+
+            .form-group-deadline {
+                margin-bottom: 1rem;
+                display: flex;
+                flex-direction: column;
+                transition: all 0.3s ease;
+                margin-top: 90px;
+                position: relative;
+                right: 125px;
+            }
+
+            .form-group-email {
+                margin-bottom: 1rem;
+                display: flex;
+                flex-direction: column;
+                transition: all 0.3s ease;
+                position: relative;
+                left: 96px;
+            }
+
+            .extra-options {
+                margin-top: 1rem;
+                font-size: 11px;
+            }
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+        }
+
+
     </style>
 
 
@@ -414,7 +464,7 @@
                     <input type="text" id="fileUploads" name="fileUploads">
                 </div>
 
-                
+                <br>
                 <div class="extra-options">
                     <label for="topProgrammer">
                         <input type="checkbox" id="topProgrammer" name="topProgrammer"> Top-level person required
@@ -433,11 +483,11 @@
                     </label>
                 </div>
                 
-                
+                <br>
                 <div class="form-group">
-                    <label style="position: relative; top: 12px;">Task Size:</label>
+                    <label id="taskSizeLable" style="position: relative; top: 12px; display: none;">Task Size:</label>
                
-                    <div class="button-group" id="taskSizeButtons">
+                    <div class="button-group" id="taskSizeButtons" style="display: none;">
                         <button type="button" data-size="extraSmall">Extra Small</button>
                         <button type="button" data-size="small">Small</button>
                         <button type="button" data-size="medium">Medium</button>
@@ -451,7 +501,7 @@
                
                 </div>
 
-               
+                <br>
                 <div class="form-group">
                     <label for="vivaPreparation">Need Viva Preparation?</label>
               
@@ -526,7 +576,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 
-    
+
 
     <script>
 
@@ -638,6 +688,37 @@
             
             else {
                 hideElement(fullStackDetails);
+            }
+        });
+
+
+        const programmingTasks = [
+            'Technical Report',
+            'All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)',
+            'Lab Report',
+            'Semester/Term Project',
+            'Professional Web App',
+            'App Development',
+            'Game Development',
+            'Web Development',
+            'Programming Tutoring',
+            'All Types of Programming Assignments'
+        ];  
+
+        $('#assignmentType').on('change', function() {
+        
+            const selectedTaskType = $(this).val();
+        
+            if (programmingTasks.includes(selectedTaskType)) {
+                $('#taskSizeLabel').fadeIn();
+                $('#taskSizeButtons').fadeIn();
+            } 
+        
+            else {
+                $('#taskSizeLabel').fadeOut();
+                $('#taskSizeButtons').fadeOut();
+                $('#taskSizeDetails').fadeOut();
+                $('#taskSize').val('');
             }
         });
 
