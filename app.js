@@ -633,6 +633,176 @@ app.get('/social-responsibility-policy', (req, res) => {
 
 
 
+// ---------- STEM Assignments Routes Starts From Here ----------
+app.get('/stem-assignments/calculus-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/calculus");
+});
+
+app.get('/stem-assignments/chemistry-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/chemistry");
+});
+
+app.get('/stem-assignments/computer-science-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/computer-science");
+});
+
+app.get('/stem-assignments/database-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/database");
+});
+
+app.get('/stem-assignments/excel-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/excel");
+});
+
+app.get('/stem-assignments/html-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/html");
+});
+
+app.get('/stem-assignments/java-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/java");
+});
+
+app.get('/stem-assignments/javascript-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/javascript");
+});
+
+app.get('/stem-assignments/matlab-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/matlab");
+});
+
+app.get('/stem-assignments/physics-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/physics");
+});
+
+app.get('/stem-assignments/programming-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/programming");
+});
+
+app.get('/stem-assignments/python-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/python");
+});
+
+app.get('/stem-assignments/r-studio-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/r");
+});
+
+app.get('/stem-assignments/php-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/php");
+});
+
+app.get('/stem-assignments/engineering-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/engineering");
+});
+
+app.get('/stem-assignments/cpp-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/cpp");
+});
+
+app.get('/stem-assignments/csharp-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/csharp");
+});
+
+app.get('/stem-assignments/math-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/math");
+});
+
+app.get('/stem-assignments/biology-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/biology");
+});
+
+app.get('/stem-assignments/sql-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/sql");
+});
+
+app.get('/stem-assignments/data-science-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/data-science");
+});
+
+app.get('/stem-assignments/do-exam-for-me-assignments-help', (req, res) => {
+    res.render("main/stem-assignment-pages/do-exam-for-me");
+});
+// ---------- STEM Assignments Routes Starts From Here ----------
+
+
+
+
+// ---------- Academic Writing Routes Starts From Here ----------
+app.get('/academic-writing/assignment-writing-services', (req, res) => {
+    res.render("main/academic-writing-pages/assignment-writing");
+});
+
+app.get('/academic-writing/pay-for-homework-help', (req, res) => {
+    res.render("main/academic-writing-pages/pay-for-homework-help");
+});
+
+app.get('/academic-writing/assignment-editing', (req, res) => {
+    res.render("main/academic-writing-pages/assignment-editing");
+});
+
+app.get('/academic-writing/psychology-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/psychology");
+});
+
+app.get('/academic-writing/buy-assignments', (req, res) => {
+    res.render("main/academic-writing-pages/buy-assignments");
+});
+
+app.get('/academic-writing/economics-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/economics");
+});
+
+app.get('/academic-writing/statistics-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/statistics");
+});
+
+app.get('/academic-writing/nursing-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/nursing");
+});
+
+app.get('/academic-writing/law-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/law");
+});
+
+app.get('/academic-writing/college-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/college");
+});
+
+app.get('/academic-writing/assignments-for-money', (req, res) => {
+    res.render("main/academic-writing-pages/assignments-for-money");
+});
+
+app.get('/academic-writing/english-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/english");
+});
+
+app.get('/academic-writing/mba-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/mba");
+});
+
+app.get('/academic-writing/business-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/business");
+});
+
+app.get('/academic-writing/accounting-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/accounting");
+});
+
+app.get('/academic-writing/history-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/history");
+});
+
+app.get('/academic-writing/finance-assignments-help', (req, res) => {
+    res.render("main/academic-writing-pages/finance");
+});
+
+app.get('/academic-writing/write-my-coursework', (req, res) => {
+    res.render("main/academic-writing-pages/write-my-coursework");
+});
+// ---------- Academic Writing Routes Starts From Here ----------
+
+
+
+
 app.get('/order-request-form', isAuthenticated, async (req, res) => {
     res.render('main/form')
 })
