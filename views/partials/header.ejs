@@ -427,7 +427,7 @@
           left: 149px;
       }
   }
-  
+
 
   @media (max-width: 790px) {
       .nav-links li a {
@@ -440,6 +440,13 @@
 
 
   @media (max-width: 790px) {
+      .logo {
+          width: 70px;
+          margin-top: 12px;
+          position: relative;
+          left: 8px;
+      }
+
       .contact-btn {
           position: relative;
           margin-right: 155px;
@@ -577,6 +584,7 @@
   
       nav.active .menu{
           left: -0%;
+          margin-top: 8px;
       }
   
       nav.active .nav-bar .navLogo a{
@@ -688,10 +696,43 @@
           display: none;
       }
   }
-  
+
+
+  @media (max-width: 760px) {
+      .nav-bar .nav-links {
+          flex-direction: column;
+          padding-top: 30px;
+          margin-right: 158px;
+       }
+  }
+
+
+  @media (max-width: 790px) {
+      .nav-links li a {
+          display: block;
+          margin-top: 8px;
+          width: 160px;
+          text-align: center;
+      }
+
+      .contact-btn {
+          position: relative;
+          margin-right: 160px;
+          width: 151px;
+          margin-top: 36px;
+          text-align: center;
+      }
+
+      .nav.active .menu {
+          left: -0%;
+          margin-top: 14px;
+      }
+  }
+
+
   </style>
-  
-  
+
+
    <script>
       document.addEventListener('DOMContentLoaded', function() {
       const burgerButton = document.querySelector('.Header__burger');
@@ -708,10 +749,10 @@
 	<nav>
         <div class="nav-bar">
             <i class='bx bx-menu sidebarOpen' ></i>
-            <span class="logo navLogo"><a href="/"><img src="/images/logo.jpg" alt="" width="70px" height="60px"></a></span>
+            <span class="logo navLogo"><a href="/"><img src="/images/logo2.png" alt="" width="70px" height="60px"></a></span>
             <div class="menu">
                 <div class="logo-toggle">
-                    <span class="logo"><a href="/"><img src="/images/logo.jpg" alt="" width="80px" height="80px" style="position: relative; left: 100px;"></a></span>
+                    <span class="logo"><a href="/"><img src="/images/logo2.png" alt="" width="80px" height="80px" style="position: relative; left: 100px;"></a></span>
                     <i class='bx bx-x siderbarClose'></i>
                 </div>
                 <ul class="nav-links">
@@ -748,29 +789,29 @@
             <script>
                 const body2 = document.querySelector("body"),
                       nav = document.querySelector("nav"),
-                      modeToggle = document.querySelector(".dark-light"),
+                    //   modeToggle = document.querySelector(".dark-light"),
                       searchToggle = document.querySelector(".searchToggle"),
                       sidebarOpen = document.querySelector(".sidebarOpen"),
                       siderbarClose = document.querySelector(".siderbarClose");
-                      let getMode = localStorage.getItem("mode");
+                    //   let getMode = localStorage.getItem("mode");
                   
-                        if(getMode && getMode === "dark-mode"){
-                            body2.classList.add("dark");
-                        }
+                //         if(getMode && getMode === "dark-mode"){
+                //             body2.classList.add("dark");
+                //         }
             
-                        modeToggle.addEventListener("click" , () =>{
-                        modeToggle.classList.toggle("active");
-                        body2.classList.toggle("dark");
+                //         modeToggle.addEventListener("click" , () =>{
+                //         modeToggle.classList.toggle("active");
+                //         body2.classList.toggle("dark");
                         
-                    if(!body2.classList.contains("dark")){
-                        localStorage.setItem("mode" , "light-mode");
-                    }
+                //     if(!body2.classList.contains("dark")){
+                //         localStorage.setItem("mode" , "light-mode");
+                //     }
                   
-                    else{
-                        localStorage.setItem("mode" , "dark-mode");
-                    }
+                //     else{
+                //         localStorage.setItem("mode" , "dark-mode");
+                //     }
                       
-                  });
+                //   });
                     
                         searchToggle.addEventListener("click" , () =>{
                         searchToggle.classList.toggle("active");
@@ -789,3 +830,4 @@
                     }
                 });
             </script>
+

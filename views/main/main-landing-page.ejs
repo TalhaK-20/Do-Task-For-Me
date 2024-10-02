@@ -863,6 +863,7 @@ nav .nav-bar {
 
     nav.active .menu{
         left: -0%;
+        margin-top: 14px;
     }
 
     nav.active .nav-bar .navLogo a{
@@ -934,7 +935,7 @@ nav .nav-bar {
 @media (max-width: 790px) {
     .nav-links li a {
         display: block;
-        margin-top: -14px;
+        margin-top: 8px;
         width: 160px;
         text-align: center;
     }
@@ -986,6 +987,11 @@ nav .nav-bar {
         z-index: 100;
         transition: all 0.4s ease;
         color: black;
+    }
+
+    .nav.active .menu {
+        left: -0%;
+        margin-top: 14px;
     }
 
     .section-top-home-no-guarantees__title p{
@@ -1047,6 +1053,15 @@ nav .nav-bar {
 }
 
 
+@media (max-width: 362px) {
+    .section-top-home-no-guarantees__title h1 {
+        margin-left: 68px;
+        position: relative;
+        font-size: 33px;
+    }
+}
+
+
 @media (max-width: 350px) {
     .section-top-home-no-guarantees__title p{
         display: none;
@@ -1103,10 +1118,10 @@ nav .nav-bar {
 	<nav>
         <div class="nav-bar">
             <i class='bx bx-menu sidebarOpen' ></i>
-            <span class="logo navLogo"><a href="/"><img src="/images/logo.jpg" alt="" width="70px" height="60px"></a></span>
+            <span class="logo navLogo"><a href="/"><img src="/images/logo2.png" alt="" width="70px" height="60px"></a></span>
             <div class="menu">
                 <div class="logo-toggle">
-                    <span class="logo"><a href="/"><img src="/images/logo.jpg" alt="" width="80px" height="80px" style="position: relative; left: 100px;"></a></span>
+                    <span class="logo"><a href="/"><img src="/images/logo2.png" alt="" width="80px" height="80px" style="position: relative; left: 100px;"></a></span>
                     <i class='bx bx-x siderbarClose'></i>
                 </div>
                 <ul class="nav-links">

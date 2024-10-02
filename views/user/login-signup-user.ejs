@@ -113,10 +113,10 @@
             margin-left: 504px;
         }
 
-        img {
+        /* img {
             width: 80px !important;
             height: 80px !important;
-        }
+        } */
 
         #signupForm button.hidden {
             opacity: 0;
@@ -834,6 +834,7 @@
 
             nav.active .menu {
                 left: -0%;
+                margin-top: 14px;
             }
 
             nav.active .nav-bar .navLogo a {
@@ -862,6 +863,10 @@
 
             .our-guarantees__statistics__numbers {
                 color: #06234A;
+            }
+
+            .logo {
+                margin-left: 12px;
             }
         }
 
@@ -950,10 +955,10 @@
         <nav>
             <div class="nav-bar">
                 <i class='bx bx-menu sidebarOpen'></i>
-                <span class="logo navLogo"><a href="/"><img src="../images/logo.jpg" alt="" width="70px" height="60px"></a></span>
+                <span class="logo navLogo"><a href="/"><img src="../images/logo2.png" alt="" width="70px" height="40px"></a></span>
                 <div class="menu">
                     <div class="logo-toggle">
-                        <span class="logo"><a href="/"><img src="../images/logo.jpg" alt="" width="80px" height="80px" style="position: relative; left: 100px;"></a></span>
+                        <span class="logo"><a href="/"><img src="../images/logo2.png" alt="" width="70px" height="40px" style="position: relative; left: 100px;"></a></span>
                         <i class='bx bx-x siderbarClose'></i>
                     </div>
                     
@@ -1315,21 +1320,21 @@
                 siderbarClose = document.querySelector(".siderbarClose");
             let getMode = localStorage.getItem("mode");
         
-            if (getMode && getMode === "dark-mode") {
-                body2.classList.add("dark");
-            }
+            // if (getMode && getMode === "dark-mode") {
+            //     body2.classList.add("dark");
+            // }
         
             modeToggle.addEventListener("click", () => {
                 modeToggle.classList.toggle("active");
                 body2.classList.toggle("dark");
         
-                if (!body2.classList.contains("dark")) {
-                    localStorage.setItem("mode", "light-mode");
-                }
+                // if (!body2.classList.contains("dark")) {
+                //     localStorage.setItem("mode", "light-mode");
+                // }
         
-                else {
-                    localStorage.setItem("mode", "dark-mode");
-                }
+                // else {
+                //     localStorage.setItem("mode", "dark-mode");
+                // }
         
             });
         

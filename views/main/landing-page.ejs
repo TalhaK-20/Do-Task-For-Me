@@ -275,8 +275,8 @@
         }
 
         .logo img {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 40px;
         }
 
 
@@ -589,9 +589,9 @@
             geoIpLookup: function(success, failure) {
                 fetch('https://ipinfo.io?token=e932ef37602dda', { headers: { 'Accept': 'application/json' } })
                     
-                    .then((resp) => resp.json())
+                .then((resp) => resp.json())
                     
-                    .then((resp) => {
+                .then((resp) => {
                         const countryCode = (resp && resp.country) ? resp.country : "us";
                         success(countryCode);
                     })
@@ -602,24 +602,45 @@
             },
 
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-
         });
-    
+
         function formatPhoneNumber(number) {
             return number.replace(/\D/g, '');
         }
-    
+
+        function stripDialCode(number, dialCode) {
+            const cleanNumber = formatPhoneNumber(number);
+            const dialCodeLength = dialCode.length;
+            
+            if (cleanNumber.startsWith(dialCode)) {
+                return cleanNumber.slice(dialCodeLength);
+            }
+            return cleanNumber;
+        }
+
         input.addEventListener('input', function() {
-            const rawValue = input.value;
-            const formattedValue = formatPhoneNumber(rawValue);
-            input.value = formattedValue;
+            let rawValue = input.value;
+            const countryData = iti.getSelectedCountryData();
+            const dialCode = countryData.dialCode;
+
+            if (!rawValue.startsWith('+')) {
+                rawValue = '+' + dialCode + formatPhoneNumber(rawValue);
+            } 
+            
+            else {
+                rawValue = '+' + formatPhoneNumber(rawValue);
+            }   
+            input.value = rawValue;
         });
-    
+
         input.addEventListener('countrychange', function() {
             const countryData = iti.getSelectedCountryData();
+            const dialCode = countryData.dialCode;
             let rawValue = input.value;
-            rawValue = formatPhoneNumber(rawValue);
-            input.value = '+' + countryData.dialCode + rawValue;
+    
+            rawValue = stripDialCode(rawValue, dialCode);
+    
+            input.value = '+' + dialCode + rawValue;
         });
 
     </script>
