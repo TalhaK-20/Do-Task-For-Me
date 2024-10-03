@@ -275,7 +275,7 @@
         }
 
         .logo img {
-            width: 60px;
+            width: 70px;
             height: 40px;
         }
 
@@ -649,6 +649,16 @@
 
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPriceSpan = document.getElementById('currentPrice');
+            currentPriceSpan.textContent = '0.00';
+        });
+    </script>
+
+
+
+
+    <script>
 
         $(document).ready(function() {
             const assignmentTypeSelect = $('#assignmentType');
@@ -860,7 +870,7 @@
 
 
         // Initial calculation on page load
-        calculateTotalCost();
+        // calculateTotalCost();
 
 
         $('#assignmentForm').on('submit', function(e) {
