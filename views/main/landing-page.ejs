@@ -810,62 +810,56 @@
         function calculateTotalCost() {
             const daysUntilDue = parseInt(daysUntilDueInput.val()) || 0;
             const gradeDesired = gradeDesiredInput.val();
-            const basePrice = 0.5; // Base price for calculation
-
-            // Urgency Multiplier
+            const basePrice = 0.5;
+                
             let urgencyMultiplier = 1;
+            
             if (daysUntilDue <= 3) {
                 urgencyMultiplier = 2;
-            } 
-            
+            }
+
             else if (daysUntilDue <= 7) {
                 urgencyMultiplier = 1.5;
             }
-
-            // Grade Multiplier
+        
             let gradeMultiplier = 1;
             if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'a') {
                 gradeMultiplier = 1.5;
             } 
             
+            
             else if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'b') {
                 gradeMultiplier = 1.2;
             }
-
-            // Additional Costs
+        
             const professionalLevel = professionalLevelCheckbox.is(':checked');
             const vivaRequired = vivaRequiredCheckbox.is(':checked');
             const topProgrammer = topProgrammerCheckbox.is(':checked');
             const vivaPreparation = vivaPreparationRadio.val();
-
+        
             const professionalLevelCost = professionalLevel ? basePrice * 90 : 0;
             const vivaCost = vivaRequired ? basePrice * 30 : 0;
             const topProgrammerCost = topProgrammer ? basePrice * 30 : 0;
-            const vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 40 : 0;
-
-            // Task Size Multipliers
+        
             const taskSize = taskSizeInput.val();
             let taskSizeMultiplier = 1;
-            
+
             switch (taskSize) {
-                
                 case 'extraSmall': taskSizeMultiplier = 15; break;
-                
                 case 'small': taskSizeMultiplier = 30; break;
-                
                 case 'medium': taskSizeMultiplier = 50; break;
-                
                 case 'large': taskSizeMultiplier = 100; break;
-                
                 case 'professional': taskSizeMultiplier = 200; break;
             }
-
-
-            // Total Cost Calculation
-            const totalCost = basePrice * urgencyMultiplier * gradeMultiplier * taskSizeMultiplier + professionalLevelCost + vivaCost + topProgrammerCost + vivaPreparationCost;
-
+        
+            let totalCost = basePrice * urgencyMultiplier * gradeMultiplier * taskSizeMultiplier + professionalLevelCost + vivaCost + topProgrammerCost;
+        
+            if (vivaPreparation === 'yes') {
+                totalCost += totalCost * 0.15;
+            }
+        
             currentPriceSpan.text(totalCost.toFixed(2));
-            priceMessage.fadeIn(); // Show price details to user
+            priceMessage.fadeIn();
         }
 
 

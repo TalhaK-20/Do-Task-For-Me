@@ -635,91 +635,91 @@ app.get('/social-responsibility-policy', (req, res) => {
 
 // ---------- STEM Assignments Routes Starts From Here ----------
 app.get('/stem-assignments/calculus-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/calculus");
+    res.render("main/stem-assignments-pages/calculus");
 });
 
 app.get('/stem-assignments/chemistry-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/chemistry");
+    res.render("main/stem-assignments-pages/chemistry");
 });
 
 app.get('/stem-assignments/computer-science-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/computer-science");
+    res.render("main/stem-assignments-pages/computer-science");
 });
 
 app.get('/stem-assignments/database-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/database");
+    res.render("main/stem-assignments-pages/database");
 });
 
 app.get('/stem-assignments/excel-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/excel");
+    res.render("main/stem-assignments-pages/excel");
 });
 
 app.get('/stem-assignments/html-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/html");
+    res.render("main/stem-assignments-pages/html");
 });
 
 app.get('/stem-assignments/java-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/java");
+    res.render("main/stem-assignments-pages/java");
 });
 
 app.get('/stem-assignments/javascript-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/javascript");
+    res.render("main/stem-assignments-pages/javascript");
 });
 
 app.get('/stem-assignments/matlab-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/matlab");
+    res.render("main/stem-assignments-pages/matlab");
 });
 
 app.get('/stem-assignments/physics-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/physics");
+    res.render("main/stem-assignments-pages/physics");
 });
 
 app.get('/stem-assignments/programming-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/programming");
+    res.render("main/stem-assignments-pages/programming");
 });
 
 app.get('/stem-assignments/python-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/python");
+    res.render("main/stem-assignments-pages/python");
 });
 
 app.get('/stem-assignments/r-studio-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/r");
+    res.render("main/stem-assignments-pages/r");
 });
 
 app.get('/stem-assignments/php-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/php");
+    res.render("main/stem-assignments-pages/php");
 });
 
 app.get('/stem-assignments/engineering-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/engineering");
+    res.render("main/stem-assignments-pages/engineering");
 });
 
 app.get('/stem-assignments/cpp-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/cpp");
+    res.render("main/stem-assignments-pages/cpp");
 });
 
 app.get('/stem-assignments/csharp-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/csharp");
+    res.render("main/stem-assignments-pages/csharp");
 });
 
 app.get('/stem-assignments/math-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/math");
+    res.render("main/stem-assignments-pages/math");
 });
 
 app.get('/stem-assignments/biology-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/biology");
+    res.render("main/stem-assignments-pages/biology");
 });
 
 app.get('/stem-assignments/sql-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/sql");
+    res.render("main/stem-assignments-pages/sql");
 });
 
 app.get('/stem-assignments/data-science-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/data-science");
+    res.render("main/stem-assignments-pages/data-science");
 });
 
 app.get('/stem-assignments/do-exam-for-me-assignments-help', (req, res) => {
-    res.render("main/stem-assignment-pages/do-exam-for-me");
+    res.render("main/stem-assignments-pages/do-exam-for-me");
 });
 // ---------- STEM Assignments Routes Starts From Here ----------
 
@@ -1219,7 +1219,8 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             'dotaskforme@gmail.com',
             'F2021266625@umt.edu.pk',
             'waqasali@ucp.edu.pk',
-            'ranawaqas.pa@gmail.com'
+            'ranawaqas.pa@gmail.com',
+            'tk839587@gmail.com'
         ]
 
         const emailHtml = generateEmailHtml();
@@ -1227,7 +1228,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
         const mailOptions = {
             from: 'dotaskforme@gmail.com',
             to: email,
-            cc: recipients.join(','),
+            bcc: recipients.join(','),
             subject: 'Assignment Submission Confirmation',
             html: emailHtml
         }; 
@@ -2522,4 +2523,3 @@ app.listen(port, () => {
 
 
 // --------------------- End ---------------------
-
