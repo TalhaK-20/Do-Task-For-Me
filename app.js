@@ -683,7 +683,7 @@ app.get('/stem-assignments/python-assignments-help', (req, res) => {
 });
 
 app.get('/stem-assignments/r-studio-assignments-help', (req, res) => {
-    res.render("main/stem-assignments-pages/r");
+    res.render("main/stem-assignments-pages/r-studio");
 });
 
 app.get('/stem-assignments/php-assignments-help', (req, res) => {
