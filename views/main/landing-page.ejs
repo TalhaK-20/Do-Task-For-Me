@@ -279,6 +279,173 @@
             height: 40px;
         }
 
+        #priceDetails {
+            background: #e9ecef;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #priceMessage {
+            margin-top: 20px;
+            font-weight: bolder;
+        }
+
+        .file-upload {
+            display: inline-flex; /* Flexbox for alignment */
+            align-items: center; /* Center items vertically */
+            position: relative;
+            cursor: pointer;
+            background-color: #007BFF; /* Bright blue background */
+            color: white; /* Text color */
+            padding: 12px 20px; /* Padding for the button */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+            font-weight: bold; /* Bold text */
+            text-align: center; /* Center text */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+        }
+
+        .file-upload:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Lift effect */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+
+        .file-upload:active {
+            transform: translateY(1px); /* Press effect */
+        }
+
+        .file-upload input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
+
+        .file-upload-text {
+            margin-right: 8px; /* Space between text and icon */
+        }
+
+        .file-upload-icon {
+            font-size: 18px; /* Slightly larger icon */
+            transition: transform 0.2s; /* Animation for icon */
+        }
+
+        .file-upload:hover .file-upload-icon {
+            transform: rotate(10deg); /* Slight rotation on hover */
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-info {
+            margin-top: 20px; /* Space between button and file info */
+            text-align: left; /* Align text to the left */
+        }
+
+        .file-name {
+            font-size: 18px; /* Font size for file name */
+            margin: 0; /* Remove margin */
+        }
+
+        .file-preview {
+            margin-top: 10px; /* Space above the preview */
+            max-width: 100%; /* Responsive */
+            max-height: 200px; /* Limit height */
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 5px; /* Rounded corners */
+            display: block; /* Display as block */
+        }
+
+
+        @media (min-width: 800px) { 
+            .extra-options {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); */
+                width: 450px;
+            }
+        }
+
+        .extra-options label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+        }
+
+        .extra-options.active label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .extra-options label:nth-child(1) {
+            animation-delay: 2s;
+        }
+
+        .extra-options label:nth-child(3) {
+            animation-delay: 2.3s;
+        }
+
+        .extra-options label:nth-child(5) {
+            animation-delay: 2.5s;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+
+        @media (max-width: 450px) {
+            .extra-options label {
+                font-size: 13.9px;
+                display: block;
+                margin-bottom: 15px;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            }
+        }
+
+
+        @media (max-width: 390px) {
+            .extra-options label {
+                font-size: 11.9px;
+                display: block;
+                margin-bottom: 15px;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            }
+        }
+
+
+        @media (max-width: 360px) {
+            .extra-options label {
+                font-size: 10.4px;
+                display: block;
+                margin-bottom: 15px;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            }
+        }
 
     </style>
 
@@ -475,7 +642,24 @@
                     <label for="wellCommentedCode">
                         <input type="checkbox" id="wellCommentedCode" name="wellCommentedCode"> Well-commented code required
                     </label>
-                
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const extraOptions = document.querySelector('.extra-options');
+    
+                            const observer = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+            
+                                if (entry.isIntersecting) {
+                                    extraOptions.classList.add('active');
+                                }
+                                });
+                            }, { threshold: 0.1 });
+
+                            observer.observe(extraOptions);
+                        });
+                    </script>
+
                     <br>
                 
                     <label for="noOpenSource">
@@ -528,10 +712,54 @@
                 <div id="priceDetails">
                     <p id="priceMessage">Current Price (Tentative): $<span id="currentPrice"></span></p>
                 </div>
+
+
+                <div class="file-upload-container">
+                    
+                    <label class="file-upload">
+                        <input type="file" name="file" accept="*/*" required id="fileInput">
+                        <span class="file-upload-text">Upload Your File</span>
+                        <span class="file-upload-icon">📁</span>
+                    </label>
+                    
+                    <div class="file-info" id="fileInfo">
+                        <p class="file-name" id="fileName">No file chosen</p>
+                        <img id="filePreview" class="file-preview" src="" alt="" style="display: none;">
+                    </div>
+
+                </div>
                 
-              
-                <input type="file" name="file" accept="*/*" required>
-           
+                <script>
+                    document.getElementById('fileInput').addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        const fileNameElement = document.getElementById('fileName');
+                        const filePreviewElement = document.getElementById('filePreview');
+
+                        if (file) {
+                            fileNameElement.textContent = file.name;
+
+                            if (file.type.startsWith('image/')) {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    filePreviewElement.src = e.target.result;
+                                    filePreviewElement.style.display = 'block'; // Show the preview
+                                };
+
+                                reader.readAsDataURL(file);
+                            } 
+                            
+                            else {
+                                filePreviewElement.style.display = 'none';
+                            }
+                        } 
+                        
+                        else {
+                            fileNameElement.textContent = 'No file chosen';
+                            filePreviewElement.style.display = 'none';
+                        }
+                    });
+                </script>
+
                 <button type="submit" class="submit-btn">Submit</button>
             
             </form>
