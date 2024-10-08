@@ -715,53 +715,27 @@
 
 
                 <div class="file-upload-container">
-                    
+
                     <label class="file-upload">
-                        <input type="file" name="file" accept="*/*" id="fileInput">
-                        <span class="file-upload-text">Upload Your File</span>
+                        <input type="file" name="file" accept="*/*" id="fileInput" required>
+
+                        <span class="file-upload-text">Upload Your File - Required </span>
+
                         <span class="file-upload-icon">📁</span>
+
+                        <span id="errorMessage" style="color: red; display: none;">Please upload a file.</span>
                     </label>
-                    
+
+
                     <div class="file-info" id="fileInfo">
                         <p class="file-name" id="fileName">No file chosen</p>
                         <img id="filePreview" class="file-preview" src="" alt="" style="display: none;">
                     </div>
 
                 </div>
-                
-                <script>
-                    document.getElementById('fileInput').addEventListener('change', function(event) {
-                        const file = event.target.files[0];
-                        const fileNameElement = document.getElementById('fileName');
-                        const filePreviewElement = document.getElementById('filePreview');
-
-                        if (file) {
-                            fileNameElement.textContent = file.name;
-
-                            if (file.type.startsWith('image/')) {
-                                const reader = new FileReader();
-                                reader.onload = function(e) {
-                                    filePreviewElement.src = e.target.result;
-                                    filePreviewElement.style.display = 'block'; // Show the preview
-                                };
-
-                                reader.readAsDataURL(file);
-                            } 
-                            
-                            else {
-                                filePreviewElement.style.display = 'none';
-                            }
-                        } 
-                        
-                        else {
-                            fileNameElement.textContent = 'No file chosen';
-                            filePreviewElement.style.display = 'none';
-                        }
-                    });
-                </script>
 
                 <button type="submit" class="submit-btn">Submit</button>
-            
+
             </form>
         </div>
     </div>
@@ -772,6 +746,54 @@
 
 
 
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('assignmentForm').addEventListener('submit', function(event) {
+                const fileInput = document.getElementById('fileInput');
+                const errorMessage = document.getElementById('errorMessage');
+        
+                if (!fileInput.files.length) {
+                    errorMessage.style.display = 'block';
+                    event.preventDefault();
+                } 
+                
+                else {
+                    errorMessage.style.display = 'none';
+                }
+            });
+
+
+            document.getElementById('fileInput').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                const fileNameElement = document.getElementById('fileName');
+                const filePreviewElement = document.getElementById('filePreview');
+        
+                if (file) {
+                    fileNameElement.textContent = file.name;
+
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            filePreviewElement.src = e.target.result;
+                            filePreviewElement.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } 
+                    
+                    else {
+                        filePreviewElement.style.display = 'none';
+                    }
+                } 
+                
+                else {
+                    fileNameElement.textContent = 'No file chosen';
+                    filePreviewElement.style.display = 'none';
+                }
+            });
+        });
+
+    </script>
 
 
 
