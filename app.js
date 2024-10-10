@@ -728,75 +728,79 @@ app.get('/stem-assignments/do-exam-for-me-assignments-help', (req, res) => {
 
 // ---------- Academic Writing Routes Starts From Here ----------
 app.get('/academic-writing/assignment-writing-services', (req, res) => {
-    res.render("main/academic-writing-pages/assignment-writing");
+    res.render("main/writing-assignments-pages/service");
 });
 
 app.get('/academic-writing/pay-for-homework-help', (req, res) => {
-    res.render("main/academic-writing-pages/pay-for-homework-help");
+    res.render("main/writing-assignments-pages/pay-for-homework");
 });
 
 app.get('/academic-writing/assignment-editing', (req, res) => {
-    res.render("main/academic-writing-pages/assignment-editing");
+    res.render("main/writing-assignments-pages/editing-service");
 });
 
 app.get('/academic-writing/psychology-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/psychology");
+    res.render("main/writing-assignments-pages/psychology");
 });
 
 app.get('/academic-writing/buy-assignments', (req, res) => {
-    res.render("main/academic-writing-pages/buy-assignments");
+    res.render("main/writing-assignments-pages/buy");
 });
 
 app.get('/academic-writing/economics-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/economics");
+    res.render("main/writing-assignments-pages/economics");
 });
 
 app.get('/academic-writing/statistics-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/statistics");
+    res.render("main/writing-assignments-pages/statistics");
 });
 
 app.get('/academic-writing/nursing-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/nursing");
+    res.render("main/writing-assignments-pages/nursing");
 });
 
 app.get('/academic-writing/law-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/law");
+    res.render("main/writing-assignments-pages/law");
 });
 
 app.get('/academic-writing/college-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/college");
+    res.render("main/writing-assignments-pages/college");
 });
 
 app.get('/academic-writing/assignments-for-money', (req, res) => {
-    res.render("main/academic-writing-pages/assignments-for-money");
+    res.render("main/writing-assignments-pages/pay-for-homework");
 });
 
 app.get('/academic-writing/english-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/english");
+    res.render("main/writing-assignments-pages/english");
 });
 
 app.get('/academic-writing/mba-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/mba");
+    res.render("main/writing-assignments-pages/mba");
 });
 
 app.get('/academic-writing/business-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/business");
+    res.render("main/writing-assignments-pages/business");
+});
+
+app.get('/academic-writing/business-management-assignments-help', (req, res) => {
+    res.render("main/writing-assignments-pages/business-management");
 });
 
 app.get('/academic-writing/accounting-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/accounting");
+    res.render("main/writing-assignments-pages/accounting");
 });
 
 app.get('/academic-writing/history-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/history");
+    res.render("main/writing-assignments-pages/history");
 });
 
 app.get('/academic-writing/finance-assignments-help', (req, res) => {
-    res.render("main/academic-writing-pages/finance");
+    res.render("main/writing-assignments-pages/finance");
 });
 
 app.get('/academic-writing/write-my-coursework', (req, res) => {
-    res.render("main/academic-writing-pages/write-my-coursework");
+    res.render("main/writing-assignments-pages/do-my-coursework");
 });
 // ---------- Academic Writing Routes Starts From Here ----------
 
