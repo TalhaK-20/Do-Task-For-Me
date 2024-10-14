@@ -21,7 +21,7 @@
     .section-top-experts__heading.visible {
       opacity: 1;
       margin-left: 218px;
-      text-align: center;
+      text-align: left;
       transform: translateX(0);
     }
 
@@ -30,11 +30,31 @@
       position: relative;
       left: 462px;
     }
+
+    .section-top-experts__inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-column-gap: 50px;
+      -webkit-column-gap: 50px;
+      -moz-column-gap: 50px;
+      column-gap: 50px;
+      width: 115%;
+      position: relative;
+      right: 197px;
+    }
+
   }
 
   #TalhaK {
     background-color: #f8f8f8;
-    height: 828px;
+    height: 410px;
+  }
+
+  @media (max-width: 500px) {
+    #TalhaK {
+      background-color: #f8f8f8;
+      height: 370px;
+    }
   }
 
   .section-top-experts__heading {
@@ -91,7 +111,7 @@
 
     const options = {
       root: null,
-      threshold: 0.1 // Adjust as needed
+      threshold: 0.9 // Adjust as needed
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -113,7 +133,7 @@
 
     const options = {
       root: null,
-      threshold: 0.1 // Adjust as needed
+      threshold: 0.9 // Adjust as needed
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -136,7 +156,7 @@
 
     const options = {
       root: null,
-      threshold: 0.3 // Adjust as needed
+      threshold: 0.9 // Adjust as needed
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -159,7 +179,7 @@
         <p class="section__subtitle">Each of our experts is highly experienced and qualified to deal with any tasks
           in their field. All you need to do is ask them for assistance.</p>
       </div>
-      <div class="section-top-experts__banner" style="display: none;">
+      <div class="section-top-experts__banner">
         <img src="/images/main-landing-page-images/redesign/home/section-top-experts/ico_star.svg" width="34"
           height="44" alt="" loading="lazy">
         <p>15 years of experience in the STEM assignments and academic writing</p>
@@ -205,7 +225,7 @@
                 plant cells, as well as with advanced tasks.</p>
             </div>
 
-            <div class="writers__item spwriters__item splide__slide1" id="splide01-slide04" style="">
+            <div class="writers__item spwriters__item splide__slide1" id="splide01-slide04" style="display: none;">
               <img src="/images/main-landing-page-images/redesign/home/section-top-experts/img_heart.png" width="287"
                 height="287" alt="" loading="lazy" class="writers__item__img">
               <a href="/form" class="btn btn--orange">Find your coding expert</a>

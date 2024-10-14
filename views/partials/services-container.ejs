@@ -1,3 +1,82 @@
+<style>
+    #trick7 {
+        opacity: 0;
+        /* Start hidden */
+        transform: translateY(-100px);
+        /* Start from the right */
+        transition: opacity 2.0s ease, transform 2.0s ease;
+        /* Smooth transition */
+    }
+
+    #trick7.visible {
+        opacity: 1;
+        /* Fade in */
+        transform: translateX(0);
+        /* Move to original position */
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const heading = document.querySelector('#trick7');
+
+        const options = {
+            root: null,
+            threshold: 0.9 // Adjust as needed
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    heading.classList.add('visible');
+                    observer.unobserve(heading); // Stop observing after the animation is triggered
+                }
+            });
+        }, options);
+
+        observer.observe(heading);
+    });
+</script>
+
+
+
+<style>
+    #trick8 {
+        opacity: 0;
+        /* Start hidden */
+        transform: translateY(100px);
+        /* Start from the right */
+        transition: opacity 2.0s ease, transform 2.0s ease;
+        /* Smooth transition */
+    }
+
+    #trick8.visible {
+        opacity: 1;
+        /* Fade in */
+        transform: translateX(0);
+        /* Move to original position */
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const heading = document.querySelector('#trick8');
+
+        const options = {
+            root: null,
+            threshold: 0.9 // Adjust as needed
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    heading.classList.add('visible');
+                    observer.unobserve(heading); // Stop observing after the animation is triggered
+                }
+            });
+        }, options);
+
+        observer.observe(heading);
+    });
+</script>
 <div class="section section-services-links">
     <div class="container">
         <div class="services-links__blocks">
@@ -5,7 +84,7 @@
                 <div class="h3 services-links__header">
                     STEM assignments
                 </div>
-                <ul class="services-links__list list--clean">
+                <ul class="services-links__list list--clean" id="trick7">
                     <li><a href="/stem-assignments/programming-assignments-help">Programming homework help</a></li>
 
                     <li><a href="/stem-assignments/java-assignments-help">JAVA homework help</a></li>
@@ -14,7 +93,8 @@
 
                     <li><a href="/stem-assignments/matlab-assignments-help">MATLAB homework help</a></li>
 
-                    <li><a href="/stem-assignments/computer-science-assignments-help">Computer science homework help</a></li>
+                    <li><a href="/stem-assignments/computer-science-assignments-help">Computer science homework help</a>
+                    </li>
 
                     <li><a href="/stem-assignments/php-assignments-help">PHP homework help</a></li>
 
@@ -25,7 +105,7 @@
                     <li><a href="/stem-assignments/html-assignments-help">HTML assignment help</a></li>
 
                     <li><a href="/stem-assignments/cpp-assignments-help">C++ assignment help</a></li>
-                    
+
                     <li><a href="/stem-assignments/calculus-assignments-help">Calculus homework help</a></li>
 
                     <li><a href="/stem-assignments/math-assignments-help">Do math homework for me</a></li>
@@ -55,7 +135,7 @@
                 <div class="h3 services-links__header">
                     Academic writing
                 </div>
-                <ul class="services-links__list list--clean">
+                <ul class="services-links__list list--clean" id="trick8">
                     <li><a href="/academic-writing/assignment-writing-services">Assignment writing service</a></li>
 
                     <li><a href="/academic-writing/assignments-for-money">Assignments for money</a></li>
