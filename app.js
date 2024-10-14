@@ -337,11 +337,11 @@ async (token, tokenSecret, profile, done) => {
             });
         }
 
-        done(null, user);
+        return done(null, user);
     } 
 
     catch (error) {
-        done(error, null);
+        return done(error, null);
     }
 }));
 
