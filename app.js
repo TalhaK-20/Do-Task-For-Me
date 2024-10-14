@@ -215,27 +215,29 @@ passport.use(new GoogleStrategy({
     clientID: '561313317956-b22rnrjp8h2aelrdvu42699cqc6ib9ld.apps.googleusercontent.com',
     clientSecret: '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',
     callbackURL: 'https://dotaskforme.com/auth/google/callback'
-}, async (token, tokenSecret, profile, done) => {
-    
+}, 
+
+async (token, tokenSecret, profile, done) => {
+
     try {
         let user = await User.findOne({ googleId: profile.id });
+
         if (!user) {
+
             user = new User({
                 googleId: profile.id,
                 username: profile.displayName,
                 email: profile.emails[0].value,
                 password: profile.id  // Save Google ID as the Password
             });
-            await user.save();
 
+            await user.save();
 
             const mailOptions = {
                 from: 'dotaskforme@gmail.com',
                 to: user.email,
                 subject: 'Welcome to Do Task For Me.com',
-                html: 
-       
-                `
+                html: `
                     <!DOCTYPE html>
                     <html>
                     <head>
@@ -323,23 +325,21 @@ passport.use(new GoogleStrategy({
                 `
             };
 
-
             transporter.sendMail(mailOptions, (error, info) => {
-                
+
                 if (error) {
                     console.log('Error sending email:', error);
                 } 
-                
+
                 else {
                     console.log('Email sent:', info.response);
                 }
-
             });
         }
 
         done(null, user);
     } 
-    
+
     catch (error) {
         done(error, null);
     }
