@@ -576,6 +576,11 @@
 	class="home page-template page-template-template-builder page-template-template-builder-php page page-id-1693 wp-custom-logo wp-embed-responsive theme-agenxe woocommerce-no-js dark-theme elementor-default elementor-kit-7 elementor-page elementor-page-1693"
 	style="background-color: #06234A;">
 
+
+    <%- include("../partials/whatsapp-contact-for-main.ejs") %>	
+    <%- include("../partials/cursor-effect.ejs") %>
+
+
 	<div class="th-cursor"></div>
 	<header class="header">
 		<div data-elementor-type="wp-post" data-elementor-id="1684" class="elementor elementor-1684">
@@ -617,7 +622,7 @@
 										<!-- HEADER FOR MOBILE -->
 										<div class="th-menu-area text-center">
 											<button class="th-menu-toggle"><i class="fal fa-times"></i></button>
-											<div class="mobile-logo"><a class="logo" href="index.html"><img
+											<div class="mobile-logo"><a class="logo" href="/"><img
 														src="/images/modern-landing-page-images/wp-content/uploads/2024/02/42801909_transparent-1.png"
 														alt="42801909_transparent 1" class="img-fluid" width="94px"
 														height="60px" /></a></div>
@@ -747,12 +752,12 @@
 } */
 													</style>
 													<div id="JUGAAR">
-														<a href="#contact"><button class="btn login-btn">LOGIN | SIGN
+														<a href="/login-user"><button class="btn login-btn">LOGIN | SIGN
 																UP</button></a>
 														<br>
 														<br>
 														<hr>
-														<a href="#contact"><button class="btn order-btn">ORDER
+														<a href="/form"><button class="btn order-btn">ORDER
 																NOW</button></a>
 													</div>
 											</div>
@@ -901,12 +906,12 @@
 										<div style="
 	 text-align: center;
 	 margin-top: 226px;">
-											<a href="#contact"><button class="btn login-btn" id="trick3">LOGIN | SIGN
+											<a href="/login-user"><button class="btn login-btn" id="trick3">LOGIN | SIGN
 													UP</button></a>
 											<br>
 											<br>
 											<hr>
-											<a href="#contact"><button class="btn order-btn" id="trick4">ORDER
+											<a href="/form"><button class="btn order-btn" id="trick4">ORDER
 													NOW</button></a>
 										</div>
 										<!-- <button type="submit"><i class="fal fa-search"></i></button> -->
@@ -951,7 +956,7 @@
 													<div class="row align-items-center justify-content-between">
 														<div class="col-auto">
 															<div class="header-logo">
-																<a href="index.html">
+																<a href="/">
 																	<img src="images/modern-landing-page-images/wp-content/uploads/2023/10/42801909_transparent-1-4.png"
 																		alt="42801909_transparent 1 4" width="92px"
 																		height="60px" /> </a>
@@ -2594,7 +2599,7 @@
 		</div>
 	</div>
 
-	<%- include("../partials/services-container.ejs") %>
+	<%- include("../partials/services-container-for-main.ejs") %>
 		<%- include("../partials/footer.ejs") %>
 
 			<!---footer-wrapper start-->
