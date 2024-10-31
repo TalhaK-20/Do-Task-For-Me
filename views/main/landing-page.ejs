@@ -1205,9 +1205,27 @@
       z-index: -1;
     }
 
+    @media (min-width: 980px) {
+      #whatsapp {
+        width: 451px;
+      }
+
+      #vivaPreparation {
+        width: 451px;
+      }
+    }
+
+    @media (max-width: 950px) {
+      #whatsapp {
+        width: 420px;
+      }
+
+      #vivaPreparation {
+        width: 420px;
+      }
+    }
+
     @media (min-width: 800px) {
-
-
       .OrderForm {
         position: relative;
         left: 170px;
@@ -1224,6 +1242,83 @@
         font-size: xx-large;
       }
     }
+
+    @media (max-width: 780px) {
+      #whatsapp {
+        width: 357px;
+      }
+
+      #vivaPreparation {
+        width: 357px;
+      }
+
+      .OrderForm {
+        margin-top: 120px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .OrderForm {
+        margin-top: 102px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      #whatsapp {
+        width: 325px;
+      }
+
+      #vivaPreparation {
+        width: 325px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      #whatsapp {
+        width: 293px;
+      }
+
+      #vivaPreparation {
+        width: 293px;
+      }
+    }
+
+    @media (max-width: 376px) {
+      #whatsapp {
+        width: 280px;
+      }
+
+      #vivaPreparation {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      #whatsapp {
+        width: 268px;
+      }
+
+      #vivaPreparation {
+        width: 268px;
+      }
+    }
+
+    @media (max-width: 345px) {
+      #whatsapp {
+        width: 252px;
+      }
+
+      #vivaPreparation {
+        width: 252px;
+      }
+    }
+
+    @media (max-width: 600px) and (min-width: 300px) {
+      .OrderForm {
+        margin-top: 120px;
+      }
+    }
+
   </style>
   <%- include("../partials/header.ejs") %>
 
@@ -1456,10 +1551,10 @@
                                         </div>
                                         <div class="InstructionsControl"><textarea
                                             class="InstructionsControl__input UIInput UIInput-default UIInput-default--type-textarea UIInput-default--size-m UIInput-default--color-default UIInput-default--autosize UIInput-default--not-resizable"
-                                            placeholder="• Write what's important for the expert to consider to meet your expectations;
-                                        • Mention the software or programming environment to be used, upload data sets, grading scale, etc.
-                                        • Attach tables or charts as files; they can't be pasted here." tabindex="0"
-                                            style="overflow: hidden; overflow-wrap: break-word; height: 164px;"></textarea>
+                                            placeholder="• Write what's important for the expert to consider to meet your expectations. 
+• Mention the software or programming environment to be used, upload data sets, grading scale, etc.
+• Attach tables or charts as files; they can't be pasted here." tabindex="0"
+                                            style="overflow: hidden; overflow-wrap: break-word; height: 164px; text-align: center;"></textarea>
                                           <div
                                             class="rc-ui-blocker rc-ui-blocker--size-m rc-ui-blocker--transparency-soft">
                                             <div class="rc-files-control InstructionsControl__files"
