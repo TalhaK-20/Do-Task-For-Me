@@ -1771,7 +1771,7 @@ app.post('/reset-password-admin', async (req, res) => {
             if (foundAdmin) {
                 const resetToken = crypto.randomBytes(20).toString('hex');
                 foundAdmin.resetToken = resetToken;
-                foundAdmin.resetTokenExpiration = Date.now() + 3600000; // 1 hr
+                foundAdmin.resetTokenExpiration = Date.now() + 3600000; // 1 hour
                 await foundAdmin.save();
 
                 const mailOptions = {
