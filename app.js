@@ -1421,7 +1421,7 @@ app.post('/login-user', async (req, res) => {
         const foundUser = await User.findOne({ email, password });
 
         if (foundUser) {
-            // Store user data in session
+            // Store user's data in session
             req.session.user = foundUser;
             res.redirect('/user-dashboard');
         } 
