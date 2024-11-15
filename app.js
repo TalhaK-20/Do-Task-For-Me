@@ -1159,7 +1159,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
                     // File Sharing code will be here for the future.
                     // Account details will be given here for the file
                     // sharing in case when the file link or other things
-                    // got corrupted or other issues
+                    // got corrupted or other issues.
                     
                     // -------------------------------------------
         
