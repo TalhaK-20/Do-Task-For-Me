@@ -1085,8 +1085,7 @@
     																		.dropdown-item:hover {
 																				text-decoration: none;
     																		}
-																		
-    																		/* Responsive Design */
+																			
     																		@media (max-width: 768px) {
     																		  .dropdown-menu {
     																		    width: 100%;
@@ -1096,20 +1095,33 @@
     																		    padding: 15px;
     																		  }
     																		}
+
+																			#menu-onepage-nav {
+																				margin-right: -158px;
+																			}
+
   																			</style>
 																			<div class="dropdown">
 																				<button class="dropdown-button" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="toggleDropdown()">Sign In</button>
+																				<button class="dropdown-button" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 2px solid turquoise;"><a href="/form" style="text-decoration: none; color: white;">Order Now</a></button>
 																				<div class="dropdown-menu" id="dropdown-menu">
 																				  <div class="dropdown-item">
 																					<h4>Registered Users</h4>
 																					<p>Have an account? Sign in now.</p>
 																					<a href="/login-user">Sign In</a>
+																					<!-- <a href="/form" style="background: none; border: 1px solid turquoise; color: turquoise !important;">Order Now</a> -->
+																					
 																				  </div>
 																				  <div class="dropdown-item">
 																					<h4>New Customer</h4>
 																					<p>New one? Create an account!</p>
 																					<a href="/login-user">Create an Account</a>
 																				  </div>
+																				  <!-- <div class="dropdown-item">
+																					<h4>Get Your Assignments Done</h4>
+																					<p>Order your First Assignment</p>
+																					<a href="/form" style="background: none; border: 1px solid turquoise; color: turquoise !important;">Order Now</a>
+																				  </div> -->
 																				</div>
 																			  </div>																			
 																			  <script>
