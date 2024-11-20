@@ -341,6 +341,7 @@ async (token, tokenSecret, profile, done) => {
     } 
 
     catch (error) {
+        console.error('Error in Google Strategy:', error);
         return done(error, null);
     }
 }));
@@ -446,6 +447,7 @@ app.use(passport.session());
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+    console.log('Redirecting to dashboard');
     res.redirect('/user-dashboard');
 });
 
