@@ -465,8 +465,9 @@
 	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc0db0.php?rsd" />
 	<meta name="generator" content="WordPress 6.5.5" />
 	<meta name="generator" content="WooCommerce 8.8.5" />
-	<link rel="canonical" href="index.html" />
-	<link rel='shortlink' href='index.html' />
+	
+	<!-- <link rel="canonical" href="index.html" />
+	<link rel='shortlink' href='index.html' /> -->
 	<link rel="alternate" type="application/json+oembed"
 		href="wp-json/oembed/1.0/embed10b1.json?url=https%3A%2F%2Fparallexdevelopers.com%2F" />
 	<link rel="alternate" type="text/xml+oembed"
@@ -576,6 +577,232 @@
 	<%- include("../partials/whatsapp-contact-for-main.ejs") %>
 		<%- include("../partials/cursor-effect.ejs") %>
 
+		<style>
+			.offer-section {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				background: linear-gradient(to bottom right, #f4f4ff, #eef2f8);
+				text-align: center;
+				padding: 20px;
+			}
+		
+			.offer-container {
+				background: #ffffff;
+				border-radius: 15px;
+				padding: 30px 40px;
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+				max-width: 600px;
+				width: 100%;
+			}
+		
+			.offer-heading {
+				font-size: 2.5rem;
+				font-weight: bold;
+				color: #333;
+			}
+		
+			.offer-heading span {
+				color: #06234A;
+			}
+		
+			.offer-subheading {
+				margin: 15px 0;
+				font-size: 1.2rem;
+				color: #555;
+			}
+		
+			.offer-subheading strong {
+				color: #06234A;
+			}
+		
+			.offer-features {
+				list-style: none;
+				padding: 0;
+				margin: 20px 0;
+				font-size: 1rem;
+				color: #555;
+			}
+		
+			.offer-features li {
+				margin: 5px 0;
+			}
+		
+			.offer-price {
+				margin: 20px 0;
+				font-size: 1.5rem;
+				font-weight: bold;
+			}
+		
+			.price-amount {
+				font-size: 2rem;
+				color: #06234A;
+			}
+		
+			.price-duration {
+				font-size: 1rem;
+				color: #555;
+			}
+		
+			.additional-offer {
+				font-size: 0.9rem;
+				color: #888;
+			}
+		
+			.cta {
+				margin-top: 20px;
+			}
+		
+			.cta-btn {
+				background: #06234A;
+				color: #fff;
+				border: none;
+				padding: 12px 20px;
+				border-radius: 30px;
+				font-size: 1rem;
+				font-weight: bold;
+				cursor: pointer;
+				transition: background 0.3s ease;
+			}
+		
+			.cta-btn:hover {
+				background: #6255fc;
+			}
+		
+			.timer {
+				margin-top: 10px;
+				font-size: 1rem;
+				color: #555;
+			}
+		
+			.ExitPopup {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.6);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 9999;
+				opacity: 0;
+				visibility: hidden;
+				transition: opacity 0.3s ease, visibility 0.3s ease;
+			}
+		
+			.ExitPopup.show {
+				opacity: 1;
+				visibility: visible;
+			}
+		
+			.ExitPopup__content {
+				background: #ffffff;
+				border-radius: 15px;
+				padding: 25px;
+				text-align: center;
+				position: relative;
+				width: 90%;
+				max-width: 450px;
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+			}
+		
+			.ExitPopup__heading {
+				font-size: 1.8rem;
+				font-weight: bold;
+				color: #06234A;
+				margin-bottom: 15px;
+			}
+		
+			.btn--orange {
+				display: inline-block;
+				background: #06234A;
+				color: #ffffff;
+				padding: 12px 25px;
+				text-decoration: none;
+				border-radius: 30px;
+				font-weight: bold;
+				font-size: 1rem;
+				transition: background-color 0.3s ease;
+			}
+		
+			.btn--orange:hover {
+				background: #6980e7;
+			}
+		
+			.ExitPopup__close {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				cursor: pointer;
+				font-size: 1.5rem;
+				font-weight: bold;
+				color: #333;
+				transition: color 0.3s ease;
+			}
+		
+			.ExitPopup__close:hover {
+				color: #6980e7;
+			}
+		</style>
+		
+		<!--style="background-image: url(https://images.pexels.com/photos/2297472/pexels-photo-2297472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);"-->
+		<div class="ExitPopup" id="popup">
+			<div class="ExitPopup__content">
+				<span class="ExitPopup__close" id="closePopup">&times;</span>
+				<div class="ExitPopup__heading">Take a 90% discount for your all types of assignments!</div>
+		
+				<h1 class="offer-heading">
+					Biggest ever <span><u>New Year</u></span> sale
+				</h1>
+		
+				<p class="offer-subheading">
+					Offers we are offering for the <strong>limited time</strong> only
+				</p>
+		
+				<ul class="offer-features">
+					<li>✔ Free documentations</li>
+					<li>✔ Free plagiarism and AI reports</li>
+					<li>✔ Free revisions</li>
+					<li>✔ Free deployment for Web-based projects</li>
+				</ul>
+		
+				<!-- Pricing -->
+				<!-- <div class="offer-price">
+		  			      <span class="price-amount">Rs. 499</span>
+		  			      <span class="price-duration">/mo</span>
+		  			      <p class="additional-offer">+3 months free</p>
+		  			    </div> -->
+		
+				<div class="cta">
+					<!-- <button class="cta-btn">Order your first assignment</button> -->
+					<!-- <div class="timer">00 : 19 : 33 : 23</div> -->
+				</div>
+		
+				<a href="/form" class="btn btn--orange">
+					Order your first assignment
+				</a>
+			</div>
+		</div>
+	
+		<script>
+			document.getElementById('closePopup').addEventListener('click', function () {
+				document.getElementById('popup').classList.remove('show');
+			});
+
+			document.getElementById('popup').addEventListener('click', function (e) {
+				if (e.target === this) {
+					this.classList.remove('show');
+				}
+			});
+
+			window.onload = function () {
+				setTimeout(function () {
+					document.getElementById('popup').classList.add('show');
+				}, 3000);
+			};
+		</script>
 
 			<div class="th-cursor"></div>
 			<header class="header">
