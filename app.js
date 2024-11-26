@@ -1562,7 +1562,7 @@ app.get('/check-email', async (req, res) => {
 app.post('/reset-password-user', async (req, res) => {
 
     const email = req.body.email;
-    // const username = req.body.username (Does not require)
+    // const username = req.body.username (Does not require) 
 
     try {
         const foundUser = await User.findOne({ email });
