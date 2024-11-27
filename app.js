@@ -2093,7 +2093,7 @@ app.get('/fetch-users', async (req, res) => {
             return {
                 ...user._doc,
                 whatsapp,
-                totalAssignments: assignments.length // Count of assignments
+                totalAssignments: assignments.length // Count of assignments 
             };
 
         }));
