@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+    <meta
+      name="description"
+      content="All your assignments and tasks at one place 'Do Task For Me - Your Task Our Expertise'"
+    />
+    <link rel="icon" href="/images/logo.jpg" type="image/jpeg" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #6c63ff;
+        --primary-dark: #5a52d5;
+        --secondary: #ff6584;
+        --accent: #36d1dc;
+        --success: #4cd964;
+        --warning: #ff9500;
+        --danger: #ff3b30;
+        --light: #f8f9fd;
+        --dark: #1a1d29;
+        --gray: #8e94b3;
+        --card-bg: #ffffff;
+        --body-bg: #f0f2f8;
+        --text-primary: #1a1d29;
+        --text-secondary: #6c7293;
+        --border-color: #e8ecf2;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.1);
+        --gradient: linear-gradient(135deg, #6c63ff 0%, #36d1dc 100%);
+        --gradient-secondary: linear-gradient(135deg, #ff6584 0%, #ffd166 100%);
+        --sidebar-width: 280px;
+        --header-height: 80px;
+        --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --radius: 16px;
+      }
+
+      [data-theme="dark"] {
+        --primary: #8b85ff;
+        --primary-dark: #6c63ff;
+        --secondary: #ff7b9c;
+        --accent: #5ce1e6;
+        --light: #1e2130;
+        --dark: #f8f9fd;
+        --gray: #6c7293;
+        --card-bg: #252a3f;
+        --body-bg: #151824;
+        --text-primary: #f8f9fd;
+        --text-secondary: #8e94b3;
+        --border-color: #2d324d;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--body-bg);
+        color: var(--text-primary);
+        transition: var(--transition);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .dashboard-container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: var(--sidebar-width);
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 1000;
+        transition: var(--transition);
+        transform: translateX(0);
+        padding: 30px 0;
+      }
+
+      .sidebar-header {
+        padding: 0 25px 30px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+      }
+
+      .logo-text {
+        font-size: 1.4rem;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .sidebar-menu {
+        padding: 0 15px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: var(--transition);
+        font-weight: 500;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .menu-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: var(--primary);
+        transform: scaleY(0);
+        transition: var(--transition);
+      }
+
+      .menu-item:hover,
+      .menu-item.active {
+        background: rgba(108, 99, 255, 0.08);
+        color: var(--primary);
+      }
+
+      .menu-item.active::before {
+        transform: scaleY(1);
+      }
+
+      .menu-item i {
+        margin-right: 12px;
+        font-size: 1.2rem;
+        width: 24px;
+        text-align: center;
+      }
+
+      .theme-toggle-container {
+        padding: 20px;
+        margin-top: auto;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 15px;
+        background: var(--light);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 500;
+      }
+
+      .theme-toggle:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 26px;
+        background: var(--gray);
+        border-radius: 50px;
+        transition: var(--transition);
+      }
+
+      .toggle-switch::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        top: 3px;
+        left: 3px;
+        transition: var(--transition);
+      }
+
+      [data-theme="dark"] .toggle-switch {
+        background: var(--primary);
+      }
+
+      [data-theme="dark"] .toggle-switch::after {
+        left: 27px;
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        padding: 30px;
+        transition: var(--transition);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        animation: fadeInDown 0.8s ease;
+      }
+
+      .welcome-section h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .welcome-section p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: var(--card-bg);
+        padding: 12px 20px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .user-info:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1.2rem;
+        position: relative;
+      }
+
+      .user-avatar::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: var(--success);
+        border: 2px solid white;
+        border-radius: 50%;
+        bottom: 2px;
+        right: 2px;
+      }
+
+      /* Stats Cards */
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .stat-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 25px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.6s ease;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient);
+        top: 0;
+        left: 0;
+      }
+
+      .stat-card:nth-child(2)::before {
+        background: var(--gradient-secondary);
+      }
+
+      .stat-card:nth-child(3)::before {
+        background: linear-gradient(
+          135deg,
+          var(--success) 0%,
+          var(--accent) 100%
+        );
+      }
+
+      .stat-card:nth-child(4)::before {
+        background: linear-gradient(
+          135deg,
+          var(--warning) 0%,
+          var(--secondary) 100%
+        );
+      }
+
+      .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-hover);
+      }
+
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        background: var(--primary);
+        box-shadow: 0 6px 15px rgba(108, 99, 255, 0.3);
+      }
+
+      .stat-card:nth-child(2) .stat-icon {
+        background: var(--secondary);
+        box-shadow: 0 6px 15px rgba(255, 101, 132, 0.3);
+      }
+
+      .stat-card:nth-child(3) .stat-icon {
+        background: var(--success);
+        box-shadow: 0 6px 15px rgba(76, 217, 100, 0.3);
+      }
+
+      .stat-card:nth-child(4) .stat-icon {
+        background: var(--warning);
+        box-shadow: 0 6px 15px rgba(255, 149, 0, 0.3);
+      }
+
+      .stat-info h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .stat-info p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      /* Orders Section */
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        animation: fadeIn 0.8s ease;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 5px;
+        height: 20px;
+        width: 4px;
+        background: var(--primary);
+        border-radius: 4px;
+      }
+
+      .orders-container {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        animation: fadeIn 1s ease;
+      }
+
+      .orders-header {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+        padding: 20px 25px;
+        background: var(--light);
+        font-weight: 600;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .orders-list {
+        list-style: none;
+      }
+
+      .order-item {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+        padding: 20px 25px;
+        border-bottom: 1px solid var(--border-color);
+        transition: var(--transition);
+        align-items: center;
+        position: relative;
+      }
+
+      .order-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: var(--primary);
+        transform: scaleY(0);
+        transition: var(--transition);
+      }
+
+      .order-item:hover {
+        background: var(--light);
+      }
+
+      .order-item:hover::before {
+        transform: scaleY(1);
+      }
+
+      .order-id {
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .order-type {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .order-type-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.1rem;
+      }
+
+      .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: inline-block;
+      }
+
+      .status-badge.pending {
+        background: rgba(255, 149, 0, 0.15);
+        color: var(--warning);
+      }
+
+      .status-badge.in-progress {
+        background: rgba(108, 99, 255, 0.15);
+        color: var(--primary);
+      }
+
+      .status-badge.completed {
+        background: rgba(76, 217, 100, 0.15);
+        color: var(--success);
+      }
+
+      .payment-status {
+        font-weight: 500;
+      }
+
+      .payment-status.paid {
+        color: var(--success);
+      }
+
+      .payment-status.unpaid {
+        color: var(--danger);
+      }
+
+      .order-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn {
+        padding: 8px 15px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.85rem;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .no-orders {
+        padding: 60px 40px;
+        text-align: center;
+        color: var(--text-secondary);
+      }
+
+      .no-orders i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: var(--gray);
+        opacity: 0.5;
+      }
+
+      .no-orders h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          border-color: transparent;
+        }
+        50% {
+          border-color: var(--primary);
+        }
+      }
+
+      .typing-animation {
+        overflow: hidden;
+        border-right: 2px solid var(--primary);
+        white-space: nowrap;
+        margin: 0 auto;
+        animation: typing 3.5s steps(40, end), blink 1s step-end infinite;
+      }
+
+      /* Floating Elements */
+      .floating-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .floating-element {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--primary);
+        opacity: 0.05;
+        animation: float 20s infinite linear;
+      }
+
+      .floating-element:nth-child(1) {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+      }
+
+      .floating-element:nth-child(2) {
+        width: 150px;
+        height: 150px;
+        top: 60%;
+        left: 80%;
+        animation-delay: -5s;
+        background: var(--secondary);
+      }
+
+      .floating-element:nth-child(3) {
+        width: 100px;
+        height: 100px;
+        top: 80%;
+        left: 10%;
+        animation-delay: -10s;
+        background: var(--accent);
+      }
+
+      .floating-element:nth-child(4) {
+        width: 120px;
+        height: 120px;
+        top: 20%;
+        left: 70%;
+        animation-delay: -15s;
+        background: var(--success);
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+          transform: translate(20px, 40px) rotate(90deg);
+        }
+        50% {
+          transform: translate(0, 80px) rotate(180deg);
+        }
+        75% {
+          transform: translate(-20px, 40px) rotate(270deg);
+        }
+        100% {
+          transform: translate(0, 0) rotate(360deg);
+        }
+      }
+
+      /* Mobile Menu Toggle */
+      .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1100;
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .menu-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1200px) {
+        .orders-header,
+        .order-item {
+          grid-template-columns: 2fr 1fr 1fr 1fr;
+        }
+
+        .order-actions {
+          grid-column: 1 / -1;
+          justify-content: center;
+          margin-top: 15px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+          padding: 20px;
+        }
+
+        .menu-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .stats-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .stats-container {
+          grid-template-columns: 1fr;
+        }
+
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+        }
+
+        .user-info {
+          align-self: stretch;
+          justify-content: center;
+        }
+
+        .orders-header,
+        .order-item {
+          grid-template-columns: 1fr;
+          gap: 15px;
+          text-align: center;
+        }
+
+        .order-type {
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .main-content {
+          padding: 15px;
+        }
+
+        .welcome-section h1 {
+          font-size: 1.8rem;
+        }
+
+        .stat-card {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menuToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="logo-text">TaskForMe</div>
+          </div>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="/" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="/form" class="menu-item active">
+            <i class="fas fa-plus-circle"></i>
+            <span>New Order</span>
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-tasks"></i>
+            <span>My Tasks</span>
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Progress</span>
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+          <a href="/logout" class="menu-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </nav>
+
+        <div class="theme-toggle-container">
+          <div class="theme-toggle" id="darkModeToggle">
+            <div class="theme-toggle-text">
+              <i class="fas fa-moon"></i> Dark Mode
+            </div>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="header">
+          <div class="welcome-section">
+            <h1 id="usernameHeading"></h1>
+            <p>Welcome back! Here's your task overview for today</p>
+          </div>
+
+          <div class="user-info">
+            <div class="user-avatar">
+              <span id="userInitials">U</span>
+            </div>
+            <div>
+              <div class="user-name" id="userName">User</div>
+              <div class="user-email" id="userEmail">user@example.com</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalTasks">0</h3>
+              <p>Total Tasks</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-spinner"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="inProgress">0</h3>
+              <p>In Progress</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="completed">0</h3>
+              <p>Completed</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="pending">0</h3>
+              <p>Pending</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Section -->
+        <section class="orders-section">
+          <div class="section-header">
+            <h2 class="section-title">Recent Orders</h2>
+            <div class="section-actions">
+              <button class="btn btn-primary" id="newOrderBtn">
+                <i class="fas fa-plus"></i> New Order
+              </button>
+            </div>
+          </div>
+
+          <div class="orders-container">
+            <div class="orders-header">
+              <div>Assignment</div>
+              <div>Status</div>
+              <div>Payment</div>
+              <div>Date</div>
+              <div>Actions</div>
+            </div>
+
+            <ul class="orders-list" id="ordersList">
+              <!-- Orders will be dynamically inserted here -->
+            </ul>
+
+            <div class="no-orders" id="noOrders" style="display: none">
+              <i class="fas fa-clipboard-list"></i>
+              <h3>No orders yet</h3>
+              <p>Get started by creating your first order</p>
+              <button class="btn btn-primary" style="margin-top: 20px">
+                <i class="fas fa-plus"></i> Create Order
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // Function to toggle dark mode
+      function toggleDarkMode() {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        // Update toggle icon
+        const toggleIcon = document.querySelector(".theme-toggle-text i");
+        if (newTheme === "dark") {
+          toggleIcon.className = "fas fa-sun";
+          document.querySelector(".theme-toggle-text").innerHTML =
+            '<i class="fas fa-sun"></i> Light Mode';
+        } else {
+          toggleIcon.className = "fas fa-moon";
+          document.querySelector(".theme-toggle-text").innerHTML =
+            '<i class="fas fa-moon"></i> Dark Mode';
+        }
+
+        console.log(`Theme switched to: ${newTheme}`);
+      }
+
+      // Function to toggle sidebar on mobile
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("active");
+      }
+
+      // Function to fetch assignments and update the dashboard
+      async function fetchAssignments(email) {
+        try {
+          const response = await fetch(`/fetch-assignments?email=${email}`);
+          const assignments = await response.json();
+          const ordersList = document.getElementById("ordersList");
+          const noOrders = document.getElementById("noOrders");
+          ordersList.innerHTML = "";
+
+          // Update stats
+          updateStats(assignments);
+
+          if (assignments.length > 0) {
+            noOrders.style.display = "none";
+
+            assignments.forEach((assignment, index) => {
+              const li = document.createElement("li");
+              li.classList.add("order-item");
+              li.style.animationDelay = `${index * 0.1}s`;
+              li.style.animation = "fadeInUp 0.6s ease forwards";
+              li.style.opacity = "0";
+
+              // Format date
+              const formattedDate = new Date(
+                assignment.createdAt
+              ).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              });
+
+              // Determine status badge class
+              let statusClass = "pending";
+              if (assignment.status === "In Progress")
+                statusClass = "in-progress";
+              if (assignment.status === "Completed") statusClass = "completed";
+
+              li.innerHTML = `
+                            <div class="order-info">
+                                <div class="order-type">
+                                    <div class="order-type-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div>
+                                        <div class="order-id">${
+                                          assignment._id
+                                        }</div>
+                                        <div class="order-title">${
+                                          assignment.assignmentType
+                                        }</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-status">
+                                <span class="status-badge ${statusClass}">${
+                assignment.status
+              }</span>
+                            </div>
+                            <div class="order-payment">
+                                <span class="payment-status ${
+                                  assignment.payment_status === "paid"
+                                    ? "paid"
+                                    : "unpaid"
+                                }">
+                                    ${assignment.payment_status}
+                                </span>
+                            </div>
+                            <div class="order-date">${formattedDate}</div>
+                            <div class="order-actions">
+                                <button class="btn btn-outline view-details" data-id="${
+                                  assignment._id
+                                }">
+                                    <i class="fas fa-eye"></i> Details
+                                </button>
+                                <a href="${
+                                  assignment.fileUrl
+                                }" target="_blank" class="btn btn-outline">
+                                    <i class="fas fa-file"></i> File
+                                </a>
+                            </div>
+                        `;
+
+              ordersList.appendChild(li);
+            });
+
+            // Add event listeners to detail buttons
+            document.querySelectorAll(".view-details").forEach((button) => {
+              button.addEventListener("click", function () {
+                const assignmentId = this.getAttribute("data-id");
+                window.location.href = `/assignment-details?username=${encodeURIComponent(
+                  email
+                )}&assignmentId=${encodeURIComponent(assignmentId)}`;
+              });
+            });
+          } else {
+            noOrders.style.display = "block";
+          }
+        } catch (error) {
+          console.error("Error fetching assignments:", error.message);
+        }
+      }
+
+      // Function to update stats cards
+      function updateStats(assignments) {
+        const totalTasks = assignments.length;
+        const inProgress = assignments.filter(
+          (a) => a.status === "In Progress"
+        ).length;
+        const completed = assignments.filter(
+          (a) => a.status === "Completed"
+        ).length;
+        const pending = assignments.filter(
+          (a) => a.status === "Pending"
+        ).length;
+
+        document.getElementById("totalTasks").textContent = totalTasks;
+        document.getElementById("inProgress").textContent = inProgress;
+        document.getElementById("completed").textContent = completed;
+        document.getElementById("pending").textContent = pending;
+
+        // Add animation to stats
+        const statCards = document.querySelectorAll(".stat-card");
+        statCards.forEach((card, index) => {
+          card.style.animationDelay = `${index * 0.2}s`;
+          card.style.animation = "fadeInUp 0.8s ease forwards";
+        });
+      }
+
+      // Function to start typing "Welcome to your Dashboard"
+      function typeWelcomeMessage(username) {
+        const usernameHeading = document.getElementById("usernameHeading");
+        const welcomeText = `Welcome, ${username || "User"}!`;
+        usernameHeading.innerHTML = "";
+        usernameHeading.classList.add("typing-animation");
+        usernameHeading.textContent = welcomeText;
+
+        // Remove animation class after typing completes
+        setTimeout(() => {
+          usernameHeading.classList.remove("typing-animation");
+        }, 3500);
+      }
+
+      // Apply saved theme on page load
+      window.onload = async () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+
+        // Set toggle icon based on theme
+        const toggleIcon = document.querySelector(".theme-toggle-text i");
+        if (savedTheme === "dark") {
+          toggleIcon.className = "fas fa-sun";
+          document.querySelector(".theme-toggle-text").innerHTML =
+            '<i class="fas fa-sun"></i> Light Mode';
+        } else {
+          toggleIcon.className = "fas fa-moon";
+          document.querySelector(".theme-toggle-text").innerHTML =
+            '<i class="fas fa-moon"></i> Dark Mode';
+        }
+
+        // Get user data (this would typically come from your backend)
+        const userEmail = "<%= user.email %>"; // Replace with actual email from your backend
+        const userName = "<%= user.name %>" || "User"; // Replace with actual name from your backend
+
+        // Update user info
+        document.getElementById("userName").textContent = userName;
+        document.getElementById("userEmail").textContent = userEmail;
+        document.getElementById("userInitials").textContent = userName
+          .charAt(0)
+          .toUpperCase();
+
+        // Type welcome message
+        typeWelcomeMessage(userName);
+
+        // Fetch assignments
+        fetchAssignments(userEmail);
+      };
+
+      // Add event listeners
+      document
+        .getElementById("darkModeToggle")
+        .addEventListener("click", toggleDarkMode);
+      document
+        .getElementById("menuToggle")
+        .addEventListener("click", toggleSidebar);
+      document
+        .getElementById("newOrderBtn")
+        .addEventListener("click", function () {
+          window.location.href = "/form";
+        });
+
+      // Add hover effect to cards
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(
+          ".stat-card, .order-item, .user-info"
+        );
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-5px)";
+          });
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0)";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
