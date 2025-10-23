@@ -215,29 +215,29 @@ passport.use(new GoogleStrategy({
     clientID: '561313317956-b22rnrjp8h2aelrdvu42699cqc6ib9ld.apps.googleusercontent.com',
     clientSecret: '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',
     callbackURL: 'https://dotaskforme.com/auth/google/callback'
-}, 
+},
 
-async (token, tokenSecret, profile, done) => {
+    async (token, tokenSecret, profile, done) => {
 
-    try {
-        let user = await User.findOne({ googleId: profile.id });
+        try {
+            let user = await User.findOne({ googleId: profile.id });
 
-        if (!user) {
+            if (!user) {
 
-            user = new User({
-                googleId: profile.id,
-                username: profile.displayName,
-                email: profile.emails[0].value,
-                password: profile.id  // Save Google ID as the Password
-            });
+                user = new User({
+                    googleId: profile.id,
+                    username: profile.displayName,
+                    email: profile.emails[0].value,
+                    password: profile.id  // Save Google ID as the Password
+                });
 
-            await user.save();
+                await user.save();
 
-            const mailOptions = {
-                from: 'dotaskforme@gmail.com',
-                to: user.email,
-                subject: 'Welcome to Do Task For Me.com',
-                html: `
+                const mailOptions = {
+                    from: 'dotaskforme@gmail.com',
+                    to: user.email,
+                    subject: 'Welcome to Do Task For Me.com',
+                    html: `
                     <!DOCTYPE html>
                     <html>
                     <head>
@@ -323,28 +323,28 @@ async (token, tokenSecret, profile, done) => {
 
                     </html>
                 `
-            };
+                };
 
-            transporter.sendMail(mailOptions, (error, info) => {
+                transporter.sendMail(mailOptions, (error, info) => {
 
-                if (error) {
-                    console.log('Error sending email:', error);
-                } 
+                    if (error) {
+                        console.log('Error sending email:', error);
+                    }
 
-                else {
-                    console.log('Email sent:', info.response);
-                }
-            });
+                    else {
+                        console.log('Email sent:', info.response);
+                    }
+                });
+            }
+
+            return done(null, user);
         }
 
-        return done(null, user);
-    } 
-
-    catch (error) {
-        console.error('Error in Google Strategy:', error);
-        return done(error, null);
-    }
-}));
+        catch (error) {
+            console.error('Error in Google Strategy:', error);
+            return done(error, null);
+        }
+    }));
 
 
 
@@ -359,8 +359,8 @@ passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findById(id).exec();
         done(null, user);
-    } 
-    
+    }
+
     catch (error) {
         done(error, null);
     }
@@ -377,7 +377,7 @@ passport.use(new FacebookStrategy({
     callbackURL: '/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'emails']
 }, async (accessToken, refreshToken, profile, done) => {
-    
+
     try {
         let user = await User.findOne({ facebookId: profile.id });
         if (!user) {
@@ -391,8 +391,8 @@ passport.use(new FacebookStrategy({
         }
 
         done(null, user);
-    } 
-    
+    }
+
     catch (error) {
         done(error, null);
     }
@@ -410,7 +410,7 @@ passport.use(new LinkedInStrategy({
     callbackURL: '/auth/linkedin/callback',
     scope: ['r_emailaddress', 'r_liteprofile']
 }, async (token, tokenSecret, profile, done) => {
-    
+
     try {
         let user = await User.findOne({ linkedinId: profile.id });
         if (!user) {
@@ -424,7 +424,7 @@ passport.use(new LinkedInStrategy({
 
         done(null, user);
 
-    } 
+    }
 
     catch (error) {
         done(error, null);
@@ -493,7 +493,7 @@ const USER_EMAIL = 'F2021266625@umt.edu.pk';
 const upload = multer({ dest: 'uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
 
 const auth = new google.auth.GoogleAuth({
-    
+
     credentials: {
         type: "service_account",
         project_id: "file-upload-427811",
@@ -817,28 +817,28 @@ app.get('/order-request-form', isAuthenticated, async (req, res) => {
 
 
 app.post('/submit-form', upload.single('file'), async (req, res) => {
-    
-    const { 
-        
-        assignmentType, 
-        exactDeadline, 
-        email, 
-        whatsapp, 
-        additionalDetails, 
-        vivaRequired, 
-        fileUploads, 
-        professionalLevel, 
-        programmingLanguage, 
-        webDevelopmentType, 
-        fullStackFramework, 
-        topProgrammer, 
-        wellCommentedCode, 
-        noOpenSource, 
-        vivaPreparation, 
-        taskSize 
-          
+
+    const {
+
+        assignmentType,
+        exactDeadline,
+        email,
+        whatsapp,
+        additionalDetails,
+        vivaRequired,
+        fileUploads,
+        professionalLevel,
+        programmingLanguage,
+        webDevelopmentType,
+        fullStackFramework,
+        topProgrammer,
+        wellCommentedCode,
+        noOpenSource,
+        vivaPreparation,
+        taskSize
+
     } = req.body;
-  
+
 
     // Convert checkbox strings to Booleans
     const wellCommentedCodeBool = wellCommentedCode === 'on';
@@ -852,34 +852,34 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
 
     if (daysUntilDue <= 3) {
         urgencyMultiplier = 2;
-    } 
-    
+    }
+
     else if (daysUntilDue <= 7) {
         urgencyMultiplier = 1.5;
     }
 
-    
+
     let gradeMultiplier = 1;
     if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'a') {
         gradeMultiplier = 1.5;
-    } 
-    
+    }
+
     else if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'b') {
         gradeMultiplier = 1.2;
     }
 
 
     let professionalLevelCost = professionalLevel ? basePrice * 0.3 : 0;
-    
+
     let vivaCost = vivaRequired ? basePrice * 0.2 : 0; // Additional 20% for viva
-    
+
     let topProgrammerCost = topProgrammer ? basePrice * 0.1 : 0; // Additional 10% for top programmer
-    
+
     let vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 0.15 : 0; // Additional 15% for viva preparation
 
 
     let taskSizeMultiplier = 1;
-    
+
     switch (taskSize) {
         case 'extraSmall': taskSizeMultiplier = 0.5; break;
         case 'small': taskSizeMultiplier = 0.75; break;
@@ -888,75 +888,75 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
         case 'professional': taskSizeMultiplier = 1.5; break;
     }
 
-    
+
     const totalCost = basePrice * urgencyMultiplier * gradeMultiplier * taskSizeMultiplier + professionalLevelCost + vivaCost + topProgrammerCost + vivaPreparationCost;
 
-    
+
     const filePath = path.join(__dirname, 'uploads', req.file.filename);
     const mimeType = req.file.mimetype;
-    
-    
+
+
     try {
-           
+
         const response = await drive.files.create({
             requestBody: {
                 name: req.file.originalname,
                 mimeType: mimeType,
             },
-        
+
             media: {
                 mimeType: mimeType,
                 body: fs.createReadStream(filePath),
-                    },
-            });
-            
-                    const fileId = response.data.id;
-            
-                    await drive.permissions.create({
-                        fileId: fileId,
-                        requestBody: {
-                            role: 'reader',
-                            type: 'anyone',
-                        },
-                    });
-            
-                    const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
-            
-        
-                    // -------------------------------------------
-                    
-                    // File Sharing code will be here for the future.
-                    // Account details will be given here for the file
-                    // sharing in case when the file link or other things
-                    // got corrupted or other issues!
-                    
-                    // -------------------------------------------
-        
-        
-                    const newAssignment = new Assignment({
-                         
-                            filename: req.file.originalname,
-                            mimeType: mimeType,
-                            googleDriveId: fileId,
-                            fileUrl: fileUrl,
-                         
-                            assignmentType, 
-                            exactDeadline, 
-                            email, 
-                            whatsapp, 
-                            additionalDetails, 
-                            fileUploads, 
-                            vivaPreparation,
-                            
-                            wellCommentedCode: wellCommentedCodeBool,
-                            noOpenSource: noOpenSourceBool,
-                            topProgrammer: topProgrammerBool,
-                            
-                            totalCost,
-                            webDevelopmentType, 
-                            fullStackFramework,
-                            programmingLanguage  
-                    });
+            },
+        });
+
+        const fileId = response.data.id;
+
+        await drive.permissions.create({
+            fileId: fileId,
+            requestBody: {
+                role: 'reader',
+                type: 'anyone',
+            },
+        });
+
+        const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
+
+
+        // -------------------------------------------
+
+        // File Sharing code will be here for the future.
+        // Account details will be given here for the file
+        // sharing in case when the file link or other things
+        // got corrupted or other issues!
+
+        // -------------------------------------------
+
+
+        const newAssignment = new Assignment({
+
+            filename: req.file.originalname,
+            mimeType: mimeType,
+            googleDriveId: fileId,
+            fileUrl: fileUrl,
+
+            assignmentType,
+            exactDeadline,
+            email,
+            whatsapp,
+            additionalDetails,
+            fileUploads,
+            vivaPreparation,
+
+            wellCommentedCode: wellCommentedCodeBool,
+            noOpenSource: noOpenSourceBool,
+            topProgrammer: topProgrammerBool,
+
+            totalCost,
+            webDevelopmentType,
+            fullStackFramework,
+            programmingLanguage
+        });
 
         await newAssignment.save();
 
@@ -1018,7 +1018,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
 
 
         await transporter.sendMail(mailOptions);
-        
+
         res.redirect(`/user-dashboard?
             assignmentType=${assignmentType}
             &exactDeadline=${exactDeadline}
@@ -1034,10 +1034,10 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
             &topProgrammer=${topProgrammer}
             &additionalDetails=${additionalDetails}
             &fileUrl=${fileUrl}`
-    );
-    
-    } 
-    
+        );
+
+    }
+
     catch (error) {
         console.log('Error:', error);
         res.status(500).json({ message: 'Error submitting assignment', error });
@@ -1048,28 +1048,28 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
 
 
 app.post('/submit', upload.single('file'), async (req, res) => {
-    
-    const { 
-        
-        assignmentType, 
-        exactDeadline, 
-        email, 
-        whatsapp, 
-        additionalDetails, 
-        vivaRequired, 
-        fileUploads, 
-        professionalLevel, 
-        programmingLanguage, 
-        webDevelopmentType, 
-        fullStackFramework, 
-        topProgrammer, 
-        wellCommentedCode, 
-        noOpenSource, 
-        vivaPreparation, 
-        taskSize 
-          
+
+    const {
+
+        assignmentType,
+        exactDeadline,
+        email,
+        whatsapp,
+        additionalDetails,
+        vivaRequired,
+        fileUploads,
+        professionalLevel,
+        programmingLanguage,
+        webDevelopmentType,
+        fullStackFramework,
+        topProgrammer,
+        wellCommentedCode,
+        noOpenSource,
+        vivaPreparation,
+        taskSize
+
     } = req.body;
-  
+
 
     // Convert checkbox strings to Booleans
     const wellCommentedCodeBool = wellCommentedCode === 'on';
@@ -1083,35 +1083,35 @@ app.post('/submit', upload.single('file'), async (req, res) => {
 
     if (daysUntilDue <= 3) {
         urgencyMultiplier = 2;
-    } 
-    
+    }
+
     else if (daysUntilDue <= 7) {
         urgencyMultiplier = 1.5;
     }
 
-    
+
     let gradeMultiplier = 1;
     if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'a') {
         gradeMultiplier = 1.5;
-    } 
-    
+    }
+
     else if (typeof gradeDesired === 'string' && gradeDesired.toLowerCase() === 'b') {
         gradeMultiplier = 1.2;
     }
 
 
     let professionalLevelCost = professionalLevel ? basePrice * 90 : 0; // Additional 30% for professional level
-    
+
     let vivaCost = vivaRequired ? basePrice * 30 : 0; // Additional 20% for viva
-    
+
     let topProgrammerCost = topProgrammer ? basePrice * 30 : 0; // Additional 10% for top programmer
-    
+
     let vivaPreparationCost = vivaPreparation === 'yes' ? basePrice * 40 : 0; // Additional 15% for viva preparation
 
-    
+
     // Task size multipliers
     let taskSizeMultiplier = 1;
-    
+
 
     switch (taskSize) {
         case 'extraSmall': taskSizeMultiplier = 15; break;
@@ -1121,103 +1121,103 @@ app.post('/submit', upload.single('file'), async (req, res) => {
         case 'professional': taskSizeMultiplier = 200; break;
     }
 
-    
+
     const totalCost = basePrice * urgencyMultiplier * gradeMultiplier * taskSizeMultiplier + professionalLevelCost + vivaCost + topProgrammerCost + vivaPreparationCost;
 
-    
+
     const filePath = path.join(__dirname, 'uploads', req.file.filename);
     const mimeType = req.file.mimetype;
-    
-    
+
+
     try {
-           
+
         const response = await drive.files.create({
             requestBody: {
                 name: req.file.originalname,
                 mimeType: mimeType,
             },
-        
+
             media: {
                 mimeType: mimeType,
                 body: fs.createReadStream(filePath),
-                    },
-            });
-            
-                    const fileId = response.data.id;
-            
-                    await drive.permissions.create({
-                        fileId: fileId,
-                        requestBody: {
-                            role: 'reader',
-                            type: 'anyone',
-                        },
-                    });
-            
-                    const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
-            
-        
-                    // -------------------------------------------
-                    
-                    // File Sharing code will be here for the future.
-                    // Account details will be given here for the file
-                    // sharing in case when the file link or other things
-                    // got corrupted or other issues
-                    
-                    // -------------------------------------------
-        
-        
-                    const newAssignment = new Assignment({
-                            
-                        filename: req.file.originalname,
-                        mimeType: mimeType,
-                        googleDriveId: fileId,
-                        fileUrl: fileUrl,
-                     
-                        assignmentType, 
-                        exactDeadline, 
-                        email, 
-                        whatsapp, 
-                        additionalDetails, 
-                        fileUploads, 
-                        vivaPreparation,
-                        
-                        totalCost,
-                        wellCommentedCode: wellCommentedCodeBool,
-                        noOpenSource: noOpenSourceBool,
-                        topProgrammer: topProgrammerBool,
-                        
-                        webDevelopmentType, 
-                        fullStackFramework,
-                        programmingLanguage
-                                        
-                    });
-        
+            },
+        });
+
+        const fileId = response.data.id;
+
+        await drive.permissions.create({
+            fileId: fileId,
+            requestBody: {
+                role: 'reader',
+                type: 'anyone',
+            },
+        });
+
+        const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
+
+
+        // -------------------------------------------
+
+        // File Sharing code will be here for the future.
+        // Account details will be given here for the file
+        // sharing in case when the file link or other things
+        // got corrupted or other issues
+
+        // -------------------------------------------
+
+
+        const newAssignment = new Assignment({
+
+            filename: req.file.originalname,
+            mimeType: mimeType,
+            googleDriveId: fileId,
+            fileUrl: fileUrl,
+
+            assignmentType,
+            exactDeadline,
+            email,
+            whatsapp,
+            additionalDetails,
+            fileUploads,
+            vivaPreparation,
+
+            totalCost,
+            wellCommentedCode: wellCommentedCodeBool,
+            noOpenSource: noOpenSourceBool,
+            topProgrammer: topProgrammerBool,
+
+            webDevelopmentType,
+            fullStackFramework,
+            programmingLanguage
+
+        });
+
         await newAssignment.save();
-        
+
         fs.unlinkSync(filePath);
 
         function generateEmailHtml() {
-            const templatePath = path.join(__dirname, 'views', 'main',  'email-templates', 'order-details.ejs');
-            
+            const templatePath = path.join(__dirname, 'views', 'main', 'email-templates', 'order-details.ejs');
+
             const template = fs.readFileSync(templatePath, 'utf-8');
-            
+
             return ejs.render(template, {
-                assignmentType, 
-                exactDeadline, 
-                email, 
-                whatsapp, 
-                additionalDetails, 
-                vivaRequired, 
+                assignmentType,
+                exactDeadline,
+                email,
+                whatsapp,
+                additionalDetails,
+                vivaRequired,
                 fileUploads,
-                fileUrl, 
-                professionalLevel, 
-                programmingLanguage, 
-                webDevelopmentType, 
-                fullStackFramework, 
-                topProgrammer, 
-                wellCommentedCode, 
-                noOpenSource, 
-                vivaPreparation, 
+                fileUrl,
+                professionalLevel,
+                programmingLanguage,
+                webDevelopmentType,
+                fullStackFramework,
+                topProgrammer,
+                wellCommentedCode,
+                noOpenSource,
+                vivaPreparation,
                 taskSize
             });
         }
@@ -1238,10 +1238,10 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             bcc: recipients.join(','),
             subject: 'Assignment Submission Confirmation',
             html: emailHtml
-        }; 
-        
+        };
+
         await transporter.sendMail(mailOptions);
-        
+
         res.redirect(`/results?
             totalCost=${totalCost}
             assignmentType=${assignmentType}
@@ -1258,10 +1258,10 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             &topProgrammer=${topProgrammer}
             &additionalDetails=${additionalDetails}
             &fileUrl=${fileUrl}`
-    );
-    
+        );
+
     }
-    
+
     catch (error) {
         console.log('Error:', error);
         res.status(500).json({ message: 'Error submitting assignment', error });
@@ -1291,8 +1291,8 @@ app.get('/fetch-assignments', async (req, res) => {
         const assignments = await Assignment.find({ email });
 
         res.json(assignments);
-    } 
-    
+    }
+
     catch (error) {
         console.error('Error fetching assignments:', error);
         res.status(500).send('Internal Server Error');
@@ -1302,16 +1302,16 @@ app.get('/fetch-assignments', async (req, res) => {
 
 
 
-app.get('/assignments/:id', async (req, res) => { 
-    
+app.get('/assignments/:id', async (req, res) => {
+
     try {
         const assignment = await Assignment.findById(req.params.id);
         res.render('assignmentDetails', { assignment });
-    } 
-    
+    }
+
     catch (err) {
-    res.status(500).send('Server Error');
-  }
+        res.status(500).send('Server Error');
+    }
 
 });
 
@@ -1333,13 +1333,13 @@ app.get('/assignment-details', async (req, res) => {
 
         if (foundAssignment) {
             res.render('user/assignment-details', { assignment: foundAssignment });
-        } 
-        
+        }
+
         else {
             res.status(404).json({ message: 'Assignment not found' });
         }
-    } 
-    
+    }
+
     catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
@@ -1349,15 +1349,15 @@ app.get('/assignment-details', async (req, res) => {
 
 
 app.get('/results', (req, res) => {
-    
-    const { 
-        
-        assignmentType, 
-        exactDeadline, 
-        email, 
-        whatsapp, 
-        additionalDetails, 
-        fileUploads, 
+
+    const {
+
+        assignmentType,
+        exactDeadline,
+        email,
+        whatsapp,
+        additionalDetails,
+        fileUploads,
         wellCommentedCode,
         vivaPreparation,
         noOpenSource,
@@ -1367,19 +1367,19 @@ app.get('/results', (req, res) => {
         topProgrammer,
         fileUrl,
         totalCost
-    
+
     } = req.query;
 
     // Assuming totalCost needs to be formatted to two decimal places
     const formattedTotalCost = parseFloat(totalCost).toFixed(2);
 
-    res.render('main/result', { 
-        assignmentType, 
-        exactDeadline, 
-        email, 
-        whatsapp, 
-        additionalDetails, 
-        fileUploads, 
+    res.render('main/result', {
+        assignmentType,
+        exactDeadline,
+        email,
+        whatsapp,
+        additionalDetails,
+        fileUploads,
         wellCommentedCode,
         vivaPreparation,
         noOpenSource,
@@ -1403,11 +1403,11 @@ app.get('/login-user', (req, res) => {
 
 
 app.get('/check-login-status', (req, res) => {
-    
+
     if (req.session.user) {
         res.json({ loggedIn: true });
-    } 
-    
+    }
+
     else {
         res.json({ loggedIn: false });
     }
@@ -1426,13 +1426,13 @@ app.post('/login-user', async (req, res) => {
             // Store user's data in session
             req.session.user = foundUser;
             res.redirect('/user-dashboard');
-        } 
-        
+        }
+
         else {
             res.render('user/login-signup-user', { error: 'Invalid username, email, or password.' });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1443,7 +1443,7 @@ app.post('/login-user', async (req, res) => {
 
 
 app.post('/signup-user', async (req, res) => {
-    
+
     try {
         const { username, email, password } = req.body;
 
@@ -1455,7 +1455,7 @@ app.post('/signup-user', async (req, res) => {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        const newUser = new User({ username, email, password});
+        const newUser = new User({ username, email, password });
         await newUser.save();
 
         const foundUser = await User.findOne({ username, email, password });
@@ -1465,8 +1465,8 @@ app.post('/signup-user', async (req, res) => {
             res.redirect('/user-dashboard');
         }
 
-    } 
-    
+    }
+
     catch (error) {
         console.error('Error during signup:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -1477,13 +1477,13 @@ app.post('/signup-user', async (req, res) => {
 
 
 app.get('/user-dashboard', isAuthenticated, async (req, res) => {
-    
+
     try {
         const assignments = await Assignment.find({ email: req.session.user.email }).sort({ createdAt: -1 });
-        
+
         res.render('user/user-dashboard', { user: req.session.user, assignments });
-    } 
-    
+    }
+
     catch (error) {
         res.status(500).json({ message: 'Error fetching assignments', error });
     }
@@ -1493,13 +1493,13 @@ app.get('/user-dashboard', isAuthenticated, async (req, res) => {
 
 
 app.get('/logout', (req, res) => {
-    
+
     req.session.destroy(err => {
-        
+
         if (err) {
             return res.redirect('/user-dashboard');
         }
-        
+
         res.clearCookie('connect.sid');
         res.redirect('/');
     });
@@ -1517,13 +1517,13 @@ app.get('/check-username', async (req, res) => {
 
         if (user) {
             res.json({ exists: true });
-        } 
-        
+        }
+
         else {
             res.json({ exists: false });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1542,13 +1542,13 @@ app.get('/check-email', async (req, res) => {
 
         if (user) {
             res.json({ exists: true });
-        } 
-        
+        }
+
         else {
             res.json({ exists: false });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1578,9 +1578,9 @@ app.post('/reset-password-user', async (req, res) => {
                 to: foundUser.email,
                 subject: 'Password Reset',
 
-                html: 
-                
-                `
+                html:
+
+                    `
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background: linear-gradient(to right, navy, white); text-align: center; position: relative;">
                     
                     <h1 style="color: #fff; margin-top: 0; padding: 20px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); animation: fadeIn 2s ease-in-out;">
@@ -1614,15 +1614,15 @@ app.post('/reset-password-user', async (req, res) => {
             };
 
             await transporter.sendMail(mailOptions);
-        
+
             res.render('user/reset-password-user', { success: true, error: null });
-        } 
-        
+        }
+
         else {
             res.render('user/reset-password-user', { error: 'Invalid email.' });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1640,13 +1640,13 @@ app.get('/reset-password-user/:resetToken', async (req, res) => {
 
         if (foundUser && foundUser.resetTokenExpiration > Date.now()) {
             res.render('user/reset-password-user', { resetToken, user: foundUser, error: null, success: false });
-        } 
-        
+        }
+
         else {
             res.render('user/reset-password-user', { resetToken, user: null, error: 'Invalid or expired reset token.', success: false });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1669,13 +1669,13 @@ app.post('/reset-password-user/:resetToken', async (req, res) => {
             foundUser.resetTokenExpiration = null;
             await foundUser.save();
             res.render('user/password-reset-success-user', { message: 'Your password has been successfully reset.' });
-        } 
-        
+        }
+
         else {
             res.render('user/reset-password-user', { resetToken: null, user: null, error: 'Invalid or expired reset token.', success: false });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1698,14 +1698,14 @@ app.post('/login-admin', async (req, res) => {
     const predefinedSecurityKey = '+44-P@k!$t@n_1947-#06234A-A!CE';
 
     try {
-        
-        if(securityKey === predefinedSecurityKey){
+
+        if (securityKey === predefinedSecurityKey) {
 
             const foundAdmin = await Admin.findOne({ email, password });
 
             if (foundAdmin) {
                 res.render('admin/admin-dashboard', { user: foundAdmin });
-            } 
+            }
 
             else {
                 res.render('admin/login-signup-admin.ejs', { error: 'Invalid email or password.' });
@@ -1715,8 +1715,8 @@ app.post('/login-admin', async (req, res) => {
         else {
             res.render('admin/login-signup-admin.ejs', { error: 'Invalid security key.' });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1727,13 +1727,13 @@ app.post('/login-admin', async (req, res) => {
 
 
 app.post('/signup-admin', async (req, res) => {
-    const { name, email, password } = req.body;    
+    const { name, email, password } = req.body;
     const securityKey = req.body.securityKey;
     const predefinedSecurityKey = '+44-P@k!$t@n_1947-#06234A-A!CE';
 
     try {
 
-        if(securityKey === predefinedSecurityKey){
+        if (securityKey === predefinedSecurityKey) {
 
             const newAdmin = new Admin({
                 name,
@@ -1748,8 +1748,8 @@ app.post('/signup-admin', async (req, res) => {
         else {
             res.render('admin/login-signup-admin.ejs', { error: 'Invalid security key.' });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1764,10 +1764,10 @@ app.post('/reset-password-admin', async (req, res) => {
     const securityKey = req.body.securityKey;
 
     try {
-        
+
         const predefinedSecurityKey = '+44-P@k!$t@n_1947-#06234A-A!CE';
 
-        if(securityKey === predefinedSecurityKey){
+        if (securityKey === predefinedSecurityKey) {
             const foundAdmin = await Admin.findOne({ email });
 
             if (foundAdmin) {
@@ -1780,10 +1780,10 @@ app.post('/reset-password-admin', async (req, res) => {
                     from: 'dotaskforme@gmail.com',
                     to: foundAdmin.email,
                     subject: 'Password Reset',
-                
-                    html: 
-                
-                    `
+
+                    html:
+
+                        `
                         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background: linear-gradient(to right, navy, white); text-align: center; position: relative;">
                     
                         <h1 style="color: #fff; margin-top: 0; padding: 20px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); animation: fadeIn 2s ease-in-out;">
@@ -1820,20 +1820,20 @@ app.post('/reset-password-admin', async (req, res) => {
                 };
 
                 await transporter.sendMail(mailOptions);
-        
+
                 res.render('admin/reset-password-admin', { success: true, error: null });
-            } 
-        
+            }
+
             else {
                 res.render('admin/reset-password-admin', { error: 'Invalid email.' });
             }
         }
 
         else {
-            res.render('admin/reset-password-admin', {  error: 'Invalid security key.', securityKeyError: true });
+            res.render('admin/reset-password-admin', { error: 'Invalid security key.', securityKeyError: true });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1851,13 +1851,13 @@ app.get('/reset-password-admin/:resetToken', async (req, res) => {
 
         if (foundAdmin && foundAdmin.resetTokenExpiration > Date.now()) {
             res.render('admin/reset-password-admin', { resetToken, user: foundAdmin, error: null, success: false });
-        } 
-        
+        }
+
         else {
             res.render('admin/reset-password-admin', { resetToken, user: null, error: 'Invalid or expired reset token.', success: false });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1879,15 +1879,15 @@ app.post('/reset-password-admin/:resetToken', async (req, res) => {
             foundAdmin.resetToken = null;
             foundAdmin.resetTokenExpiration = null;
             await foundAdmin.save();
-            
+
             res.render('admin/password-reset-success-admin', { message: 'Your password has been successfully reset.' });
-        } 
-        
+        }
+
         else {
             res.render('admin/reset-password-admin', { resetToken: null, user: null, error: 'Invalid or expired reset token.', success: false });
         }
-    } 
-    
+    }
+
     catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -1898,12 +1898,12 @@ app.post('/reset-password-admin/:resetToken', async (req, res) => {
 
 
 app.get('/admin/dashboard', async (req, res) => {
-    
+
     try {
         const assignments = await Assignment.find().sort({ createdAt: -1 });
         res.json(assignments);
-    } 
-    
+    }
+
     catch (error) {
         res.status(500).json({ message: 'Error fetching assignments', error });
     }
@@ -1920,7 +1920,7 @@ app.post('/admin/update-status/:id', async (req, res) => {
         const assignment = await Assignment.findByIdAndUpdate(id, { status }, { new: true });
 
         if (status === 'Started') {
-   
+
             const mailOptions = {
                 from: 'dotaskforme@gmail.com',
                 to: assignment.email,
@@ -1941,8 +1941,8 @@ app.post('/admin/update-status/:id', async (req, res) => {
         }
 
         res.json({ message: 'Status updated' });
-    } 
-    
+    }
+
     catch (error) {
         res.status(500).json({ message: 'Error updating status', error });
     }
@@ -1981,8 +1981,8 @@ app.post('/admin/update-completion-status/:id', async (req, res) => {
         }
 
         res.json({ message: 'Status updated' });
-    } 
-    
+    }
+
     catch (error) {
         res.status(500).json({ message: 'Error updating status', error });
     }
@@ -2020,8 +2020,8 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
         }
 
         res.json({ message: 'Status updated' });
-    } 
-    
+    }
+
     catch (error) {
         res.status(500).json({ message: 'Error updating status', error });
     }
@@ -2044,8 +2044,8 @@ app.post('/admin/update-cost/:id', async (req, res) => {
 
         if (assignment.editCount === undefined) {
             assignment.editCount = 1;
-        } 
-        
+        }
+
         else {
             assignment.editCount += 1;
         }
@@ -2058,8 +2058,8 @@ app.post('/admin/update-cost/:id', async (req, res) => {
         await assignment.save();
 
         res.json({ message: 'Cost updated' });
-    } 
-    
+    }
+
     catch (error) {
         console.error('Error updating cost:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -2070,7 +2070,7 @@ app.post('/admin/update-cost/:id', async (req, res) => {
 
 
 app.get('/admin-assignment/:id', async (req, res) => {
-    
+
     const { id } = req.params;
     const assignment = await Assignment.findById(id);
     res.render("admin/assignment-details", { assignment });
@@ -2081,7 +2081,7 @@ app.get('/admin-assignment/:id', async (req, res) => {
 
 
 app.get('/fetch-users', async (req, res) => {
-    
+
     try {
         const users = await User.find({});
 
@@ -2101,14 +2101,14 @@ app.get('/fetch-users', async (req, res) => {
         const sortBy = req.query.sortBy || 'totalAssignments';
 
         const sortedUsers = usersWithAssignments.sort((a, b) => b[sortBy] - a[sortBy]);
-        
-        res.render('admin/fetch-all-users', { 
+
+        res.render('admin/fetch-all-users', {
             users: sortedUsers,
             sortBy: sortBy
         });
 
-    } 
-    
+    }
+
     catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
@@ -2119,7 +2119,7 @@ app.get('/fetch-users', async (req, res) => {
 
 
 app.get('/fetch-all-assignments', async (req, res) => {
-    
+
     try {
         let assignments = await Assignment.find({});
 
@@ -2127,128 +2127,128 @@ app.get('/fetch-all-assignments', async (req, res) => {
         const assignmentTypeFilter = req.query['assignmentType'] || 'all';
 
         if (statusFilter !== 'all') {
-            
+
             switch (statusFilter) {
-                
+
                 case 'Not Started':
                     assignments = assignments.filter(assignment => assignment.status === 'Not Started');
                     break;
-                
+
                 case 'Paid':
                     assignments = assignments.filter(assignment => assignment.payment_status === 'Paid');
                     break;
-                
+
                 case 'completed':
                     assignments = assignments.filter(assignment => assignment.status === 'Completed');
                     break;
-                
+
                 case 'in-progress':
                     assignments = assignments.filter(assignment => assignment.status === 'Started');
                     break;
-                
+
                 default:
                     assignments = [];
             }
         }
 
-        
+
         if (assignmentTypeFilter !== 'all') {
-            
+
             switch (assignmentTypeFilter) {
-                
+
                 case 'Web Development':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Web Development');
                     break;
-                
+
                 case 'Game Development':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Game Development');
                     break;
-                
+
                 case 'FYP Based':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'FYP Based');
                     break;
-                
+
                 case 'App Development':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'App Development');
                     break;
-                
+
                 case 'English Writing Based Assignments':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'English Writing Based Assignments');
                     break;
-                
+
                 case 'Research Paper (Thesis)':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Research Paper (Thesis)');
                     break;
-                
+
                 case 'All Types of Presentations':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'All Types of Presentations');
                     break;
-                
+
                 case 'Content Writing for Any Platform':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Content Writing for Any Platform');
                     break;
-                
+
                 case 'Research':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Research');
                     break;
-                
+
                 case 'Semester/Term Project':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Semester/Term Project');
                     break;
-                
+
                 case 'Professional Web App':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Professional Web App');
                     break;
-                
+
                 case 'Technical Report':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Technical Report');
                     break;
-                
+
                 case 'Lab Report':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Lab Report');
                     break;
-                
+
                 case 'Case Study':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Case Study');
                     break;
-                
+
                 case 'Mathematics/Physics Based Assignments':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Mathematics/Physics Based Assignments');
                     break;
-                
+
                 case 'Programming Tutoring':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Programming Tutoring');
                     break;
-                
+
                 case 'All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc)':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'All Types of Programming Assignments (C/C++, Python, Java, JavaScript, Assembly Language etc');
                     break;
-                
+
                 case 'Article':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Article');
                     break;
-                
+
                 case 'Review Paper':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Review Paper');
                     break;
-                
+
                 case 'Creative Writing':
                     assignments = assignments.filter(assignment => assignment.assignmentType === 'Creative Writing');
                     break;
-                
+
                 default:
                     assignments = [];
             }
         }
 
-        res.render('admin/fetch-assignments', { 
+        res.render('admin/fetch-assignments', {
             assignments: assignments,
             statusFilter: statusFilter,
             assignmentTypeFilter: assignmentTypeFilter
         });
 
-    } 
-    
+    }
+
     catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
@@ -2260,28 +2260,28 @@ app.get('/fetch-all-assignments', async (req, res) => {
 
 
 app.post('/admin/update-developer/:assignmentId', async (req, res) => {
-    
+
     try {
         const { assignmentId } = req.params;
         const { developer } = req.body;
 
         const updatedAssignment = await Assignment.findByIdAndUpdate(
-    
+
             assignmentId,
             { developer },
             { new: true }
-    
+
         );
 
         if (updatedAssignment) {
             res.json({ message: 'Developer updated' });
-        } 
-        
+        }
+
         else {
             res.status(404).json({ message: 'Assignment not found' });
         }
-    } 
-    
+    }
+
     catch (error) {
         console.error('Error updating developer:', error);
         res.status(500).json({ message: 'Server error' });
@@ -2292,17 +2292,17 @@ app.post('/admin/update-developer/:assignmentId', async (req, res) => {
 
 
 app.get('/assignment/:id', async (req, res) => {
-    
+
     try {
         const assignment = await Assignment.findById(req.params.id);
-        
+
         if (!assignment) {
             return res.status(404).send('Assignment not found');
         }
-        
+
         res.render('admin/admin-dashboard', { assignment });
-    } 
-    
+    }
+
     catch (error) {
         console.error('Error fetching assignment:', error);
         res.status(500).send('Server error');
@@ -2313,15 +2313,15 @@ app.get('/assignment/:id', async (req, res) => {
 
 
 app.post('/admin/completed-work/submission', upload.single('file'), async (req, res) => {
-    
+
     const { assignmentId } = req.body;
     const filePath = path.join(__dirname, 'uploads', req.file.filename);
     const mimeType = req.file.mimetype;
 
     try {
-        
+
         const assignment = await Assignment.findById(assignmentId);
-        
+
         if (!assignment) {
             return res.status(404).json({ message: 'Assignment not found' });
         }
@@ -2356,9 +2356,9 @@ app.post('/admin/completed-work/submission', upload.single('file'), async (req, 
             from: 'dotaskforme@gmail.com',
             to: assignment.email,
             subject: 'Task Completed Notification',
-            html: 
-            
-            `<!DOCTYPE html>
+            html:
+
+                `<!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
@@ -2471,8 +2471,8 @@ app.post('/admin/completed-work/submission', upload.single('file'), async (req, 
 
         res.redirect(`/admin-assignment/${assignment._id}`);
 
-    } 
-    
+    }
+
     catch (error) {
         console.log('Error:', error);
         res.status(500).json({ message: 'Error submitting assignment', error });
@@ -2491,24 +2491,24 @@ app.get("/search-form", (req, res) => {
 
 app.get("/search", async (req, res) => {
     const { searchEmail, taskID } = req.query;
-  
-    try{
-      const user_email = await Assignment.find({ email: { $regex: searchEmail, $options: 'i' } });
 
-      const task_id = await Assignment.find({ id: { $eq: taskID }, Crime_Type: { $regex: taskID, $options: 'i' } });
+    try {
+        const user_email = await Assignment.find({ email: { $regex: searchEmail, $options: 'i' } });
 
-      const results = [
-        ...user_email,
-        ...task_id
-      ];
-  
-      res.render("admin/search-result", { results });
+        const task_id = await Assignment.find({ id: { $eq: taskID }, Crime_Type: { $regex: taskID, $options: 'i' } });
 
-    } 
-    
-    catch(error){
-      console.error(error);
-      res.status(500).send("An error occurred while searching.");
+        const results = [
+            ...user_email,
+            ...task_id
+        ];
+
+        res.render("admin/search-result", { results });
+
+    }
+
+    catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while searching.");
     }
 });
 
@@ -2520,7 +2520,7 @@ app.get("/assignment/:id", async (req, res) => {
     const assignment = await Assignment.findById(id);
     res.render("admin/assignment-details", { assignment });
 });
-  
+
 
 
 
