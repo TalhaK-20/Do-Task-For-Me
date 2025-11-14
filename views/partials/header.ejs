@@ -737,17 +737,302 @@
 
   </style>
 
-
-   <script>
-      document.addEventListener('DOMContentLoaded', function() {
-      const burgerButton = document.querySelector('.Header__burger');
-      const menu = document.querySelector('.Header__menu');
+<!-- OptimizeHub A/B Testing Script -->
+<script id="optimizehub-ab-testing" data-project-id="33cc88253064753a">
+(function() {
+    'use strict';
   
-      burgerButton.addEventListener('click', function() {
-      menu.classList.toggle('is-active');
-        });
-      });
-   </script>
+    const projectId = '33cc88253064753a';
+    const apiBaseUrl = 'https://giovanni-laconic-woodenly.ngrok-free.dev';
+  
+    // Traffic split will be fetched dynamically from API
+    let trafficSplit = {
+        original: 0.5,
+        variants: 0.5
+    };
+  
+    // Get or create visitor ID
+    function getVisitorId() {
+        let visitorId = localStorage.getItem('optimizehub_visitor_id');
+        if (!visitorId) {
+            visitorId = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('optimizehub_visitor_id', visitorId);
+        }
+        console.log('[OptimizeHub] Visitor ID:', visitorId);
+        return visitorId;
+    }
+  
+    // Fetch traffic split configuration from API
+    async function fetchTrafficConfig() {
+        try {
+            const response = await fetch(`${apiBaseUrl}/get-traffic-config/${projectId}`, {
+                headers: { 'ngrok-skip-browser-warning': 'true' }
+            });
+      
+            if (response.ok) {
+                const data = await response.json();
+                if (data.status === 'success' && data.traffic_split) {
+                    trafficSplit = data.traffic_split;
+                    console.log('[OptimizeHub] 🎯 Traffic split loaded:', 
+                        `${Math.round(trafficSplit.original * 100)}% original, ${Math.round(trafficSplit.variants * 100)}% variants`);
+                    return true;
+                }
+            }
+            console.warn('[OptimizeHub] ⚠️ Using default 50/50 split');
+            return false;
+        } catch (error) {
+            console.error('[OptimizeHub] Error fetching traffic config:', error);
+            console.warn('[OptimizeHub] ⚠️ Using default 50/50 split');
+            return false;
+        }
+    }
+  
+    // Hash function for consistent variant assignment
+    function hashCode(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash);
+    }
+  
+    // Determine which variant to show (supports unlimited variants!)
+    function assignVariant(visitorId, variantsCount) {
+        if (variantsCount === 0) {
+            console.log('[OptimizeHub] No variants available');
+            return null;
+        }
+    
+        const hash = hashCode(visitorId + projectId);
+        const normalized = (hash % 100) / 100;
+    
+        console.log('[OptimizeHub] Assignment calculation:');
+        console.log('  - Hash:', hash);
+        console.log('  - Normalized (0-1):', normalized);
+        console.log('  - Original threshold:', trafficSplit.original);
+    
+        if (normalized < trafficSplit.original) {
+            console.log('[OptimizeHub] ➡️ Assigned to: ORIGINAL');
+            return null; // Show original
+        }
+    
+        // Assign to a variant
+        const variantIndex = Math.floor(
+            ((normalized - trafficSplit.original) / trafficSplit.variants) * variantsCount
+        );
+        const finalIndex = Math.min(variantIndex, variantsCount - 1);
+    
+        console.log('[OptimizeHub] ➡️ Assigned to: VARIANT', finalIndex);
+        console.log('  - Total variants:', variantsCount);
+        console.log('  - Selected index:', finalIndex);
+    
+        return finalIndex;
+    }
+  
+    // Apply variant changes to the page
+    function applyVariant(variant) {
+        if (!variant || !variant.changes) return;
+    
+        console.log('[OptimizeHub] Applying variant:', variant.variant_id);
+    
+        // Apply text changes
+        if (variant.changes.text_changes) {
+            variant.changes.text_changes.forEach(change => {
+                try {
+                    const elements = document.querySelectorAll('*');
+                    elements.forEach(el => {
+                        if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+                            if (el.textContent.trim() === change.original.trim()) {
+                                el.textContent = change.modified;
+                            }
+                        }
+                    });
+                } catch (e) {
+                    console.error('[OptimizeHub] Error applying text change:', e);
+                }
+            });
+        }
+    
+        // Apply image changes
+        if (variant.changes.image_changes) {
+            variant.changes.image_changes.forEach(change => {
+                try {
+                    // Convert HTTP to HTTPS to avoid mixed content errors
+                    let newSrc = change.new_src;
+                    if (newSrc && newSrc.startsWith('http://')) {
+                        newSrc = newSrc.replace('http://', 'https://');
+                        console.log('[OptimizeHub] 🔒 Converting HTTP to HTTPS:', newSrc);
+                    }
+          
+                    const img = document.querySelector(`img[src="${change.original_src}"]`);
+                    if (img) {
+                        img.src = newSrc;
+                        console.log('[OptimizeHub] ✅ Image updated:', newSrc);
+                    }
+                } catch (e) {
+                    console.error('[OptimizeHub] Error applying image change:', e);
+                }
+            });
+        }
+    
+        // Store assigned variant for analytics
+        sessionStorage.setItem('optimizehub_variant', variant.variant_id);
+        localStorage.setItem('optimizehub_variant', variant.variant_id); // For Landbot
+    }
+  
+    // Fetch and apply variants
+    async function initializeABTest() {
+        try {
+            // 🔧 DEBUG MODE: Check if we should force clear cache
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('optimizehub_reset') === 'true') {
+                console.log('[OptimizeHub] 🔄 RESET MODE: Clearing all cache...');
+                localStorage.removeItem('optimizehub_visitor_id');
+                localStorage.removeItem('optimizehub_variant');
+                localStorage.removeItem('optimizehub_project');
+                sessionStorage.removeItem('optimizehub_variant');
+                console.log('[OptimizeHub] ✅ Cache cleared! Reload without ?optimizehub_reset=true');
+                return;
+            }
+      
+            console.log('[OptimizeHub] 🚀 Initializing A/B test...');
+      
+            // STEP 1: Fetch dynamic traffic split configuration
+            await fetchTrafficConfig();
+      
+            const visitorId = getVisitorId();
+      
+            // ⚡ ONLY track impression on chatbot page (simulateur)
+            const currentUrl = window.location.href;
+            const isChatbotPage = currentUrl.includes('/simulateur');
+      
+            if (!isChatbotPage) {
+                console.log('[OptimizeHub] Not chatbot page - skipping impression tracking');
+                console.log('[OptimizeHub] Current URL:', currentUrl);
+        
+                // Still assign variant and save to localStorage for later use
+                const response = await fetch(`${apiBaseUrl}/get-variants/${projectId}`, {
+                    headers: { 'ngrok-skip-browser-warning': 'true' }
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.status === 'success' && data.variants && data.variants.length > 0) {
+                        const variantIndex = assignVariant(visitorId, data.variants.length);
+            
+                        if (variantIndex === null) {
+                            localStorage.setItem('optimizehub_variant', 'original');
+                        } else {
+                            const assignedVariant = data.variants[variantIndex];
+                            localStorage.setItem('optimizehub_variant', assignedVariant.variant_id);
+                            applyVariant(assignedVariant);
+                        }
+                        localStorage.setItem('optimizehub_project', projectId);
+                    }
+                }
+                return;
+            }
+      
+            console.log('[OptimizeHub] ✅ Chatbot page detected - tracking impression');
+      
+            // Fetch variants from server
+            console.log('[OptimizeHub] 📡 Fetching variants from:', `${apiBaseUrl}/get-variants/${projectId}`);
+            const response = await fetch(`${apiBaseUrl}/get-variants/${projectId}`, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
+                }
+            });
+      
+            if (!response.ok) {
+                console.error('[OptimizeHub] ❌ Failed to fetch variants. Status:', response.status);
+                return;
+            }
+      
+            const data = await response.json();
+            console.log('[OptimizeHub] 📦 Received data:', data);
+      
+            if (data.status !== 'success' || !data.variants || data.variants.length === 0) {
+                console.warn('[OptimizeHub] ⚠️ No variants available. Data:', data);
+                return;
+            }
+      
+            console.log('[OptimizeHub] ✅ Found', data.variants.length, 'variants');
+      
+            // Assign variant
+            const variantIndex = assignVariant(visitorId, data.variants.length);
+      
+            if (variantIndex === null) {
+                console.log('[OptimizeHub] Showing original version');
+        
+                // Track impression for original
+                fetch(`${apiBaseUrl}/track-impression`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true'
+                    },
+                    body: JSON.stringify({
+                        project_id: projectId,
+                        visitor_id: visitorId,
+                        variant_id: null  // null for original
+                    })
+                }).catch(e => console.error('[OptimizeHub] Track impression error:', e));
+        
+                // Store 'original' for conversion tracking
+                sessionStorage.setItem('optimizehub_variant', 'original');
+                localStorage.setItem('optimizehub_variant', 'original'); // For Landbot
+                localStorage.setItem('optimizehub_project', projectId); // For Landbot
+                return;
+            }
+      
+            const assignedVariant = data.variants[variantIndex];
+            applyVariant(assignedVariant);
+      
+            // Store project ID for Landbot
+            localStorage.setItem('optimizehub_project', projectId);
+      
+            // Track impression for variant
+            fetch(`${apiBaseUrl}/track-impression`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true'
+                },
+                body: JSON.stringify({
+                    project_id: projectId,
+                    visitor_id: visitorId,
+                    variant_id: assignedVariant.variant_id
+                })
+            }).catch(e => console.error('[OptimizeHub] Track impression error:', e));
+      
+        } catch (error) {
+            console.error('[OptimizeHub] A/B test initialization error:', error);
+        }
+    }
+  
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeABTest);
+    } else {
+        initializeABTest();
+    }
+  
+    console.log('[OptimizeHub] ✅ Code #1 loaded - Data saved to localStorage for Landbot');
+})();
+</script>
+
+     <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            const burgerButton = document.querySelector('.Header__burger');
+            const menu = document.querySelector('.Header__menu');
+  
+            burgerButton.addEventListener('click', function() {
+            menu.classList.toggle('is-active');
+                });
+            });
+     </script>
 
 
 <div class="page-wrapper ">
