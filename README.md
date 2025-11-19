@@ -264,4 +264,4 @@ This project is proprietary and confidential. All rights reserved.
 
 ---
 
-**Built with ❤️ using Node.js, Express, EJS, MongoDB, and Google Drive API**
+**Built with ❤️ using Node.js, Express, EJS, MongoDB and Google Drive API**
