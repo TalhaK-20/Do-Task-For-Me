@@ -16,7 +16,7 @@ const { google } = require('googleapis');
 const { isAuthenticated, isAdminAuthenticated } = require('./middlewares/session.js');
 
 const faviconMiddleware = require('./middlewares/favicon');
-
+const email_automation = "tk839587@gmail.com"
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -182,10 +182,13 @@ const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 
 const transporter = nodemailer.createTransport({
+    // host: "smtp.gmail.com",
+    // port: 587,
+    // secure: false,
     service: 'gmail',
     auth: {
-        user: 'dotaskforme@gmail.com',
-        pass: 'pont itwv rxqx bjpc'
+        user: 'tk839587@gmail.com',
+        pass: 'dwjp zugr ciuk usju'
     }
 });
 
@@ -234,7 +237,7 @@ passport.use(new GoogleStrategy({
                 await user.save();
 
                 const mailOptions = {
-                    from: 'dotaskforme@gmail.com',
+                    from: email_automation,
                     to: user.email,
                     subject: 'Welcome to Do Task For Me.com',
                     html: `
@@ -486,9 +489,9 @@ app.get('/auth/linkedin/callback',
 
 // --------------------- File Upload Drive API  ---------------------
 
-const GOOGLE_DRIVE_FOLDER_ID = '1CbO11lCNlmam55uIUemNHWC_QuNPYxQW';
+const GOOGLE_DRIVE_FOLDER_ID = '1qJiAlW3JIhVsE7aF0aKsiMYt8-0I__KO';
 
-const USER_EMAIL = 'F2021266625@umt.edu.pk';
+const USER_EMAIL = 'tk839587@gmail.com';
 
 const upload = multer({ dest: 'uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
 
@@ -496,15 +499,15 @@ const auth = new google.auth.GoogleAuth({
 
     credentials: {
         type: "service_account",
-        project_id: "file-upload-427811",
-        private_key_id: "d391df159dae3fe4fb4d75e94079dbadf8e7f3ce",
-        private_key: `-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFUQtw/W0CY7AY\nEVhlecq0HFJ5v4p2CG7AZjchwrArjngOnPzX5nmMLMAendGm/wr5CRSrTQe7lP2s\nlhWx5GPMEo/87ZGPP3C93PRveilGNVPHS2S+0m4ui95UDa4SPXuuNpKsXFJ6dIOX\nKv4jFVQYvx44dFXs5L/DN7EqDHGF2TXXl3dAeJyWTMZYcSVzpRXEgtqhWu6G7Bn5\nk8cH8uuHhYE26ioOCvpbNQzL0+badMLF/yYIRyEA/eVGKlzYNmIHXRVZcHOtK4hO\n0c0t9kNncVUre1iDMsNZaTo/fYe0zgwPgRMuX2IHL6ysvAC/SgF9OzkAzKL6udF9\nofgaDqAfAgMBAAECggEAANLNQuvz1AI5fmg4H7hJ5cWGfJaVi9eOKsRib4Qh+xSN\noLX8AiSmljSrmpUbBmDjGVX13Z8lLJ27D0jTD1p+JiBftHUDWf8wR8KPzJVMbcwU\nLO0+HuO+7PfNdjlWZCIYjYoRw6FhALzSvcNCqz/QCYhmpmKp5yKvQC/Pz/acVKwp\nAI0Oh97JEAuFDuzuAdetLad1g8p050LFWBcDzRLYkdePcLW0GADRfk2rdoJkaxbn\n9N9OGQt/rgV9K03EFr8igYdeGakXnZUuNF5NoOjlYQcd/RY4Vn3ZbPe2QlKYPKFR\nfiqW/gcsIdK2OwtZAL+GW15vw09v0I6ozLSM9QFadQKBgQD2rNQv6u22RdPUnGIL\nB8xV1ayEJr+lfvWblN1Qk9rVqqhsLtI6H+VcPtRLVtqfP5ETU9jw52kUuCh5fnZ2\nnY/X87D70U+i8TO7u41F1/Uox0ivsw7bcRYqSXnGv9QvYl+g9Gd7OJjx34q8Ib+S\nUFVLtCobZJg6Al73ZDbC5gwWrQKBgQDMxo3Za7YE5MDrs6VlhALZ1PfgTqP+4eQk\nqpPupgiBy+TGJ1DAAAN0z/CnFLMldSUpzaJB564Z1ntinSy+55qaTdLS1hrw3Otc\nrQAz1M+xZTGF7EtUn74jS7YkX4GCO3KD7LCch6On2hnkIowQvgXtk+hGkFFPPD2A\nXlskxUUHewKBgFpdJb4ICdzj553TS/dOfARVqkUfDMXLpJ3CAvEpuNjdE6XN4SV5\n2cPZIFwZDS2ZU8QIy0g0/cGhVPJs6Wi6f59UnlkhbFL8mT8EjdQwMJcnqfDzX1X0\nL3J+SCYOz+Qr3WxRHDd/nEe+5EvW8R7gXt7EuUgfqcRWagOmqojrTTJhAoGBAJoo\nS7dHMBMFBvsqFbSTqfXFLwotCaai9bZot88sLTFRhptqE49HM1LoC9osaiUjyGNt\nC96jhFytK9v0STA6eRf6yGCykDuNhJ4TGxjp96UrchnI5nkBfQljQO6m+39IM5B/\nSgG81wZQ2bb2Dw23kAznkTA2CxAkYIRYBDNtUucrAoGAYI0kxCs4CRW0foZUlYCJ\nKR0uIChuSQwjwF8shFq117+ndO1D8B7XTPybm3t+iey9ww95vw1Uh2qjqvygAZYV\n1WzPR2CK4uccsGiREUaldtbSPDZ1QKKFEFLWV5OXTK0fAKBv05AIteuyM3dVvgWD\nYM0sH2Zhw8exKwPQQSAdSo0=\n-----END PRIVATE KEY-----\n`,
-        client_email: "talha-khalid@file-upload-427811.iam.gserviceaccount.com",
-        client_id: "103160677148251988136",
+        project_id: "do-task-for-me-486019",
+        private_key_id: "66ef1873b74713a3f35256b40f3727acfce6aac7",
+        private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC8ZmUbwIf1SOO3\nBC8SJpdVluMaCRpZSm4vIRZ4+7wJ6XDQqBd+O2zQJckv8EqFehqT1ND4oydVdTOH\nc5h0NrgtAR2w0RN+oQgu20DyDWhfeslycpcx/44ajbHpCUi7DSNyWUX1G6X57CQA\nI0KKHzYlLmZz3cAKnOpNSP6BBSHE4Z/NqmFcR7GvzTY+FngJBuwGqa9vz/GmOVmr\ncI1TgVPzARHwggzpSVa784uiBOECH9mRJFOzNCYf8ugt6q+P3I5Or8oxuYp6TbPb\ncFjfEQO968DvN6T1R+VBRgc3zHR9OaLGLu0JtHTSkzmMHR+c2iDVMrn5uKVp6Frx\nDWQS10iVAgMBAAECggEACqXe4QqopHxSIm3iGyyDMRsuCrKpApLqV0+PbZcMsaK3\n9ZMKgN/q7ni0PjlefNzB08kbZnISLwpIt0cZPrg5AJInk269o1KGm99YdFW9qGfQ\nKt+/G9xNs8J+Y6Varve3ISdahNfjMZTfFALqJ9RLwx40PCg0SmVD+Mo/WBtqJS5i\nfb+MxFrvc1gBUfHvRwj3fVymnNyb14SXdgJVt5uDEtLu6Qrf+O3nbX0PbIy8RlKs\nrzMcYqzV6S0jp8A07AkN8uE2nKkNKB67tD9243FknkqeMsJF1au16a+BP2JWIo7q\n8DkXmQMgERyu6A0QKw9JLX8sGCIFPVsHYfDMfgI/AQKBgQDfaq/jECitASEYR4HI\njBwF9bNM0oR5569ICjDKWO6tBL+YtpJvZnQZeU6q6A1hBlWC51+AtG4LP8zKRnJD\naJ9kzGltanZhTQhGyb87K5zcbyJqIramUWcSaUkA6x5xzOw2StVj7Cx9fmY2G+uz\nNyzBhHfNxaTluxTj6sEiTg5s/QKBgQDX4Flrx/6vpvgY2ig6wXZV3unyRJsJ+1SB\nsSjVpMk0l5XzJVrPkD/tZ+6hB6Pz4m3LMuf2iOscHmrluMIwsraqnogOaUo5IWQg\nAf3BKcIcRXCP7jL+F1SwMKIkyWQXXHaDNfTq1gRML1rndxtKqSuyeZ8qux5vjaHt\njtsEejppeQKBgQC7fTa5oJfiB66UR338pMfnoHeloo0WGH4aQKMNTHCPtgprx9s/\nrYUE065W8oI3yC7+udiFk+U9f38GyPOe6i/JUVmwPsW1hgXKEghvSXxL6N/CnfsV\nu/55ju163dUgv04Die1l+46iie6QvgGg1k6y384CWzi0qbkwQ5NsjIDCqQKBgQCS\nequSY8kf/Oa5TkYf4Cfginoppn2g30XvHnu7w623HuhjbMRatOF7wJr97wZDtS+U\nwnz9HtiRYt5b8+roSkuCKEHfrXfsnginY1KAoEoTDtcbAqDdIo2XY9iRp4lgBKBx\n1cnTEtclrrg6+Omu1m1NFBN5VjCHtw3Z+KYKOrmp2QKBgGQd6cEgggUvz05n6hQF\n39qMxhh5IF+48nbR2PQNL9HAOeqhj1JoS804qt35+aDd8l+BgbyPc9Ja4QR+b7OT\nXtNd0hd2bdl+7qwBKMuCAK1fimjwYrBX30AA5queRDM3vNZzrS8yPjl0+ozRxCv+\nxWCojGEz+DuTBlxC8IFVfP45\n-----END PRIVATE KEY-----\n",
+        client_email: "drive-uploader@do-task-for-me-486019.iam.gserviceaccount.com",
+        client_id: "107592037007546109570",
         auth_uri: "https://accounts.google.com/o/oauth2/auth",
         token_uri: "https://oauth2.googleapis.com/token",
         auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/talha-khalid%40file-upload-427811.iam.gserviceaccount.com",
+        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/drive-uploader%40do-task-for-me-486019.iam.gserviceaccount.com",
         universe_domain: "googleapis.com"
     },
 
@@ -816,7 +819,7 @@ app.get('/order-request-form', isAuthenticated, async (req, res) => {
 
 
 
-app.post('/submit-form', upload.single('file'), async (req, res) => {
+app.post('/submit-form', upload.single('fileUploads'), async (req, res) => {
 
     const {
 
@@ -826,7 +829,6 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
         whatsapp,
         additionalDetails,
         vivaRequired,
-        fileUploads,
         professionalLevel,
         programmingLanguage,
         webDevelopmentType,
@@ -895,6 +897,8 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', req.file.filename);
     const mimeType = req.file.mimetype;
 
+    let fileUrl = null;
+    let fileId = null;
 
     try {
 
@@ -910,7 +914,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
             },
         });
 
-        const fileId = response.data.id;
+        fileId = response.data.id;
 
         await drive.permissions.create({
             fileId: fileId,
@@ -920,8 +924,18 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
             },
         });
 
-        const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
+        fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
 
+    } 
+    
+    catch (driveError) {
+        // If Google Drive fails (e.g., quota exceeded), use local storage
+        console.log('Google Drive upload failed, using local storage:', driveError.message);
+        fileUrl = `/uploads/${req.file.filename}`;
+        // Don't delete the file if Google Drive fails - keep it locally
+    }
+
+    try {
 
         // -------------------------------------------
 
@@ -937,7 +951,7 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
 
             filename: req.file.originalname,
             mimeType: mimeType,
-            googleDriveId: fileId,
+            googleDriveId: fileId || null,
             fileUrl: fileUrl,
 
             assignmentType,
@@ -945,7 +959,6 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
             email,
             whatsapp,
             additionalDetails,
-            fileUploads,
             vivaPreparation,
 
             wellCommentedCode: wellCommentedCodeBool,
@@ -960,18 +973,19 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
 
         await newAssignment.save();
 
-        fs.unlinkSync(filePath);
+        // Only delete file if it was successfully uploaded to Google Drive
+        
+        if (fileId) {
+            fs.unlinkSync(filePath);
+        }
 
         const recipients = [
             'dotaskforme@gmail.com',
-            'F2021266625@umt.edu.pk',
-            'waqasali@ucp.edu.pk',
-            'ranawaqas.pa@gmail.com',
             'tk839587@gmail.com'
         ]
 
         const mailOptions = {
-            from: 'dotaskforme@gmail.com',
+            from: email_automation,
             to: email,
             bcc: recipients.join(','),
             subject: 'Assignment Submission Confirmation',
@@ -1047,7 +1061,41 @@ app.post('/submit-form', upload.single('file'), async (req, res) => {
 
 
 
-app.post('/submit', upload.single('file'), async (req, res) => {
+// Test endpoint temporarily
+app.get('/test-drive-access', async (req, res) => {
+    
+    try {
+        // Test 1: List files in the folder
+        const folderContents = await drive.files.list({
+            q: `'1qJiAlW3JIhVsE7aF0aKsiMYt8-0I__KO' in parents`,
+            fields: 'files(id, name)',
+        });
+
+        // Test 2: Get folder info
+        const folderInfo = await drive.files.get({
+            fileId: '1qJiAlW3JIhVsE7aF0aKsiMYt8-0I__KO',
+            fields: 'id, name, permissions'
+        });
+
+        res.json({
+            message: 'Access test successful',
+            folderContents: folderContents.data,
+            folderInfo: folderInfo.data
+        });
+    } 
+    
+    catch (error) {
+        res.status(500).json({
+            message: 'Access test failed',
+            error: error.message
+        });
+    }
+});
+
+
+
+
+app.post('/submit', upload.single('fileUploads'), async (req, res) => {
 
     const {
 
@@ -1128,6 +1176,8 @@ app.post('/submit', upload.single('file'), async (req, res) => {
     const filePath = path.join(__dirname, 'uploads', req.file.filename);
     const mimeType = req.file.mimetype;
 
+    let fileUrl = null;
+    let fileId = null;
 
     try {
 
@@ -1135,6 +1185,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             requestBody: {
                 name: req.file.originalname,
                 mimeType: mimeType,
+                parents: ["1qJiAlW3JIhVsE7aF0aKsiMYt8-0I__KO"]
             },
 
             media: {
@@ -1143,7 +1194,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             },
         });
 
-        const fileId = response.data.id;
+        fileId = response.data.id;
 
         await drive.permissions.create({
             fileId: fileId,
@@ -1153,8 +1204,18 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             },
         });
 
-        const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
+        fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
 
+    } 
+    
+    catch (driveError) {
+        // If Google Drive fails (e.g., quota exceeded), use local storage
+        console.log('Google Drive upload failed, using local storage:', driveError.message);
+        fileUrl = `/uploads/${req.file.filename}`;
+        // Don't delete the file if Google Drive fails - keep it locally
+    }
+
+    try {
 
         // -------------------------------------------
 
@@ -1170,7 +1231,7 @@ app.post('/submit', upload.single('file'), async (req, res) => {
 
             filename: req.file.originalname,
             mimeType: mimeType,
-            googleDriveId: fileId,
+            googleDriveId: fileId || null,
             fileUrl: fileUrl,
 
             assignmentType,
@@ -1178,7 +1239,6 @@ app.post('/submit', upload.single('file'), async (req, res) => {
             email,
             whatsapp,
             additionalDetails,
-            fileUploads,
             vivaPreparation,
 
             totalCost,
@@ -1194,7 +1254,11 @@ app.post('/submit', upload.single('file'), async (req, res) => {
 
         await newAssignment.save();
 
-        fs.unlinkSync(filePath);
+        // Only delete file if it was successfully uploaded to Google Drive
+
+        if (fileId) {
+            fs.unlinkSync(filePath);
+        }
 
         function generateEmailHtml() {
             const templatePath = path.join(__dirname, 'views', 'main', 'email-templates', 'order-details.ejs');
@@ -1224,16 +1288,13 @@ app.post('/submit', upload.single('file'), async (req, res) => {
 
         const recipients = [
             'dotaskforme@gmail.com',
-            'F2021266625@umt.edu.pk',
-            'waqasali@ucp.edu.pk',
-            'ranawaqas.pa@gmail.com',
             'tk839587@gmail.com'
         ]
 
         const emailHtml = generateEmailHtml();
 
         const mailOptions = {
-            from: 'dotaskforme@gmail.com',
+            from: email_automation,
             to: email,
             bcc: recipients.join(','),
             subject: 'Assignment Submission Confirmation',
@@ -1574,7 +1635,7 @@ app.post('/reset-password-user', async (req, res) => {
             await foundUser.save();
 
             const mailOptions = {
-                from: 'dotaskforme@gmail.com',
+                from: email_automation,
                 to: foundUser.email,
                 subject: 'Password Reset',
 
@@ -1777,7 +1838,7 @@ app.post('/reset-password-admin', async (req, res) => {
                 await foundAdmin.save();
 
                 const mailOptions = {
-                    from: 'dotaskforme@gmail.com',
+                    from: email_automation,
                     to: foundAdmin.email,
                     subject: 'Password Reset',
 
@@ -1922,7 +1983,7 @@ app.post('/admin/update-status/:id', async (req, res) => {
         if (status === 'Started') {
 
             const mailOptions = {
-                from: 'dotaskforme@gmail.com',
+                from: email_automation,
                 to: assignment.email,
                 subject: 'Work Started Notification',
                 text: `Hello,
@@ -1962,7 +2023,7 @@ app.post('/admin/update-completion-status/:id', async (req, res) => {
         if (status === 'Completed') {
 
             const mailOptions = {
-                from: 'dotaskforme@gmail.com',
+                from: email_automation,
                 to: assignment.email,
                 subject: 'Work Completion Notification',
                 text: `Hello,
@@ -2001,7 +2062,7 @@ app.post('/admin/update-payment-status/:id', async (req, res) => {
 
         if (payment_status === 'Paid') {
             const mailOptions = {
-                from: 'dotaskforme@gmail.com',
+                from: email_automation,
                 to: assignment.email,
                 subject: 'Payment Notification',
                 text: `Hello,
@@ -2318,6 +2379,9 @@ app.post('/admin/completed-work/submission', upload.single('file'), async (req, 
     const filePath = path.join(__dirname, 'uploads', req.file.filename);
     const mimeType = req.file.mimetype;
 
+    let fileDownloadUrl = null;
+    let fileId = null;
+
     try {
 
         const assignment = await Assignment.findById(assignmentId);
@@ -2326,34 +2390,46 @@ app.post('/admin/completed-work/submission', upload.single('file'), async (req, 
             return res.status(404).json({ message: 'Assignment not found' });
         }
 
-        const response = await drive.files.create({
-            requestBody: {
-                name: req.file.originalname,
-                mimeType: mimeType,
-            },
-            media: {
-                mimeType: mimeType,
-                body: fs.createReadStream(filePath),
-            },
-        });
+        try {
+            const response = await drive.files.create({
+                requestBody: {
+                    name: req.file.originalname,
+                    mimeType: mimeType,
+                },
+                media: {
+                    mimeType: mimeType,
+                    body: fs.createReadStream(filePath),
+                },
+            });
 
-        const fileId = response.data.id;
+            fileId = response.data.id;
 
-        await drive.permissions.create({
-            fileId: fileId,
-            requestBody: {
-                role: 'reader',
-                type: 'anyone',
-            },
-        });
+            await drive.permissions.create({
+                fileId: fileId,
+                requestBody: {
+                    role: 'reader',
+                    type: 'anyone',
+                },
+            });
 
-        const fileDownloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            fileDownloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+        } catch (driveError) {
+            // If Google Drive fails (e.g., quota exceeded), use local storage
+            console.log('Google Drive upload failed, using local storage:', driveError.message);
+            fileDownloadUrl = `/uploads/${req.file.filename}`;
+        }
 
         assignment.taskSubmissionUrl = fileDownloadUrl;
         await assignment.save();
 
+        // Only delete file if it was successfully uploaded to Google Drive
+        if (fileId) {
+            fs.unlinkSync(filePath);
+        }
+
         const mailOptions = {
-            from: 'dotaskforme@gmail.com',
+            from: email_automation,
             to: assignment.email,
             subject: 'Task Completed Notification',
             html:
